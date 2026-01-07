@@ -32,6 +32,21 @@ class Property(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def is_under_validation(self):
+        """
+        Check if there is a pending occupation request within the last 5 hours.
+        """
+        from transactions.models import OccupationRequest
+        from django.utils import timezone
+        from datetime import timedelta
+        
+        five_hours_ago = timezone.now() - timedelta(hours=5)
+        return self.occupation_requests.filter(
+            status='PENDING',
+            created_at__gte=five_hours_ago
+        ).exists()
+
     def __str__(self):
         return f"{self.title} - {self.property_type}"
 

@@ -16,6 +16,7 @@ class PropertySerializer(serializers.ModelSerializer):
     agent_phone = serializers.ReadOnlyField(source='agent.phone')
     owner_name = serializers.ReadOnlyField(source='owner.username')
     owner_phone = serializers.ReadOnlyField(source='owner.phone')
+    is_under_validation = serializers.ReadOnlyField()
     
     class Meta:
         model = Property
@@ -25,7 +26,7 @@ class PropertySerializer(serializers.ModelSerializer):
             'property_type', 'price', 'secteur', 'secteur_name', 
             'quartier_name', 'latitude', 'longitude', 'address_details', 
             'religion_preference', 'ethnic_preference', 'is_available', 
-            'images', 'created_at'
+            'is_under_validation', 'images', 'created_at'
         ]
         read_only_fields = ['owner']
 

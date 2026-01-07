@@ -264,11 +264,11 @@ const AdvancedSearch = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 pt-20">
+    <div className="min-h-screen bg-gray-50 pt-4">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Recherche Avancée de Logements
           </h1>
           <p className="text-gray-600">
@@ -279,12 +279,12 @@ const AdvancedSearch = () => {
         {/* Search Filters Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-            <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
             </svg>
             Filtres de Recherche
             <button 
-              className="md:hidden ml-auto text-sm text-blue-600 font-semibold"
+              className="md:hidden ml-auto text-sm text-primary-600 font-semibold"
               onClick={() => setShowFilters(!showFilters)}
             >
               {showFilters ? 'Masquer' : 'Afficher'}
@@ -295,7 +295,7 @@ const AdvancedSearch = () => {
           {/* Location Filters */}
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-gray-700 mb-4 flex items-center">
-              <svg className="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
@@ -308,7 +308,7 @@ const AdvancedSearch = () => {
                 <select
                   value={filters.region}
                   onChange={(e) => handleRegionChange(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-blue-400"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-primary-400"
                 >
                   <option value="">Toutes les régions</option>
                   {regions.map((region) => (
@@ -326,7 +326,7 @@ const AdvancedSearch = () => {
                   value={filters.prefecture}
                   onChange={(e) => handlePrefectureChange(e.target.value)}
                   disabled={!filters.region}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-blue-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-primary-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
                   <option value="">Toutes les préfectures</option>
                   {prefectures.map((prefecture) => (
@@ -344,7 +344,7 @@ const AdvancedSearch = () => {
                   value={filters.sous_prefecture}
                   onChange={(e) => handleSousPrefectureChange(e.target.value)}
                   disabled={!filters.prefecture}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-blue-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-primary-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
                   <option value="">Toutes les sous-préfectures</option>
                   {sousPrefectures.map((sp) => (
@@ -362,7 +362,7 @@ const AdvancedSearch = () => {
                   value={filters.ville}
                   onChange={(e) => handleVilleChange(e.target.value)}
                   disabled={!filters.sous_prefecture}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-blue-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-primary-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
                   <option value="">Toutes les villes</option>
                   {villes.map((ville) => (
@@ -380,7 +380,7 @@ const AdvancedSearch = () => {
                   value={filters.quartier}
                   onChange={(e) => handleQuartierChange(e.target.value)}
                   disabled={!filters.ville}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-blue-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-primary-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
                   <option value="">Tous les quartiers</option>
                   {quartiers.map((quartier) => (
@@ -398,7 +398,7 @@ const AdvancedSearch = () => {
                   value={filters.secteur}
                   onChange={(e) => handleSecteurChange(e.target.value)}
                   disabled={!filters.quartier}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-blue-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-primary-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
                   <option value="">Tous les secteurs</option>
                   {secteurs.map((secteur) => (
@@ -414,7 +414,7 @@ const AdvancedSearch = () => {
           {/* Property Filters */}
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-gray-700 mb-4 flex items-center">
-              <svg className="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
               Caractéristiques du Logement
@@ -426,7 +426,7 @@ const AdvancedSearch = () => {
                 <select
                   value={filters.property_type}
                   onChange={(e) => setFilters({ ...filters, property_type: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-purple-400"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium bg-white hover:border-primary-400"
                 >
                   <option value="">Tous les types</option>
                   <option value="CHAMBRE_SIMPLE">Rentrée Couchée</option>
@@ -443,7 +443,7 @@ const AdvancedSearch = () => {
                   value={filters.min_price}
                   onChange={(e) => setFilters({ ...filters, min_price: e.target.value })}
                   placeholder="Ex: 500000"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium hover:border-purple-400"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium hover:border-primary-400"
                 />
               </div>
 
@@ -455,18 +455,18 @@ const AdvancedSearch = () => {
                   value={filters.max_price}
                   onChange={(e) => setFilters({ ...filters, max_price: e.target.value })}
                   placeholder="Ex: 2000000"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium hover:border-purple-400"
+                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-gray-800 font-medium hover:border-primary-400"
                 />
               </div>
 
               {/* Availability */}
               <div className="form-group flex items-end">
-                <label className="flex items-center cursor-pointer bg-gradient-to-r from-green-50 to-emerald-50 px-4 py-3 rounded-lg border border-green-200 hover:border-green-400 transition-all w-full">
+                <label className="flex items-center cursor-pointer bg-primary-50/50 px-4 py-3 rounded-lg border border-primary-100 hover:border-primary-300 transition-all w-full">
                   <input
                     type="checkbox"
                     checked={filters.is_available}
                     onChange={(e) => setFilters({ ...filters, is_available: e.target.checked })}
-                    className="w-5 h-5 text-green-600 rounded focus:ring-2 focus:ring-green-500 mr-3"
+                    className="w-5 h-5 text-primary-600 rounded focus:ring-2 focus:ring-primary-500 mr-3"
                   />
                   <span className="text-sm font-medium text-gray-700">Disponibles uniquement</span>
                 </label>
@@ -479,7 +479,7 @@ const AdvancedSearch = () => {
             <button
               onClick={handleSearch}
               disabled={loading}
-              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              className="flex-1 bg-gradient-to-r from-primary-600 to-primary-700 text-white px-8 py-4 rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               {loading ? (
                 <>
@@ -514,7 +514,7 @@ const AdvancedSearch = () => {
         {/* Results Section */}
         {totalCount > 0 && (
           <div className="mb-6">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-xl shadow-lg flex items-center justify-between">
+            <div className="bg-gradient-to-r from-primary-600 to-primary-800 text-white px-6 py-4 rounded-xl shadow-lg flex items-center justify-between">
               <p className="text-lg font-semibold">
                 {totalCount} logement{totalCount > 1 ? 's' : ''} trouvé{totalCount > 1 ? 's' : ''}
               </p>
@@ -525,7 +525,7 @@ const AdvancedSearch = () => {
                   onClick={() => setViewMode('grid')}
                   className={`px-4 py-2 rounded-md font-medium transition-all flex items-center gap-2 ${
                     viewMode === 'grid'
-                      ? 'bg-white text-blue-600 shadow-md'
+                      ? 'bg-white text-primary-600 shadow-md'
                       : 'text-white hover:bg-white/10'
                   }`}
                 >
@@ -538,7 +538,7 @@ const AdvancedSearch = () => {
                   onClick={() => setViewMode('map')}
                   className={`px-4 py-2 rounded-md font-medium transition-all flex items-center gap-2 ${
                     viewMode === 'map'
-                      ? 'bg-white text-blue-600 shadow-md'
+                      ? 'bg-white text-primary-600 shadow-md'
                       : 'text-white hover:bg-white/10'
                   }`}
                 >
@@ -555,7 +555,7 @@ const AdvancedSearch = () => {
         {/* Properties Display */}
         {loading ? (
           <div className="text-center py-20">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary-600 mx-auto mb-4"></div>
             <p className="text-gray-600 font-medium text-lg">Recherche en cours...</p>
           </div>
         ) : properties.length > 0 ? (

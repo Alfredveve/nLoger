@@ -55,6 +55,22 @@ class PropertyViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        
+        # Move common filtering logic to a reusable method or apply it here
+        from django.utils import timezone
+        from datetime import timedelta
+        five_hours_ago = timezone.now() - timedelta(hours=5)
+        
+        # Hide properties that are not available
+        queryset = queryset.filter(is_available=True)
+        
+        # "Clean Search": Hide properties under validation
+        # We exclude properties that have any PENDING occupation request from the last 5 hours
+        queryset = queryset.exclude(
+            occupation_requests__status='PENDING',
+            occupation_requests__created_at__gte=five_hours_ago
+        ).distinct()
+
         lat = self.request.query_params.get('lat')
         lng = self.request.query_params.get('lng')
         dist = self.request.query_params.get('dist', 10) # Default 10km
@@ -66,15 +82,12 @@ class PropertyViewSet(viewsets.ModelViewSet):
                 dist = float(dist)
                 
                 # Simple approximation for SQLite (bounding box)
-                # 1 degree lat ~ 111km
-                # 1 degree lng ~ 111km * cos(lat)
                 lat_range = dist / 111.0
                 lng_range = dist / (111.0 * abs(cos(radians(lat))))
                 
                 queryset = queryset.filter(
                     latitude__range=(lat - lat_range, lat + lat_range),
-                    longitude__range=(lng - lng_range, lng + lng_range),
-                    is_available=True
+                    longitude__range=(lng - lng_range, lng + lng_range)
                 )
             except (ValueError, TypeError):
                 pass

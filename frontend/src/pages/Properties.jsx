@@ -53,7 +53,7 @@ const Properties = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Tous les logements</h1>
+      <h1 className="text-3xl md:text-4xl font-bold mb-10 text-gray-900 tracking-tight">Tous les logements</h1>
       
       <div className="mb-12">
         <SearchFilters 

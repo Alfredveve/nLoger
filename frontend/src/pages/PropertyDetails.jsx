@@ -14,11 +14,21 @@ const PropertyDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleContactClick = () => {
+  const handleContactClick = async () => {
     if (!user) {
       navigate('/login', { state: { from: location } });
       return;
     }
+    
+    // Create occupation request before showing modal
+    try {
+      await api.post('occupations/', { property: property.id });
+      // We don't necessarily need to wait or block if it fails, 
+      // but logically it should be created.
+    } catch (error) {
+      console.error('Erreur lors de la création de la demande doccupation:', error);
+    }
+    
     setIsModalOpen(true);
   };
 
@@ -46,7 +56,7 @@ const PropertyDetails = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 pt-24 pb-12">
+    <div className="container mx-auto px-4 pt-8 pb-12">
       <div className="max-w-4xl mx-auto">
         <div className="card overflow-hidden">
           {/* Image placeholder */}
@@ -60,14 +70,25 @@ const PropertyDetails = () => {
             <h1 className="text-3xl font-bold mb-4">{property.title}</h1>
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-6 border-b gap-4">
-              <span className="text-4xl font-bold text-primary-600">
-                {parseInt(property.price).toLocaleString()} GNF
-              </span>
+              <div className="flex flex-col">
+                <span className="text-4xl font-bold text-primary-600">
+                  {parseInt(property.price).toLocaleString()} GNF
+                </span>
+                {property.is_under_validation && (
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 mt-2 w-fit">
+                    <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                    </svg>
+                    Validation en cours
+                  </span>
+                )}
+              </div>
               <button 
                 onClick={handleContactClick}
-                className="btn-primary text-lg px-8 w-full sm:w-auto py-3 sm:py-2"
+                disabled={property.is_under_validation}
+                className={`btn-primary text-lg px-8 w-full sm:w-auto py-3 sm:py-2 ${property.is_under_validation ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                Contacter le démarcheur
+                {property.is_under_validation ? 'Réservé temporairement' : 'Contacter le démarcheur'}
               </button>
             </div>
 

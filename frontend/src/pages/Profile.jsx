@@ -85,7 +85,7 @@ const Profile = () => {
     
 
     return (
-        <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
+        <div className="min-h-screen bg-gray-50 pt-8 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
             <div className="max-w-3xl mx-auto">
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 placeholder-opacity-50">
 

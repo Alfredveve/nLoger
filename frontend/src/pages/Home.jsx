@@ -97,7 +97,7 @@ const Home = () => {
 
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-linear-to-r from-primary-600 to-primary-800 text-white pt-24 pb-12 sm:py-20">
+      <div className="bg-linear-to-r from-primary-600 to-primary-800 text-white pt-8 pb-12 sm:pb-20">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Trouvez votre logement idéal en Guinée

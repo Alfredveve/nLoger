@@ -10,6 +10,7 @@ from locations.views import (
     VilleViewSet, QuartierViewSet, SecteurViewSet
 )
 from properties.views import PropertyViewSet, ManagementMandateViewSet
+from transactions.views import OccupationRequestViewSet
 from accounts.views import RegisterView, UserProfileView
 
 router = DefaultRouter()
@@ -21,6 +22,7 @@ router.register(r'quartiers', QuartierViewSet)
 router.register(r'secteurs', SecteurViewSet)
 router.register(r'properties', PropertyViewSet)
 router.register(r'mandates', ManagementMandateViewSet)
+router.register(r'occupations', OccupationRequestViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

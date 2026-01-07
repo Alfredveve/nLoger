@@ -1,53 +1,57 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 @theme {
-    -- color - primary - 50 : #f0f9ff;
-    --color - primary - 100 : #e0f2fe;
-    --color - primary - 200 : #bae6fd;
-    --color - primary - 300 : #7dd3fc;
-    --color - primary - 400 : #38bdf8;
-    --color - primary - 500 : #0ea5e9;
-    --color - primary - 600 : #0284c7;
-    --color - primary - 700 : #0369a1;
-    --color - primary - 800 : #075985;
-    --color - primary - 900 : #0c4a6e;
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
 }
 
 @layer base {
-    body {
-        @apply bg - gray - 50 text - gray - 900 antialiased;
-        font - size : 16 px;
-    }
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased transition-colors duration-300;
+  }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        @apply tracking - tight;
-    }
+  .dark {
+    color-scheme: dark;
+  }
+  .dark body {
+    @apply bg-gray-950 text-gray-100;
+  }
 
-    @media(max - width : 640 px) {
-        body {
-            font - size : 14 px;
-        }
-    }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tracking-tight;
+  }
 }
 
-@layer components {.btn - primary {
-        @apply bg - primary - 600 text - white font - semibold py - 2 px - 4 rounded - lg transition - colors duration - 200;
-    }.btn - primary: hover {
-        @apply bg - primary - 700;
-    }.btn - secondary {
-        @apply bg - gray - 200 text - gray - 800 font - semibold py - 2 px - 4 rounded - lg transition - colors duration - 200;
-    }.btn - secondary: hover {
-        @apply bg - gray - 300;
-    }.card {
-        @apply bg - white rounded - xl shadow - md transition - shadow duration - 300;
-    }.card: hover {
-        @apply shadow - lg;
-    }.glass {
-        @apply bg - white / 80 backdrop - blur - md border border - white / 20 shadow - sm;
-    }
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-primary-700;
+  }
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-gray-300;
+  }
+  .card {
+    @apply bg-white rounded-xl shadow-md transition-shadow duration-300 hover:shadow-lg;
+  }
+  .dark.card {
+    @apply bg-white/5 border border-white/10;
+  }
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+  .dark.glass {
+    @apply bg-gray-950/80 border-white/10;
+  }
 }

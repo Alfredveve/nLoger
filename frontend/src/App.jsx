@@ -12,8 +12,12 @@ import ForgotPassword from './pages/ForgotPassword';
 import Profile from './pages/Profile';
 import DelegateManagement from './pages/DelegateManagement';
 import MandateDashboard from './pages/MandateDashboard';
+import Settings from './pages/Settings';
+import About from './pages/About';
+import Footer from './components/Footer';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import './index.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -24,12 +28,21 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
   return (
     <AuthProvider>
       <Router>
         <div className="min-h-screen flex flex-col">
           <Navbar />
-          <main className="grow">
+          <main className="grow pt-16">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/properties" element={<Properties />} />
@@ -58,13 +71,15 @@ function App() {
                   <MandateDashboard />
                 </ProtectedRoute>
               } />
+              <Route path="/settings" element={
+                <ProtectedRoute>
+                  <Settings />
+                </ProtectedRoute>
+              } />
+              <Route path="/about" element={<About />} />
             </Routes>
           </main>
-          <footer className="bg-gray-800 text-white py-6 mt-12">
-            <div className="container mx-auto px-4 text-center">
-              <p>&copy; 2026 NLoger - Plateforme de gestion de logements en Guinée</p>
-            </div>
-          </footer>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>

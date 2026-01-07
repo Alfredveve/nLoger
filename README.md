@@ -7,7 +7,7 @@ NLoger est une application web moderne de gestion immobilière permettant aux ut
 - **Recherche de Biens** : Filtrez les propriétés par type, prix et emplacement.
 - **Cartographie Interactive** : Visualisation des biens sur une carte.
 - **Gestion des Annonces** : Publication et modification de logements.
-- **Interface Agent** : Permet aux démarreurs de gérer leurs contacts et propriétés.
+- **Interface Agent** : Permet aux démarcheurs de gérer leurs contacts et propriétés.
 - **PWA (Progressive Web App)** : Disponible hors ligne et installable sur mobile.
 
 ## 🛠️ Technologies Utilisées

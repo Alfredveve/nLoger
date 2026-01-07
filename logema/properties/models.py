@@ -4,13 +4,13 @@ from locations.models import Secteur
 
 class Property(models.Model):
     TYPE_CHOICES = (
-        ('CHAMBRE_SIMPLE', 'Rentrée couchée'),
-        ('SALON_CHAMBRE', 'Selon chambre'),
+        ('CHAMBRE_SIMPLE', 'Rentrée Couchée'),
+        ('SALON_CHAMBRE', 'Salon Chambre'),
         ('APPARTEMENT', 'Appartement'),
     )
     
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='properties_owned')
-    agent = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='properties_managed')
+    agent = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='properties_managed')
     
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -39,3 +39,29 @@ class PropertyImage(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='properties/')
     caption = models.CharField(max_length=100, blank=True)
+
+class ManagementMandate(models.Model):
+    STATUS_CHOICES = (
+        ('PENDING', 'En attente'),
+        ('ACCEPTED', 'Accepté'),
+        ('REJECTED', 'Rejeté'),
+        ('COMPLETED', 'Terminé'),
+        ('CANCELLED', 'Annulé'),
+    )
+
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='mandates_given')
+    agent = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='mandates_received')
+    
+    property_type = models.CharField(max_length=20, choices=Property.TYPE_CHOICES)
+    location_description = models.TextField(help_text="Description précise de l'emplacement du bien")
+    property_description = models.TextField(help_text="Détails sur le bien (nombre de pièces, état, etc.)")
+    expected_price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+    owner_phone = models.CharField(max_length=20, help_text="Numéro à contacter (WhatsApp ou direct)")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Mandat {self.id} - {self.owner.username} ({self.get_status_display()})"

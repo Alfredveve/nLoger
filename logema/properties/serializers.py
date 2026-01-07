@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Property, PropertyImage
+from .models import Property, PropertyImage, ManagementMandate
 
 class PropertyImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,3 +28,19 @@ class PropertySerializer(serializers.ModelSerializer):
             'images', 'created_at'
         ]
         read_only_fields = ['owner']
+
+class ManagementMandateSerializer(serializers.ModelSerializer):
+    owner_username = serializers.ReadOnlyField(source='owner.username')
+    agent_username = serializers.ReadOnlyField(source='agent.username', allow_null=True)
+    property_type_display = serializers.CharField(source='get_property_type_display', read_only=True)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
+
+    class Meta:
+        model = ManagementMandate
+        fields = [
+            'id', 'owner', 'owner_username', 'agent', 'agent_username',
+            'property_type', 'property_type_display', 'location_description',
+            'property_description', 'expected_price', 'status', 'status_display',
+            'owner_phone', 'created_at', 'updated_at'
+        ]
+        read_only_fields = ['owner', 'status', 'agent']

@@ -23,7 +23,9 @@ class User(AbstractUser):
     
     kyc_status = models.CharField(max_length=20, choices=KYC_STATUS_CHOICES, default='PENDING')
     bio_document = models.FileField(upload_to='kyc_docs/', null=True, blank=True)
+    contract_document = models.FileField(upload_to='kyc_docs/', null=True, blank=True)
     engagement_signed = models.BooleanField(default=False)
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     
     def __str__(self):
         return f"{self.username} ({self.email})"

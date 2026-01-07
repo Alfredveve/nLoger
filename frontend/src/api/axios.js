@@ -7,10 +7,28 @@ const api = axios.create({
   },
 });
 
-// Intercepteur pour gérer les erreurs globalement si besoin
+// Intercepteur pour ajouter le token à chaque requête
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Intercepteur pour gérer les erreurs globalement
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (error.response?.status === 401) {
+      // Optionnel: logout ou redirection si nécessaire
+      // localStorage.removeItem('token');
+    }
     console.error('API Error:', error.response?.data || error.message);
     return Promise.reject(error);
   }

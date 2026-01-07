@@ -4,6 +4,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import api from '../api/axios';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+// Fix for default marker icons in Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 const propertySchema = z.object({
   title: z.string().min(5, "Le titre doit faire au moins 5 caractères").max(100),
@@ -12,11 +23,55 @@ const propertySchema = z.object({
   price: z.coerce.number().positive("Le prix doit être positif"),
   region: z.string().min(1, "La région est obligatoire"),
   prefecture: z.string().min(1, "La préfecture est obligatoire"),
+  sous_prefecture: z.string().min(1, "La sous-préfecture est obligatoire"),
+  ville: z.string().min(1, "La ville est obligatoire"),
+  quartier: z.string().min(1, "Le quartier est obligatoire"),
   secteur: z.string().min(1, "Le secteur est obligatoire"),
+  quartier_custom_name: z.string().optional(),
+  secteur_custom_name: z.string().optional(),
   address_details: z.string().optional(),
   religion_preference: z.string().default('Indifférent'),
   ethnic_preference: z.string().default('Indifférent'),
-});
+  latitude: z.number().optional(),
+  longitude: z.number().optional(),
+}).refine(data => {
+  if (data.quartier === 'custom' && !data.quartier_custom_name) return false;
+  return true;
+}, { message: "Le nom du quartier est obligatoire", path: ['quartier_custom_name'] })
+.refine(data => {
+  if (data.secteur === 'custom' && !data.secteur_custom_name) return false;
+  return true;
+}, { message: "Le nom du secteur est obligatoire", path: ['secteur_custom_name'] });
+
+const DraggableMarker = ({ position, setPosition }) => {
+  const map = useMap();
+  
+  const eventHandlers = React.useMemo(
+    () => ({
+      dragend(e) {
+        const marker = e.target;
+        if (marker != null) {
+          setPosition(marker.getLatLng());
+        }
+      },
+    }),
+    [setPosition],
+  );
+
+  useEffect(() => {
+    if (position) {
+      map.flyTo(position, map.getZoom());
+    }
+  }, [position, map]);
+
+  return position ? (
+    <Marker
+      draggable={true}
+      eventHandlers={eventHandlers}
+      position={position}
+    />
+  ) : null;
+};
 
 const AddProperty = () => {
   const navigate = useNavigate();
@@ -26,7 +81,13 @@ const AddProperty = () => {
   
   const [regions, setRegions] = useState([]);
   const [prefectures, setPrefectures] = useState([]);
+  const [sousPrefectures, setSousPrefectures] = useState([]);
+  const [villes, setVilles] = useState([]);
+  const [quartiers, setQuartiers] = useState([]);
   const [secteurs, setSecteurs] = useState([]);
+  
+  const [markerPos, setMarkerPos] = useState({ lat: 9.6412, lng: -13.5784 }); // Conakry par défaut
+  const [isGeocoding, setIsGeocoding] = useState(false);
 
   const {
     register,
@@ -45,6 +106,12 @@ const AddProperty = () => {
 
   const selectedRegion = watch('region');
   const selectedPrefecture = watch('prefecture');
+  const selectedSousPrefecture = watch('sous_prefecture');
+  const selectedVille = watch('ville');
+  const selectedQuartier = watch('quartier');
+  const selectedSecteur = watch('secteur');
+  const quartierCustomName = watch('quartier_custom_name');
+  const secteurCustomName = watch('secteur_custom_name');
 
   useEffect(() => {
     const fetchRegions = async () => {
@@ -76,31 +143,135 @@ const AddProperty = () => {
   }, [selectedRegion, setValue]);
 
   useEffect(() => {
-    const fetchSecteurs = async () => {
+    const fetchSousPrefectures = async () => {
       if (!selectedPrefecture) {
+        setSousPrefectures([]);
+        setValue('sous_prefecture', '');
+        return;
+      }
+      try {
+        const res = await api.get('sous-prefectures/', { params: { prefecture: selectedPrefecture } });
+        setSousPrefectures(res.data);
+      } catch (err) {
+        console.error('Erreur lors du chargement des sous-préfectures:', err);
+      }
+    };
+    fetchSousPrefectures();
+  }, [selectedPrefecture, setValue]);
+
+  useEffect(() => {
+    const fetchVilles = async () => {
+      if (!selectedSousPrefecture) {
+        setVilles([]);
+        setValue('ville', '');
+        return;
+      }
+      try {
+        const res = await api.get('villes/', { params: { sous_prefecture: selectedSousPrefecture } });
+        setVilles(res.data);
+      } catch (err) {
+        console.error('Erreur lors du chargement des villes:', err);
+      }
+    };
+    fetchVilles();
+  }, [selectedSousPrefecture, setValue]);
+
+  useEffect(() => {
+    const fetchQuartiers = async () => {
+      if (!selectedVille) {
+        setQuartiers([]);
+        setValue('quartier', '');
+        return;
+      }
+      try {
+        const res = await api.get('quartiers/', { params: { ville: selectedVille } });
+        setQuartiers(res.data);
+      } catch (err) {
+        console.error('Erreur lors du chargement des quartiers:', err);
+      }
+    };
+    fetchQuartiers();
+  }, [selectedVille, setValue]);
+
+  useEffect(() => {
+    const fetchSecteurs = async () => {
+      if (!selectedQuartier) {
         setSecteurs([]);
         setValue('secteur', '');
         return;
       }
       try {
-        const res = await api.get('secteurs/', { params: { prefecture: selectedPrefecture } });
+        const res = await api.get('secteurs/', { params: { quartier: selectedQuartier } });
         setSecteurs(res.data);
       } catch (err) {
         console.error('Erreur lors du chargement des secteurs:', err);
       }
     };
     fetchSecteurs();
-  }, [selectedPrefecture, setValue]);
+  }, [selectedQuartier, setValue]);
+
+  useEffect(() => {
+    const geocodeAddress = async () => {
+      const region = regions.find(r => r.id.toString() === selectedRegion?.toString())?.name;
+      const pref = prefectures.find(p => p.id.toString() === selectedPrefecture?.toString())?.name;
+      const ville = villes.find(v => v.id.toString() === selectedVille?.toString())?.name;
+      const qSelected = quartiers.find(q => q.id.toString() === selectedQuartier?.toString())?.name;
+      const sSelected = secteurs.find(s => s.id.toString() === selectedSecteur?.toString())?.name;
+
+      const qName = selectedQuartier === 'custom' ? quartierCustomName : qSelected;
+      const sName = selectedSecteur === 'custom' ? secteurCustomName : sSelected;
+
+      if (!region) return;
+
+      setIsGeocoding(true);
+      try {
+        const queryParts = [sName, qName, ville, pref, region, 'Guinea'].filter(Boolean);
+        const query = queryParts.join(', ');
+        
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`);
+        const results = await response.json();
+
+        if (results && results.length > 0) {
+          const { lat, lon } = results[0];
+          setMarkerPos({ lat: parseFloat(lat), lng: parseFloat(lon) });
+        }
+      } catch (err) {
+        console.error('Geocoding error:', err);
+      } finally {
+        setIsGeocoding(false);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      if (selectedRegion || selectedPrefecture || selectedQuartier || quartierCustomName || secteurCustomName) {
+        geocodeAddress();
+      }
+    }, 1500); // Slightly longer debounce for manual typing
+
+    return () => clearTimeout(timer);
+  }, [selectedRegion, selectedPrefecture, selectedVille, selectedQuartier, selectedSecteur, quartierCustomName, secteurCustomName, regions, prefectures, villes, quartiers, secteurs]);
 
   const onSubmit = async (data) => {
     setLoading(true);
     setError('');
     
     try {
-      await api.post('properties/', {
+      const payload = {
         ...data,
-        secteur: parseInt(data.secteur),
-      });
+        secteur: data.secteur === 'custom' ? null : parseInt(data.secteur),
+        latitude: markerPos.lat,
+        longitude: markerPos.lng,
+      };
+      
+      // Add custom names if 'custom' was selected
+      if (data.secteur === 'custom') {
+        payload.secteur_custom_name = data.secteur_custom_name;
+        if (data.quartier === 'custom') {
+          payload.quartier_custom_name = data.quartier_custom_name;
+        }
+      }
+
+      await api.post('properties/', payload);
       
       setSuccess(true);
       setTimeout(() => navigate('/properties'), 2000);
@@ -129,11 +300,11 @@ const AddProperty = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 pt-24 pb-12">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">Publier un nouveau logement</h1>
         
-        <form onSubmit={handleSubmit(onSubmit)} className="card p-8 bg-white shadow-xl rounded-2xl">
+        <form onSubmit={handleSubmit(onSubmit)} className="card p-6 md:p-8 bg-white shadow-xl rounded-2xl">
           {error && (
             <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700">
               {error}
@@ -175,8 +346,8 @@ const AddProperty = () => {
                       {...register('property_type')}
                       className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                     >
-                      <option value="CHAMBRE_SIMPLE">Rentrée couchée</option>
-                      <option value="SALON_CHAMBRE">Salon chambre</option>
+                      <option value="CHAMBRE_SIMPLE">Rentrée Couchée</option>
+                      <option value="SALON_CHAMBRE">Salon Chambre</option>
                       <option value="APPARTEMENT">Appartement</option>
                     </select>
                   </div>
@@ -204,7 +375,7 @@ const AddProperty = () => {
                   <select
                     id="region"
                     {...register('region')}
-                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none ${errors.region ? 'border-red-500' : ''}`}
+                    className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none ${errors.region ? 'border-red-500' : ''}`}
                   >
                     <option value="">Sélectionner</option>
                     {regions.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
@@ -217,7 +388,7 @@ const AddProperty = () => {
                     id="prefecture"
                     {...register('prefecture')}
                     disabled={!selectedRegion}
-                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none disabled:bg-gray-100 ${errors.prefecture ? 'border-red-500' : ''}`}
+                    className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none disabled:bg-gray-100 ${errors.prefecture ? 'border-red-500' : ''}`}
                   >
                     <option value="">Sélectionner</option>
                     {prefectures.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
@@ -225,17 +396,99 @@ const AddProperty = () => {
                   {errors.prefecture && <p className="text-red-500 text-xs mt-1">{errors.prefecture.message}</p>}
                 </div>
                 <div>
+                  <label htmlFor="sous_prefecture" className="block text-sm font-medium text-gray-700 mb-1">Sous-Préfecture</label>
+                  <select
+                    id="sous_prefecture"
+                    {...register('sous_prefecture')}
+                    disabled={!selectedPrefecture}
+                    className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none disabled:bg-gray-100 ${errors.sous_prefecture ? 'border-red-500' : ''}`}
+                  >
+                    <option value="">Sélectionner</option>
+                    {sousPrefectures.map(sp => <option key={sp.id} value={sp.id}>{sp.name}</option>)}
+                  </select>
+                  {errors.sous_prefecture && <p className="text-red-500 text-xs mt-1">{errors.sous_prefecture.message}</p>}
+                </div>
+                <div>
+                  <label htmlFor="ville" className="block text-sm font-medium text-gray-700 mb-1">Ville / Commune</label>
+                  <select
+                    id="ville"
+                    {...register('ville')}
+                    disabled={!selectedSousPrefecture}
+                    className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none disabled:bg-gray-100 ${errors.ville ? 'border-red-500' : ''}`}
+                  >
+                    <option value="">Sélectionner</option>
+                    {villes.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
+                  </select>
+                  {errors.ville && <p className="text-red-500 text-xs mt-1">{errors.ville.message}</p>}
+                </div>
+                <div>
+                  <label htmlFor="quartier" className="block text-sm font-medium text-gray-700 mb-1">Quartier</label>
+                  <select
+                    id="quartier"
+                    {...register('quartier')}
+                    disabled={!selectedVille}
+                    className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none disabled:bg-gray-100 ${errors.quartier ? 'border-red-500' : ''}`}
+                  >
+                    <option value="">Sélectionner</option>
+                    {quartiers.map(q => <option key={q.id} value={q.id}>{q.name}</option>)}
+                    {selectedVille && <option value="custom">+ Autre (Saisie manuelle)</option>}
+                  </select>
+                  {errors.quartier && <p className="text-red-500 text-xs mt-1">{errors.quartier.message}</p>}
+                  
+                  {selectedQuartier === 'custom' && (
+                    <div className="mt-2">
+                      <input
+                        type="text"
+                        {...register('quartier_custom_name')}
+                        placeholder="Nom du quartier..."
+                        className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none ${errors.quartier_custom_name ? 'border-red-500' : ''}`}
+                      />
+                      {errors.quartier_custom_name && <p className="text-red-500 text-xs mt-1">{errors.quartier_custom_name.message}</p>}
+                    </div>
+                  )}
+                </div>
+                <div>
                   <label htmlFor="secteur" className="block text-sm font-medium text-gray-700 mb-1">Secteur</label>
                   <select
                     id="secteur"
                     {...register('secteur')}
-                    disabled={!selectedPrefecture}
-                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none disabled:bg-gray-100 ${errors.secteur ? 'border-red-500' : ''}`}
+                    disabled={!selectedQuartier}
+                    className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none disabled:bg-gray-100 ${errors.secteur ? 'border-red-500' : ''}`}
                   >
                     <option value="">Sélectionner</option>
                     {secteurs.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                    {selectedQuartier && <option value="custom">+ Autre (Saisie manuelle)</option>}
                   </select>
                   {errors.secteur && <p className="text-red-500 text-xs mt-1">{errors.secteur.message}</p>}
+                  
+                  {selectedSecteur === 'custom' && (
+                    <div className="mt-2">
+                      <input
+                        type="text"
+                        {...register('secteur_custom_name')}
+                        placeholder="Nom du secteur..."
+                        className={`w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none ${errors.secteur_custom_name ? 'border-red-500' : ''}`}
+                      />
+                      {errors.secteur_custom_name && <p className="text-red-500 text-xs mt-1">{errors.secteur_custom_name.message}</p>}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Map Selection */}
+              <div className="mt-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Position sur la carte {isGeocoding && <span className="text-primary-500 animate-pulse">(Recherche...)</span>}
+                </label>
+                <p className="text-xs text-gray-500 mb-2">La position est automatisée, mais vous pouvez déplacer le marqueur pour plus de précision.</p>
+                <div className="h-[300px] rounded-xl overflow-hidden border-2 border-gray-100">
+                  <MapContainer center={[markerPos.lat, markerPos.lng]} zoom={13} className="h-full w-full">
+                    <TileLayer
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <DraggableMarker position={markerPos} setPosition={setMarkerPos} />
+                  </MapContainer>
                 </div>
               </div>
               <div className="mt-4">

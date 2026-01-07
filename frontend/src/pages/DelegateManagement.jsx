@@ -33,7 +33,7 @@ const DelegateManagement = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      await api.post('/api/mandates/', data);
+      await api.post('mandates/', data);
       toast.success('Votre demande de mandat a été envoyée avec succès !');
       setTimeout(() => navigate('/dashboard'), 2000);
     } catch (error) {

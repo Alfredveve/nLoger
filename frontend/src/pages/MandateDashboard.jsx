@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
+import { useAuth } from '../context/AuthContext';
 import { Toaster, toast } from 'react-hot-toast';
 import { 
   Briefcase, 
@@ -17,6 +18,7 @@ import {
 } from 'lucide-react';
 
 const MandateDashboard = () => {
+  const { user } = useAuth();
   const [mandates, setMandates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('PENDING'); // PENDING or ACCEPTED
@@ -28,11 +30,12 @@ const MandateDashboard = () => {
   const fetchMandates = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/api/mandates/');
+      const response = await api.get('mandates/');
       setMandates(response.data);
     } catch (error) {
       console.error('Error fetching mandates:', error);
-      toast.error('Impossible de charger les mandats.');
+      const errorMessage = error.response?.data?.detail || 'Impossible de charger les mandats.';
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -40,7 +43,7 @@ const MandateDashboard = () => {
 
   const handleAccept = async (id) => {
     try {
-      await api.post(`/api/mandates/${id}/accept/`);
+      await api.post(`mandates/${id}/accept/`);
       toast.success('Mandat accepté ! Vous êtes maintenant en charge de ce bien.');
       fetchMandates();
     } catch (error) {
@@ -54,6 +57,24 @@ const MandateDashboard = () => {
     if (filter === 'ACCEPTED') return m.status === 'ACCEPTED';
     return true;
   });
+
+  // Check if user is a demarcheur
+  if (user && !user.is_demarcheur && !user.is_proprietaire) {
+    return (
+      <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 pt-24">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-3xl p-16 text-center shadow-sm border border-slate-100">
+            <div className="bg-orange-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Briefcase className="w-10 h-10 text-orange-600" />
+            </div>
+            <h3 className="text-2xl font-bold text-slate-800 mb-3">Accès Réservé</h3>
+            <p className="text-slate-600 mb-6">Le tableau de bord des mandats est réservé aux démarcheurs et propriétaires.</p>
+            <p className="text-sm text-slate-500">Si vous souhaitez devenir démarcheur, veuillez contacter l'administration.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 pt-24">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Properties from './pages/Properties';
@@ -27,6 +27,27 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+const PageLayout = () => {
+  return (
+    <>
+      <Navbar />
+      <main className="grow pt-16">
+        <Outlet />
+      </main>
+      <Footer />
+    </>
+  );
+};
+
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminProperties from './pages/admin/AdminProperties';
+import AdminMandates from './pages/admin/AdminMandates';
+import AdminTransactions from './pages/admin/AdminTransactions';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
+import AdminLayout from './components/AdminLayout';
+import AdminRoute from './components/AdminRoute';
+
 function App() {
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -41,45 +62,60 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="min-h-screen flex flex-col">
-          <Navbar />
-          <main className="grow pt-16">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/properties" element={<Properties />} />
-              <Route path="/advanced-search" element={<AdvancedSearch />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/profile" element={
+          <Routes>
+            {/* Admin Routes */}
+            <Route path="/admin-dashboard/*" element={
+              <AdminRoute>
+                <AdminLayout>
+                  <Routes>
+                    <Route path="/" element={<AdminDashboard />} />
+                    <Route path="/users" element={<AdminUsers />} />
+                    <Route path="/properties" element={<AdminProperties />} />
+                    <Route path="/mandates" element={<AdminMandates />} />
+                    <Route path="/transactions" element={<AdminTransactions />} />
+                    <Route path="/analytics" element={<AdminAnalytics />} />
+                  </Routes>
+                </AdminLayout>
+              </AdminRoute>
+            } />
+
+            {/* Public and Standard Protected Routes */}
+            <Route path="/" element={<PageLayout />}>
+              <Route index element={<Home />} />
+              <Route path="properties" element={<Properties />} />
+              <Route path="advanced-search" element={<AdvancedSearch />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="profile" element={
                 <ProtectedRoute>
                   <Profile />
                 </ProtectedRoute>
               } />
-              <Route path="/add-property" element={
+              <Route path="add-property" element={
                 <ProtectedRoute>
                   <AddProperty />
                 </ProtectedRoute>
               } />
-              <Route path="/property/:id" element={<PropertyDetails />} />
-              <Route path="/delegate-management" element={
+              <Route path="property/:id" element={<PropertyDetails />} />
+              <Route path="delegate-management" element={
                 <ProtectedRoute>
                   <DelegateManagement />
                 </ProtectedRoute>
               } />
-              <Route path="/mandate-dashboard" element={
+              <Route path="mandate-dashboard" element={
                 <ProtectedRoute>
                   <MandateDashboard />
                 </ProtectedRoute>
               } />
-              <Route path="/settings" element={
+              <Route path="settings" element={
                 <ProtectedRoute>
                   <Settings />
                 </ProtectedRoute>
               } />
-              <Route path="/about" element={<About />} />
-            </Routes>
-          </main>
-          <Footer />
+              <Route path="about" element={<About />} />
+            </Route>
+          </Routes>
         </div>
       </Router>
     </AuthProvider>

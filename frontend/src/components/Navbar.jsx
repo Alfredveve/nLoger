@@ -57,7 +57,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed w-full top-0 z-[2000] transition-all duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-[2000] transition-all duration-300 ${
       scrolled 
         ? 'bg-white/90 backdrop-blur-md shadow-md border-b border-white/20' 
         : 'bg-white/50 backdrop-blur-sm border-b border-white/5'
@@ -71,7 +71,7 @@ const Navbar = () => {
               alt="NLoger Logo" 
               className="w-10 h-10 rounded-lg shadow-sm"
             />
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent tracking-tight">
+            <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-2">
               NLoger
             </span>
           </Link>
@@ -192,7 +192,7 @@ const Navbar = () => {
                   <Link to="/login" className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary-600 transition-colors">
                     Connexion
                   </Link>
-                  <Link to="/register" className="px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-full shadow-lg shadow-primary-500/30 transition-all hover:-translate-y-0.5">
+                  <Link to="/register" className="px-6 py-2 bg-linear-to-br from-blue-600 to-blue-700 text-white rounded-xl font-bold shadow-lg shadow-blue-200 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                     S'inscrire
                   </Link>
                 </div>

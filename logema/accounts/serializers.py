@@ -6,7 +6,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone', 
                   'is_demarcheur', 'is_proprietaire', 'is_locataire', 'kyc_status',
-                  'is_staff', 'is_superuser', 'avatar')
+                  'is_staff', 'is_superuser', 'avatar', 'bio_document', 'contract_document')
         read_only_fields = ('kyc_status',)
 
 class RegisterSerializer(serializers.ModelSerializer):

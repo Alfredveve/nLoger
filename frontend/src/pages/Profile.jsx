@@ -17,7 +17,9 @@ const Profile = () => {
                 first_name: user.first_name || '',
                 last_name: user.last_name || '',
                 email: user.email || '',
-                phone: user.phone || ''
+                phone: user.phone || '',
+                bio_document: null,
+                contract_document: null
             });
             if (user.avatar) {
                 setAvatarPreview(user.avatar);
@@ -57,6 +59,12 @@ const Profile = () => {
         if (avatarFile) {
             data.append('avatar', avatarFile);
         }
+        if (formData.bio_document) {
+            data.append('bio_document', formData.bio_document);
+        }
+        if (formData.contract_document) {
+            data.append('contract_document', formData.contract_document);
+        }
 
         try {
             const response = await api.patch('auth/profile/', data, {
@@ -87,7 +95,7 @@ const Profile = () => {
     return (
         <div className="min-h-screen bg-gray-50 pt-8 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
             <div className="max-w-3xl mx-auto">
-                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 placeholder-opacity-50">
+                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
 
                     {/* Header Section with Gradient */}
                     <div className="bg-gradient-to-r from-primary-700 to-primary-500 px-6 py-8 sm:px-8 sm:py-10 text-center relative">
@@ -130,8 +138,7 @@ const Profile = () => {
                             <h1 className="mt-4 text-3xl font-bold text-white tracking-tight">
                                 {
                                 formData.first_name
-                            }
-                                {
+                            } {
                                 formData.last_name
                             } </h1>
                             <p className="text-primary-100 font-medium">
@@ -178,7 +185,7 @@ const Profile = () => {
                                             formData.first_name
                                         }
                                         onChange={handleChange}
-                                        className="block w-full px-4 py-3 rounded-xl border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-all bg-gray-50 focus:bg-white hover:bg-white"
+                                        className="block w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all shadow-sm hover:border-primary-300 hover:shadow-md"
                                         placeholder="Votre prénom"/>
                                 </div>
                                 <div className="group">
@@ -188,7 +195,7 @@ const Profile = () => {
                                             formData.last_name
                                         }
                                         onChange={handleChange}
-                                        className="block w-full px-4 py-3 rounded-xl border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-all bg-gray-50 focus:bg-white hover:bg-white"
+                                        className="block w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all shadow-sm hover:border-primary-300 hover:shadow-md"
                                         placeholder="Votre nom"/>
                                 </div>
                             </div>
@@ -201,7 +208,7 @@ const Profile = () => {
                                             formData.email
                                         }
                                         onChange={handleChange}
-                                        className="block w-full px-4 py-3 rounded-xl border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-all bg-gray-50 focus:bg-white hover:bg-white"
+                                        className="block w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all shadow-sm hover:border-primary-300 hover:shadow-md"
                                         placeholder="votre@email.com"/>
                                 </div>
                                 <div className="group">
@@ -211,7 +218,7 @@ const Profile = () => {
                                             formData.phone
                                         }
                                         onChange={handleChange}
-                                        className="block w-full px-4 py-3 rounded-xl border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-all bg-gray-50 focus:bg-white hover:bg-white"
+                                        className="block w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all shadow-sm hover:border-primary-300 hover:shadow-md"
                                         placeholder="+224 ..."/>
                                 </div>
                             </div>
@@ -243,12 +250,54 @@ const Profile = () => {
                                         <span className="text-sm text-indigo-500 font-semibold uppercase tracking-wider block">Statut KYC</span>
                                         <span className={
                                             `inline-flex items-center mt-1 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
-                                                user.kyc_status === 'VALIDATED' ? 'bg-green-100 text-green-700' : user.kyc_status === 'PENDING' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-200 text-gray-700'
+                                                user.kyc_status === 'VERIFIED' ? 'bg-green-100 text-green-700' : user.kyc_status === 'PENDING' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-200 text-gray-700'
                                             }`
                                         }>
                                             {
-                                            user.kyc_status === 'VALIDATED' ? 'Vérifié' : user.kyc_status === 'PENDING' ? 'En Attente' : 'Non Vérifié'
+                                            user.kyc_status === 'VERIFIED' ? 'Vérifié' : user.kyc_status === 'PENDING' ? 'En Attente' : 'Non Vérifié'
                                         } </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* KYC Documents Section */}
+                            <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm space-y-6">
+                                <h3 className="text-lg font-bold text-gray-900 flex items-center">
+                                    <svg className="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                    Documents de Vérification (KYC)
+                                </h3>
+
+                                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-semibold text-gray-700">Pièce d'identité (PDF/Image)</label>
+                                        <input 
+                                            type="file" 
+                                            name="bio_document"
+                                            onChange={(e) => setFormData({...formData, bio_document: e.target.files[0]})}
+                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100 transition-all cursor-pointer"
+                                        />
+                                        {user.bio_document && (
+                                            <p className="text-xs text-green-600 flex items-center mt-1">
+                                                <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                                Document déjà envoyé
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-semibold text-gray-700">Contrat signé (PDF/Image)</label>
+                                        <input 
+                                            type="file" 
+                                            name="contract_document"
+                                            onChange={(e) => setFormData({...formData, contract_document: e.target.files[0]})}
+                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100 transition-all cursor-pointer"
+                                        />
+                                        {user.contract_document && (
+                                            <p className="text-xs text-green-600 flex items-center mt-1">
+                                                <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                                Document déjà envoyé
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                             </div>

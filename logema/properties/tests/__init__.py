@@ -1,0 +1,1 @@
+# Init properties tests

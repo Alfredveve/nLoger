@@ -63,9 +63,22 @@ class ManagementMandate(models.Model):
         ('COMPLETED', 'Terminé'),
         ('CANCELLED', 'Annulé'),
     )
+    
+    MANDATE_TYPE_CHOICES = (
+        ('EXCLUSIVE', 'Exclusif'),
+        ('SIMPLE', 'Simple (Non-exclusif)'),
+    )
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='mandates_given')
     agent = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='mandates_received')
+    
+    mandate_type = models.CharField(max_length=20, choices=MANDATE_TYPE_CHOICES, default='SIMPLE')
+    commission_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=10.0, help_text="Pourcentage de commission (ex: 10%)")
+    
+    # Digital Signatures
+    signature_owner = models.CharField(max_length=255, blank=True, help_text="Signature numérique du propriétaire")
+    signature_agent = models.CharField(max_length=255, blank=True, help_text="Signature numérique du démarcheur")
+    signed_at = models.DateTimeField(null=True, blank=True)
     
     property_type = models.CharField(max_length=20, choices=Property.TYPE_CHOICES)
     location_description = models.TextField(help_text="Description précise de l'emplacement du bien")
@@ -79,4 +92,5 @@ class ManagementMandate(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Mandat {self.id} - {self.owner.username} ({self.get_status_display()})"
+        return f"Mandat {self.id} ({self.get_mandate_type_display()}) - {self.owner.username} ({self.get_status_display()})"
+

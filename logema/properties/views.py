@@ -143,29 +143,76 @@ class ManagementMandateViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        user = self.request.user
+        if user.is_demarcheur:
+            # Agent proposes a mandate to an owner
+            # Owner must be passed in data (e.g., by ID)
+            owner_id = self.request.data.get('owner')
+            from django.contrib.auth import get_user_model
+            User = get_user_model()
+            try:
+                owner = User.objects.get(id=owner_id)
+                serializer.save(agent=user, owner=owner, status='PENDING')
+            except User.DoesNotExist:
+                # Fallback or error if owner not found, for now let validation handle it or assume user meant themselves (if dual role)
+                serializer.save(owner=user)
+        else:
+            # Owner creates a request
+            serializer.save(owner=user)
 
     def get_queryset(self):
         user = self.request.user
         if user.is_demarcheur:
-            # Agents see pending mandates or ones assigned to them
+            # Agents see mandates where they are the agent OR pending unassigned requests
             return ManagementMandate.objects.filter(
-                models.Q(status='PENDING') | models.Q(agent=user)
+                models.Q(agent=user) | models.Q(status='PENDING', agent__isnull=True)
             )
         # Owners only see their own mandates
         return ManagementMandate.objects.filter(owner=user)
 
     @action(detail=True, methods=['post'])
-    def accept(self, request, pk=None):
+    def sign_agent(self, request, pk=None):
+        """
+        Agent accepts/signs a mandate request from an owner.
+        """
         mandate = self.get_object()
         if not request.user.is_demarcheur:
-            return Response({"error": "Only agents can accept mandates"}, status=403)
+            return Response({"error": "Seuls les démarcheurs peuvent signer en tant qu'agent"}, status=403)
         
         if mandate.status != 'PENDING':
-            return Response({"error": "Mandate is not pending"}, status=400)
+            return Response({"error": "Le mandat n'est pas en attente"}, status=400)
         
+        from django.utils import timezone
         mandate.agent = request.user
         mandate.status = 'ACCEPTED'
+        mandate.signature_agent = f"signed_by_{request.user.id}_{timezone.now().timestamp()}"
+        mandate.signed_at = timezone.now()
+        mandate.save()
+        return Response(self.get_serializer(mandate).data)
+
+    @action(detail=True, methods=['post'])
+    def sign_owner(self, request, pk=None):
+        """
+        Owner accepts/signs a mandate proposal from an agent.
+        """
+        mandate = self.get_object()
+        if request.user != mandate.owner:
+            return Response({"error": "Seul le propriétaire du mandate peut signer"}, status=403)
+        
+        if mandate.status != 'PENDING':
+            return Response({"error": "Le mandat n'est pas en attente"}, status=400)
+            
+        if not mandate.agent:
+             return Response({"error": "Aucun démarcheur associé à cette proposition"}, status=400)
+
+        from django.utils import timezone
+        mandate.status = 'ACCEPTED'
+        mandate.signature_owner = f"signed_by_owner_{request.user.id}_{timezone.now().timestamp()}"
+        # If agent already signed (proposal), we keep it. If not, we might need agent to counter-sign? 
+        # But usually proposal comes from agent.
+        if not mandate.signed_at:
+            mandate.signed_at = timezone.now()
+            
         mandate.save()
         return Response(self.get_serializer(mandate).data)
 

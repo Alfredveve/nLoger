@@ -170,6 +170,15 @@ const Navbar = () => {
                             Tableau de bord
                           </Link>
                         )}
+                        
+                        <Link 
+                          to="/visits" 
+                          onClick={() => setIsProfileOpen(false)}
+                          className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors"
+                        >
+                           <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                          Visites & Codes
+                        </Link>
 
                         <div className="h-px bg-gray-100 my-2 mx-4"></div>
                         
@@ -283,6 +292,9 @@ const Navbar = () => {
                       Tableau de bord
                     </Link>
                   )}
+                  <Link to="/visits" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-xl text-gray-700 hover:text-primary-600 hover:bg-primary-50 font-medium transition-all">
+                    Visites & Codes
+                  </Link>
                   <button 
                     onClick={() => {
                       handleLogout();

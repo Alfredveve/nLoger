@@ -10,7 +10,7 @@ from locations.views import (
     VilleViewSet, QuartierViewSet, SecteurViewSet
 )
 from properties.views import PropertyViewSet, ManagementMandateViewSet
-from transactions.views import OccupationRequestViewSet
+from transactions.views import OccupationRequestViewSet, VisitVoucherViewSet
 from accounts.views import RegisterView, UserProfileView
 
 from accounts.admin_views import (
@@ -29,6 +29,7 @@ router.register(r'secteurs', SecteurViewSet)
 router.register(r'properties', PropertyViewSet)
 router.register(r'mandates', ManagementMandateViewSet)
 router.register(r'occupations', OccupationRequestViewSet)
+router.register(r'visits', VisitVoucherViewSet)
 
 # Admin routes
 router.register(r'admin/users', AdminUserViewSet, basename='admin-users')

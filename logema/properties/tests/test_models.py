@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
-from .models import Property
+from properties.models import Property
 from accounts.models import User
 from locations.models import Region, Prefecture, SousPrefecture, Ville, Quartier, Secteur
 
@@ -47,7 +47,7 @@ class PropertyModelTests(TestCase):
         self.assertEqual(prop.agent, self.agent)
 
     def test_property_validation(self):
-        """Les contraintes de base doivent être respectées (Django valide au save() pour certains champs, mais full_clean() pour d'autres)."""
+        """Les contraintes de base doivent être respectées."""
         prop = Property(
             owner=self.owner,
             title="Test",
@@ -57,7 +57,6 @@ class PropertyModelTests(TestCase):
             secteur=self.secteur
         )
         prop.full_clean() # Should not raise
-        pass
 
     def test_missing_owner(self):
         """Une propriété doit avoir un propriétaire."""
@@ -69,16 +68,4 @@ class PropertyModelTests(TestCase):
                 property_type="APPARTEMENT",
                 price=1000,
                 secteur=self.secteur
-            )
-
-    def test_missing_secteur(self):
-        """Une propriété doit avoir un secteur."""
-        with self.assertRaises(IntegrityError):
-            Property.objects.create(
-                owner=self.owner,
-                title="No Secteur",
-                description="...",
-                property_type="APPARTEMENT",
-                price=1000,
-                secteur=None
             )

@@ -1,7 +1,14 @@
+
+from django.db import models
+from django.shortcuts import render
+from django.db import models
+from django.utils.crypto import get_random_string
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
-from .models import OccupationRequest
-from .serializers import OccupationRequestSerializer
+from rest_framework.decorators import action
+from .models import OccupationRequest, VisitVoucher
+from .serializers import OccupationRequestSerializer, VisitVoucherSerializer
+from properties.models import Property
 
 class OccupationRequestViewSet(viewsets.ModelViewSet):
     queryset = OccupationRequest.objects.all()
@@ -12,9 +19,93 @@ class OccupationRequestViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
+        # Users see their requests, Agents/Owners see requests on their properties
         user = self.request.user
-        if user.is_demarcheur:
-            # Agents see requests for their properties
-            return OccupationRequest.objects.filter(property__agent=user)
-        # Regular users see their own requests
+        if user.is_demarcheur or user.is_proprietaire:
+             # Logic could be refined: agent sees requests on properties they manage
+             return OccupationRequest.objects.filter(property__agent=user) | OccupationRequest.objects.filter(user=user)
         return OccupationRequest.objects.filter(user=user)
+
+class VisitVoucherViewSet(viewsets.ModelViewSet):
+    queryset = VisitVoucher.objects.all()
+    serializer_class = VisitVoucherSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return VisitVoucher.objects.filter(models.Q(visitor=user) | models.Q(agent=user))
+
+    def perform_create(self, serializer):
+        # Auto-generate 6-digit code
+        code = get_random_string(length=6, allowed_chars='0123456789')
+        # Agent is derived from property
+        property_id = self.request.data.get('property')
+        try:
+             prop = Property.objects.get(id=property_id)
+             agent = prop.agent
+             # If no agent, maybe owner manages it?
+             if not agent:
+                 agent = prop.owner 
+             serializer.save(visitor=self.request.user, validation_code=code, agent=agent)
+        except Property.DoesNotExist:
+             # Should be handled by validation but safe fallback
+             pass
+
+    @action(detail=True, methods=['post'])
+    def validate_visit(self, request, pk=None):
+        """
+        Agent/Owner validates the visit using the code provided by the visitor.
+        """
+        visit = self.get_object()
+        code = request.data.get('code')
+        
+        # Only the assigned agent (or owner) can validate
+        if request.user != visit.agent:
+            return Response({"error": "Vous n'êtes pas autorisé à valider cette visite"}, status=403)
+            
+        if visit.status != 'PENDING':
+             return Response({"error": "Visite déjà traitée"}, status=400)
+             
+        if code == visit.validation_code:
+            visit.status = 'VALIDATED'
+            visit.save()
+            return Response({"status": "Visite validée avec succès"})
+        else:
+            return Response({"error": "Code invalide"}, status=400)
+
+    @action(detail=True, methods=['post'])
+    def rate_visit(self, request, pk=None):
+        """
+        Visitor rates the visit after it has been validated.
+        """
+        visit = self.get_object()
+        if request.user != visit.visitor:
+             return Response({"error": "Seul le visiteur peut noter"}, status=403)
+             
+        if visit.status != 'VALIDATED':
+            return Response({"error": "La visite doit être validée avant d'être notée"}, status=400)
+            
+        rating = request.data.get('rating')
+        comment = request.data.get('comment', '')
+        
+        if rating:
+            visit.rating = rating
+            visit.comment = comment
+            visit.save()
+            
+            # Update Agent Reputation (simple average logic)
+            agent = visit.agent
+            current_score = agent.reputation_score
+            # Ideal: Recalculate average from all ratings. existing score is simple float.
+            # Weighted average update for simplicity or re-aggregation
+            # simplified: 
+            # new_score = (old * n + new) / (n+1) -> but we don't store N
+            # Let's just do a 10% movement for now or Re-aggregate if heavy
+            # Better: Aggregate
+            avg = VisitVoucher.objects.filter(agent=agent, rating__isnull=False).aggregate(models.Avg('rating'))
+            if avg['rating__avg']:
+                agent.reputation_score = round(avg['rating__avg'], 1)
+                agent.save()
+                
+            return Response({"status": "Note enregistrée"})
+        return Response({"error": "Note requise"}, status=400)

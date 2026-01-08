@@ -33,15 +33,16 @@ class PropertySerializer(serializers.ModelSerializer):
 class ManagementMandateSerializer(serializers.ModelSerializer):
     owner_username = serializers.ReadOnlyField(source='owner.username')
     agent_username = serializers.ReadOnlyField(source='agent.username', allow_null=True)
-    property_type_display = serializers.CharField(source='get_property_type_display', read_only=True)
-    status_display = serializers.CharField(source='get_status_display', read_only=True)
-
+    mandate_type_display = serializers.CharField(source='get_mandate_type_display', read_only=True)
+    
     class Meta:
         model = ManagementMandate
         fields = [
             'id', 'owner', 'owner_username', 'agent', 'agent_username',
             'property_type', 'property_type_display', 'location_description',
             'property_description', 'expected_price', 'status', 'status_display',
-            'owner_phone', 'created_at', 'updated_at'
+            'owner_phone', 'created_at', 'updated_at',
+            'mandate_type', 'mandate_type_display', 'commission_percentage',
+            'signature_owner', 'signature_agent', 'signed_at'
         ]
-        read_only_fields = ['owner', 'status', 'agent']
+        read_only_fields = ['owner', 'status', 'agent', 'signature_owner', 'signature_agent', 'signed_at']

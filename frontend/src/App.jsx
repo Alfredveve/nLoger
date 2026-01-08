@@ -12,6 +12,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Profile from './pages/Profile';
 import DelegateManagement from './pages/DelegateManagement';
 import MandateDashboard from './pages/MandateDashboard';
+import MyVisits from './pages/MyVisits';
 import Settings from './pages/Settings';
 import About from './pages/About';
 import Footer from './components/Footer';

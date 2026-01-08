@@ -15,10 +15,10 @@ import MandateDashboard from './pages/MandateDashboard';
 import Settings from './pages/Settings';
 import About from './pages/About';
 import Footer from './components/Footer';
+import InstallPWA from './components/InstallPWA';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import './index.css';
 
 const ProtectedRoute = ({ children }) => {
   const { token, loading } = useAuth();
@@ -62,6 +62,7 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="min-h-screen flex flex-col">
+          <InstallPWA />
           <Routes>
             {/* Admin Routes */}
             <Route path="/admin-dashboard/*" element={

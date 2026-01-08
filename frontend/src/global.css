@@ -1,0 +1,89 @@
+﻿@import "tailwindcss";
+
+@theme {
+    --color-primary-50: #f0f9ff;
+    --color-primary-100: #e0f2fe;
+    --color-primary-500: #0ea5e9;
+    --color-primary-600: #0284c7;
+    --color-primary-700: #0369a1;
+    --color-primary-800: #075985;
+    --color-primary-900: #0c4a6e;
+}
+
+@layer base {
+    body {
+        @apply bg-gray-50 text-gray-900 antialiased transition-colors duration-300;
+    }
+
+    .dark {
+        color-scheme: dark;
+    }
+    .dark body {
+        @apply bg-gray-950 text-gray-100;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply tracking-tight font-bold;
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+    }
+    .btn-primary:hover {
+        @apply bg-primary-700;
+    }
+
+    .btn-secondary {
+        @apply bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+    }
+    .btn-secondary:hover {
+        @apply bg-gray-300;
+    }
+
+    .card {
+        @apply bg-white rounded-xl shadow-md transition-shadow duration-300;
+    }
+    .card:hover {
+        @apply shadow-lg;
+    }
+
+    .dark.card {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .glass {
+        background-color: rgba(255, 255, 255, 0.8);
+        @apply backdrop-blur-md shadow-sm;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .dark.glass {
+        background-color: rgba(10, 10, 10, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+@layer utilities {
+    @keyframes slide-up {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .animate-slide-up {
+        animation: slide-up 0.3s ease-out;
+    }
+}

@@ -87,7 +87,7 @@ const InstallPWA = () => {
           </div>
           
           <div className="flex-1">
-            <h3 className="font-bold text-lg mb-1">Installer NLoger</h3>
+            <h3 className="font-bold text-lg mb-1">Trouver un logement autour de moi</h3>
             <p className="text-sm text-white/90 mb-3">
               Installez l'application pour un accès rapide et une expérience hors ligne
             </p>

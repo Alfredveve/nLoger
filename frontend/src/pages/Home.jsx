@@ -110,6 +110,7 @@ const Home = () => {
             filters={filters} 
             setFilters={setFilters} 
             onSearch={handleSearch}
+            onLocationSearch={handleLocateMe}
             onReset={resetFilters}
           />
 

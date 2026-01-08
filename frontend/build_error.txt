@@ -1,0 +1,6 @@
+﻿
+> frontend@0.0.0 build
+> vite build 2>&1
+
+[36mvite v7.3.0 [32mbuilding client environment for production...[36m[39m
+[32mÔ£ô[39m 0 modules transformed.

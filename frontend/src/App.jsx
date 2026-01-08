@@ -15,7 +15,7 @@ import MandateDashboard from './pages/MandateDashboard';
 import Settings from './pages/Settings';
 import About from './pages/About';
 import Footer from './components/Footer';
-import InstallPWA from './components/InstallPWA';
+import GeolocationBanner from './components/GeolocationBanner';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -62,7 +62,7 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="min-h-screen flex flex-col">
-          <InstallPWA />
+          <GeolocationBanner />
           <Routes>
             {/* Admin Routes */}
             <Route path="/admin-dashboard/*" element={

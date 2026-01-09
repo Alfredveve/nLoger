@@ -30,18 +30,34 @@ const GeolocationBanner = () => {
     localStorage.setItem('geo-banner-dismissed', Date.now().toString());
   };
 
+  const [detecting, setDetecting] = useState(false);
+
   const handleLocateMe = () => {
     if ("geolocation" in navigator) {
+      setDetecting(true);
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
+          setDetecting(false);
           setIsVisible(false);
           // Navigate to properties page with location params and map view
           navigate(`/properties?lat=${latitude}&lng=${longitude}&dist=10&view=map`);
         },
         (error) => {
+          setDetecting(false);
           console.error("Error getting location:", error);
-          alert("Impossible de récupérer votre position. Veuillez vérifier vos paramètres GPS.");
+          if (error.code === 1) { // PERMISSION_DENIED
+            alert("Veuillez autoriser l'accès à la localisation pour utiliser cette fonctionnalité.");
+          } else if (error.code === 3) { // TIMEOUT
+            alert("Le délai d'attente pour la localisation a expiré. Veuillez vérifier votre signal GPS.");
+          } else {
+            alert("Impossible de récupérer votre position. Veuillez vérifier vos paramètres GPS.");
+          }
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 60000
         }
       );
     } else {
@@ -68,9 +84,17 @@ const GeolocationBanner = () => {
             <div className="flex gap-2">
               <button
                 onClick={handleLocateMe}
-                className="flex-1 bg-white text-primary-700 px-4 py-2 rounded-lg font-bold hover:bg-white/90 transition-colors shadow-sm"
+                disabled={detecting}
+                className="flex-1 bg-white text-primary-700 px-4 py-2 rounded-lg font-bold hover:bg-white/90 transition-colors shadow-sm flex items-center justify-center gap-2 disabled:opacity-75"
               >
-                Trouver maintenant
+                {detecting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
+                    <span>Détection...</span>
+                  </>
+                ) : (
+                  "Trouver maintenant"
+                )}
               </button>
               <button
                 onClick={handleDismiss}

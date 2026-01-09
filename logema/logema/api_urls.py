@@ -39,6 +39,7 @@ router.register(r'admin/occupations', AdminOccupationViewSet, basename='admin-oc
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('', include('payments.urls')),  # Payment endpoints
     path('auth/register/', RegisterView.as_view(), name='register'),
     path('auth/profile/', UserProfileView.as_view(), name='profile'),
     path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -46,3 +47,4 @@ urlpatterns = [
     path('admin/stats/', AdminStatsView.as_view(), name='admin-stats'),
     path('admin/analytics/', AdminAnalyticsView.as_view(), name='admin-analytics'),
 ]
+

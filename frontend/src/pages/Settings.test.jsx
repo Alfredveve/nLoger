@@ -28,6 +28,6 @@ describe('Settings Component', () => {
 
   test('renders notifications section', () => {
     renderWithProviders(<Settings />);
-    expect(screen.getByText(/Notifications/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Notifications/i })).toBeInTheDocument();
   });
 });

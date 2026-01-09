@@ -6,7 +6,11 @@ const PropertyCard = ({property}) => {
         const labels = {
             'CHAMBRE_SIMPLE': 'Rentrée Couchée',
             'SALON_CHAMBRE': 'Salon Chambre',
-            'APPARTEMENT': 'Appartement'
+            'APPARTEMENT': 'Appartement',
+            'VILLA': 'Villa',
+            'STUDIO': 'Studio',
+            'MAGASIN': 'Magasin',
+            'BUREAU': 'Bureau'
         };
         return labels[type] || type;
     };

@@ -16,33 +16,42 @@ const useGeolocation = () => {
       // Accuracy check: if > 500m, it's likely IP-based or low-quality
       if (coords.accuracy > 500) {
         console.warn("Location accuracy is poor:", coords.accuracy);
-        // We still proceed but maybe we'll add a flag or note
       }
 
       setLocation(coords);
       
+      // If we don't need to wait for the address, we can resolve the promise here
+      // while the address resolution continues in the background
+      // (This comment remains for clarity on the logic flow)
+
       if (options.detailed) {
-        const addrDetails = await getAddressFromCoords(coords.latitude, coords.longitude);
-        if (addrDetails) {
-          const simplified = {
-            region: addrDetails.state || addrDetails.region || '',
-            prefecture: addrDetails.county || '',
-            city: addrDetails.city || addrDetails.town || addrDetails.village || '',
-            suburb: addrDetails.suburb || addrDetails.neighbourhood || addrDetails.road || '',
-            road: addrDetails.road || '',
-            accuracy: coords.accuracy,
-            full: [
-              addrDetails.suburb || addrDetails.neighbourhood || addrDetails.road,
-              addrDetails.city || addrDetails.town || addrDetails.village,
-              addrDetails.county,
-              addrDetails.state
-            ].filter(Boolean).join(', ')
-          };
-          setAddress(simplified);
-          // Persist simplified location for session
-          localStorage.setItem('last_known_location', JSON.stringify({ coords, addr: simplified }));
-        }
+        // We start the address lookup but don't 'await' it if we want to return coords fast
+        // However, some callers might still want the full result.
+        // Let's make it so it updates the state when ready.
+        getAddressFromCoords(coords.latitude, coords.longitude).then(addrDetails => {
+          if (addrDetails) {
+            const simplified = {
+              region: addrDetails.state || addrDetails.region || '',
+              prefecture: addrDetails.county || '',
+              city: addrDetails.city || addrDetails.town || addrDetails.village || '',
+              suburb: addrDetails.suburb || addrDetails.neighbourhood || addrDetails.road || '',
+              road: addrDetails.road || '',
+              accuracy: coords.accuracy,
+              full: [
+                addrDetails.suburb || addrDetails.neighbourhood || addrDetails.road,
+                addrDetails.city || addrDetails.town || addrDetails.village,
+                addrDetails.county,
+                addrDetails.state
+              ].filter(Boolean).join(', ')
+            };
+            setAddress(simplified);
+            localStorage.setItem('last_known_location', JSON.stringify({ coords, addr: simplified }));
+          }
+        }).catch(err => {
+          console.error('Reverse Geocoding Error:', err);
+        });
       }
+
       return coords;
     } catch (err) {
       if (err.code === 3) {
@@ -51,6 +60,7 @@ const useGeolocation = () => {
         setError(err.message || 'Erreur de localisation');
       }
       console.error('Geolocation Error:', err);
+      throw err; // Re-throw to let the caller handle it
     } finally {
       setLoading(false);
     }

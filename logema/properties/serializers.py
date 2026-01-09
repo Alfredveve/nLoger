@@ -34,6 +34,8 @@ class ManagementMandateSerializer(serializers.ModelSerializer):
     owner_username = serializers.ReadOnlyField(source='owner.username')
     agent_username = serializers.ReadOnlyField(source='agent.username', allow_null=True)
     mandate_type_display = serializers.CharField(source='get_mandate_type_display', read_only=True)
+    property_type_display = serializers.CharField(source='get_property_type_display', read_only=True)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
     
     class Meta:
         model = ManagementMandate

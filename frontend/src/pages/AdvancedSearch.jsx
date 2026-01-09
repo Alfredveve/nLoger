@@ -432,6 +432,10 @@ const AdvancedSearch = () => {
                   <option value="CHAMBRE_SIMPLE">Rentrée Couchée</option>
                   <option value="SALON_CHAMBRE">Salon Chambre</option>
                   <option value="APPARTEMENT">Appartement</option>
+                  <option value="VILLA">Villa</option>
+                  <option value="STUDIO">Studio</option>
+                  <option value="MAGASIN">Magasin</option>
+                  <option value="BUREAU">Bureau</option>
                 </select>
               </div>
 

@@ -8,7 +8,7 @@ export const getCurrentPosition = () => {
           resolve({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-            accuracy: position.coords.accuracy, // Capture accuracy in meters
+            accuracy: position.coords.accuracy,
             timestamp: position.timestamp
           });
         },
@@ -17,8 +17,8 @@ export const getCurrentPosition = () => {
         },
         {
           enableHighAccuracy: true,
-          timeout: 15000, // Increased to 15s for real GPS fix
-          maximumAge: 0   // Force fresh location
+          timeout: 10000,     // Reduced to 10s for better responsiveness
+          maximumAge: 60000,  // Use cached position if less than 60s old
         }
       );
 

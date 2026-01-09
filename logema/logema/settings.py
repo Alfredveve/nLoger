@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-qlhn)^7y%n+6dek#r72h(_)fewb2*(8%fs!!u#@*owbgc!_&gt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'http://localhost:5174']
+
 
 
 # Application definition
@@ -51,6 +53,7 @@ INSTALLED_APPS = [
     'properties',
     'locations',
     'transactions',
+    'payments',
     'rest_framework_simplejwt',
 ]
 
@@ -175,3 +178,20 @@ SECURE_CROSS_ORIGIN_EMBEDDER_POLICY = None
 # https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Payment Configuration
+PAYMENT_SANDBOX_MODE = True  # Mode sandbox pour le développement
+
+# URLs pour les callbacks de paiement
+FRONTEND_URL = 'http://localhost:5173'
+BACKEND_URL = 'http://localhost:8000'
+
+# Clés API des fournisseurs de paiement (à configurer en production)
+ORANGE_MONEY_API_KEY = ''
+ORANGE_MONEY_API_SECRET = ''
+MTN_MONEY_API_KEY = ''
+MTN_MONEY_API_SECRET = ''
+WAVE_API_KEY = ''
+WAVE_API_SECRET = ''
+PAYMENT_WEBHOOK_SECRET = 'your-webhook-secret-here'
+

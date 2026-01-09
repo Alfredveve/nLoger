@@ -67,12 +67,16 @@ const SearchFilters = ({
                         <option value="CHAMBRE_SIMPLE">Rentrée Couchée</option>
                         <option value="SALON_CHAMBRE">Salon Chambre</option>
                         <option value="APPARTEMENT">Appartement</option>
+                        <option value="VILLA">Villa</option>
+                        <option value="STUDIO">Studio</option>
+                        <option value="MAGASIN">Magasin</option>
+                        <option value="BUREAU">Bureau</option>
                     </select>
                 </div>
 
-                <div className="flex items-end gap-2 md:col-span-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-3 md:col-span-2">
                     <button onClick={onSearch}
-                        className="grow h-[50px] flex items-center justify-center bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-bold rounded-xl shadow-lg shadow-primary-500/30 transition-all transform active:scale-95">
+                        className="flex-1 h-[56px] sm:h-[50px] flex items-center justify-center bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-bold rounded-xl shadow-lg shadow-primary-500/30 transition-all transform active:scale-95 text-lg sm:text-base">
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round"
                                 strokeWidth={2}
@@ -80,24 +84,29 @@ const SearchFilters = ({
                         </svg>
                         Rechercher
                     </button>
-                    <button onClick={onReset}
-                        className="px-4 h-[50px] border border-gray-200 rounded-xl text-gray-500 hover:bg-gray-50 hover:text-red-500 hover:border-red-200 transition-all flex items-center shadow-sm"
-                        title="Réinitialiser">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                        </svg>
-                    </button>
-                    <button onClick={onLocationSearch}
-                        className="px-4 h-[50px] bg-white border border-gray-200 rounded-xl text-blue-600 hover:bg-blue-50 transition-all flex items-center shadow-sm font-medium"
-                        title="Autour de moi">
-                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        Autour de moi
-                    </button>
+                    
+                    <div className="flex gap-2 h-[56px] sm:h-[50px]">
+                        <button onClick={onReset}
+                            className="flex-1 sm:flex-initial px-6 border border-gray-200 rounded-xl text-gray-500 hover:bg-gray-50 hover:text-red-500 hover:border-red-200 transition-all flex items-center justify-center shadow-sm"
+                            title="Réinitialiser">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span className="ml-2 sm:hidden font-medium">Reset</span>
+                        </button>
+                        
+                        <button onClick={onLocationSearch}
+                            className="flex-[2] sm:flex-initial px-6 bg-blue-50 border border-blue-100 rounded-xl text-blue-600 hover:bg-blue-100 transition-all flex items-center justify-center shadow-sm font-bold"
+                            title="Autour de moi">
+                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span className="sm:inline">Prop de moi</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

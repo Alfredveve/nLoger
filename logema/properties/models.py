@@ -7,6 +7,10 @@ class Property(models.Model):
         ('CHAMBRE_SIMPLE', 'Rentrée Couchée'),
         ('SALON_CHAMBRE', 'Salon Chambre'),
         ('APPARTEMENT', 'Appartement'),
+        ('VILLA', 'Villa'),
+        ('STUDIO', 'Studio'),
+        ('MAGASIN', 'Magasin'),
+        ('BUREAU', 'Bureau'),
     )
     
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='properties_owned')

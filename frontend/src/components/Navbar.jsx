@@ -59,8 +59,8 @@ const Navbar = () => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[2000] transition-all duration-300 ${
       scrolled 
-        ? 'bg-white/90 backdrop-blur-md shadow-md border-b border-white/20' 
-        : 'bg-white/50 backdrop-blur-sm border-b border-white/5'
+        ? 'bg-white shadow-md border-b border-gray-100 md:bg-white/90 md:backdrop-blur-md' 
+        : 'bg-white/80 border-b border-transparent md:bg-white/50 md:backdrop-blur-sm'
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
@@ -168,6 +168,17 @@ const Navbar = () => {
                           >
                              <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                             Tableau de bord
+                          </Link>
+                        )}
+
+                        {user.is_superuser && (
+                          <Link 
+                            to="/admin-dashboard" 
+                            onClick={() => setIsProfileOpen(false)}
+                            className="flex items-center px-4 py-2.5 text-sm text-blue-600 font-bold hover:bg-blue-50 transition-colors"
+                          >
+                            <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m12 4a2 2 0 100-4m0 4a2 2 0 110-4m-6 0a2 2 0 100 4m0-4a2 2 0 110 4m-6 0v2m0-6V4m6 6v10m6-2v2m0-6V4" /></svg>
+                            Administration
                           </Link>
                         )}
                         
@@ -290,6 +301,11 @@ const Navbar = () => {
                   {(user.is_demarcheur || user.is_superuser) && (
                     <Link to="/mandate-dashboard" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-xl text-gray-700 hover:text-primary-600 hover:bg-primary-50 font-medium transition-all">
                       Tableau de bord
+                    </Link>
+                  )}
+                  {user.is_superuser && (
+                    <Link to="/admin-dashboard" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-xl text-blue-600 font-bold hover:bg-blue-50 transition-all">
+                      Administration
                     </Link>
                   )}
                   <Link to="/visits" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-xl text-gray-700 hover:text-primary-600 hover:bg-primary-50 font-medium transition-all">

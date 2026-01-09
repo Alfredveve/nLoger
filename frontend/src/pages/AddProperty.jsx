@@ -19,7 +19,7 @@ L.Icon.Default.mergeOptions({
 const propertySchema = z.object({
   title: z.string().min(5, "Le titre doit faire au moins 5 caractères").max(100),
   description: z.string().min(20, "La description doit faire au moins 20 caractères"),
-  property_type: z.enum(['CHAMBRE_SIMPLE', 'SALON_CHAMBRE', 'APPARTEMENT']),
+  property_type: z.enum(['CHAMBRE_SIMPLE', 'SALON_CHAMBRE', 'APPARTEMENT', 'VILLA', 'STUDIO', 'MAGASIN', 'BUREAU']),
   price: z.coerce.number().positive("Le prix doit être positif"),
   region: z.string().min(1, "La région est obligatoire"),
   prefecture: z.string().min(1, "La préfecture est obligatoire"),
@@ -349,6 +349,10 @@ const AddProperty = () => {
                       <option value="CHAMBRE_SIMPLE">Rentrée Couchée</option>
                       <option value="SALON_CHAMBRE">Salon Chambre</option>
                       <option value="APPARTEMENT">Appartement</option>
+                      <option value="VILLA">Villa</option>
+                      <option value="STUDIO">Studio</option>
+                      <option value="MAGASIN">Magasin</option>
+                      <option value="BUREAU">Bureau</option>
                     </select>
                   </div>
                   <div>

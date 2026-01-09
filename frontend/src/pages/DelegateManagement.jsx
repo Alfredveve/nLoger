@@ -13,6 +13,8 @@ const mandateSchema = z.object({
   property_description: z.string().min(20, "Veuillez décrire le bien plus en détail"),
   expected_price: z.coerce.number().positive("Le prix doit être positif").optional(),
   owner_phone: z.string().min(8, "Numéro de téléphone invalide"),
+  mandate_type: z.enum(['SIMPLE', 'EXCLUSIVE']).default('SIMPLE'),
+  commission_percentage: z.coerce.number().min(0).max(100).default(10),
 });
 
 const DelegateManagement = () => {
@@ -27,6 +29,8 @@ const DelegateManagement = () => {
     resolver: zodResolver(mandateSchema),
     defaultValues: {
       property_type: 'CHAMBRE_SIMPLE',
+      mandate_type: 'SIMPLE',
+      commission_percentage: 10,
     }
   });
 
@@ -93,6 +97,40 @@ const DelegateManagement = () => {
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none bg-slate-50"
                 />
                 {errors.expected_price && <p className="text-red-500 text-xs mt-1">{errors.expected_price.message}</p>}
+              </div>
+
+              {/* Type de mandat */}
+              <div className="space-y-2">
+                <label className="flex items-center text-sm font-semibold text-slate-700">
+                  <FileText className="w-4 h-4 mr-2 text-blue-600" />
+                  Type de mandat
+                </label>
+                <select
+                  {...register('mandate_type')}
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none bg-slate-50"
+                >
+                  <option value="SIMPLE">Simple (Non-exclusif)</option>
+                  <option value="EXCLUSIVE">Exclusif</option>
+                </select>
+                <p className="text-xs text-slate-500">
+                  Exclusif = seul le démarcheur peut louer votre bien
+                </p>
+              </div>
+
+              {/* Commission */}
+              <div className="space-y-2">
+                <label className="flex items-center text-sm font-semibold text-slate-700">
+                  <DollarSign className="w-4 h-4 mr-2 text-blue-600" />
+                  Commission proposée (%)
+                </label>
+                <input
+                  type="number"
+                  step="0.5"
+                  {...register('commission_percentage')}
+                  placeholder="10"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none bg-slate-50"
+                />
+                {errors.commission_percentage && <p className="text-red-500 text-xs mt-1">{errors.commission_percentage.message}</p>}
               </div>
             </div>
 

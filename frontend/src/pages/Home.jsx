@@ -69,26 +69,39 @@ const Home = () => {
 
 
   const handleLocateMe = async () => {
-    const coords = await refreshLocation();
-    if (coords) {
-      if (coords.accuracy > 1000) {
-        alert("Attention : La précision de votre position est faible (localisation par défaut ou IP détectée). Veuillez vous assurer que le GPS de votre appareil est activé pour une localisation précise dans votre quartier.");
-      }
-      try {
+    try {
+      // Start location detection
+      const coords = await refreshLocation({ detailed: true });
+      
+      if (coords) {
+        if (coords.accuracy > 1000) {
+          alert("Attention : La précision de votre position est faible (localisation par défaut ou IP détectée). Veuillez vous assurer que le GPS de votre appareil est activé pour une localisation précise dans votre quartier.");
+        }
+        
+        // Immediate API call once we have coordinates
         setLoading(true);
-        const response = await api.get('properties/nearby/', {
-          params: {
-            lat: coords.latitude,
-            lng: coords.longitude,
-            dist: 10 // Rayon de 10km comme demandé
+        try {
+          const response = await api.get('properties/nearby/', {
+            params: {
+              lat: coords.latitude,
+              lng: coords.longitude,
+              dist: 10
+            }
+          });
+          setProperties(response.data);
+          if (response.data.length === 0) {
+            alert("Aucun logement trouvé dans un rayon de 10km autour de votre position.");
           }
-        });
-        setProperties(response.data);
-      } catch (error) {
-        console.error('Erreur lors de la recherche à proximité:', error);
-      } finally {
-        setLoading(false);
+        } catch (apiError) {
+          console.error('API Error:', apiError);
+          alert("Erreur lors de la récupération des logements à proximité. Vérifiez que le serveur backend est lancé.");
+        }
       }
+    } catch (error) {
+      console.error('Erreur lors de la recherche à proximité:', error);
+      alert("Erreur de localisation : " + (error.message || "Impossible d'obtenir votre position."));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,37 +127,40 @@ const Home = () => {
             onReset={resetFilters}
           />
 
-          {/* Premium Call to Action */}
-          <div className="mt-12 group">
+          <div className="mt-8 sm:mt-12 group">
             <div className="relative max-w-2xl mx-auto">
-              <div className="absolute -inset-1 bg-linear-to-r from-primary-400 to-primary-200 rounded-2xl blur-sm opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+              {/* Subtle glow effect, simplified for mobile */}
+              <div className="absolute -inset-1 bg-linear-to-r from-white/20 to-white/5 rounded-2xl blur-sm opacity-50"></div>
+              
               <button
                 onClick={handleLocateMe}
                 disabled={detectingLocation}
-                className="relative w-full flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-6 sm:px-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-xl transition-all duration-300 hover:bg-white/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="relative w-full flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-8 sm:px-8 bg-white text-primary-900 rounded-2xl shadow-2xl transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed border-2 border-primary-200/50"
               >
                 <div className="flex items-center gap-6">
-                  <div className={`flex items-center justify-center w-14 h-14 rounded-2xl ${detectingLocation ? 'bg-white/20' : 'bg-primary-500 shadow-lg shadow-primary-500/50'}`}>
+                  <div className={`flex items-center justify-center w-16 h-16 rounded-2xl ${detectingLocation ? 'bg-primary-100' : 'bg-primary-600 shadow-xl shadow-primary-600/30'}`}>
                     {detectingLocation ? (
-                      <div className="w-8 h-8 border-3 border-transparent border-t-white rounded-full animate-spin"></div>
+                      <div className="w-8 h-8 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
                     ) : (
-                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     )}
                   </div>
                   <div className="text-left">
-                    <p className="text-xl font-bold text-white mb-0.5">Vous recherchez un logement ?</p>
-                    <p className="text-primary-100">Voir les disponibilités dans votre quartier / secteur</p>
+                    <p className="text-2xl font-black text-gray-900 mb-1 leading-none">Vous recherchez un logement ?</p>
+                    <p className="text-primary-600 font-bold text-lg">Voir les disponibilités autour de moi</p>
                   </div>
-
                 </div>
-                <div className="hidden sm:flex items-center gap-2 text-primary-200 font-semibold group-hover:text-white transition-colors">
-                  <span>Démarrer</span>
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                
+                <div className="flex items-center gap-3 bg-primary-50 px-6 py-3 rounded-xl text-primary-700 font-bold group-hover:bg-primary-600 group-hover:text-white transition-all">
+                  <span>{detectingLocation ? 'Localisation...' : 'Démarrer'}</span>
+                  {!detectingLocation && (
+                    <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                    </svg>
+                  )}
                 </div>
               </button>
             </div>

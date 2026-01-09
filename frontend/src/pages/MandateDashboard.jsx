@@ -84,7 +84,7 @@ const MandateDashboard = () => {
       toast.success('Demande de mandat créée !');
       setShowCreateModal(false);
       fetchMandates();
-    } catch (error) {
+    } catch {
       toast.error('Erreur lors de la création.');
     }
   };
@@ -111,9 +111,13 @@ const MandateDashboard = () => {
                   value={formData.property_type}
                   onChange={e => setFormData({...formData, property_type: e.target.value})}
                 >
-                  <option value="APPARTEMENT">Appartement</option>
                   <option value="CHAMBRE_SIMPLE">Chambre Simple</option>
                   <option value="SALON_CHAMBRE">Salon Chambre</option>
+                  <option value="APPARTEMENT">Appartement</option>
+                  <option value="VILLA">Villa</option>
+                  <option value="STUDIO">Studio</option>
+                  <option value="MAGASIN">Magasin</option>
+                  <option value="BUREAU">Bureau</option>
                 </select>
               </div>
 

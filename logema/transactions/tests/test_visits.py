@@ -38,7 +38,7 @@ class VisitTests(TestCase):
             validation_code="123456",
             scheduled_at=timezone.now()
         )
-        self.assertEqual(voucher.status, 'PENDING')
+        self.assertEqual(voucher.status, 'REQUESTED')
         self.assertEqual(voucher.validation_code, "123456")
         self.assertIsNone(voucher.validated_at)
 

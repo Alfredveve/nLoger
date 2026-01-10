@@ -25,6 +25,16 @@ const ContactModal = ({ isOpen, onClose, contact }) => {
         <div className="pt-16 pb-8 px-8 text-center">
           <h3 className="text-2xl font-bold text-gray-900 mb-1">{name}</h3>
           <p className="text-primary-600 font-medium text-sm uppercase tracking-wider mb-6">{role || 'Démarcheur'}</p>
+
+          <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 mb-6 text-sm text-blue-800 text-left">
+            <p className="font-bold mb-1 flex items-center">
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              Dossier de réservation ouvert !
+            </p>
+            <p className="opacity-90">
+              Votre demande a été enregistrée dans <b>"Mes Réservations"</b>. Contactez le démarcheur pour qu'il valide votre dossier.
+            </p>
+          </div>
           
           <div className="space-y-4">
             <a 

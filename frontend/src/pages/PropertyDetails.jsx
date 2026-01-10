@@ -3,12 +3,15 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import api from '../api/axios';
 import ContactModal from '../components/ContactModal';
 import { useAuth } from '../context/AuthContext';
+import VisitModal from '../components/VisitModal';
+import { toast, Toaster } from 'react-hot-toast';
 
 const PropertyDetails = () => {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVisitModalOpen, setIsVisitModalOpen] = useState(false);
   
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -85,29 +88,22 @@ const PropertyDetails = () => {
               </div>
               
               <div className="flex flex-col gap-3 w-full sm:w-auto">
-                 <button 
+                <button 
                   onClick={handleContactClick}
-                  disabled={property.is_under_validation}
-                  className={`btn-primary text-lg px-8 py-3 ${property.is_under_validation ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={property.is_under_validation && user?.kyc_status !== 'VERIFIED'}
+                  className={`btn-primary text-lg px-8 py-3 ${property.is_under_validation && user?.kyc_status !== 'VERIFIED' ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  {property.is_under_validation ? 'Réservé temporairement' : 'Contacter le démarcheur'}
+                  {property.is_under_validation && user?.kyc_status !== 'VERIFIED' ? 'Réservé temporairement' : 'Contacter le démarcheur'}
                 </button>
                 
-                {!property.is_under_validation && (
+                {(!property.is_under_validation || user?.kyc_status === 'VERIFIED') && (
                     <button
-                        onClick={async () => {
+                        onClick={() => {
                             if (!user) {
                                 navigate('/login', { state: { from: location } });
                                 return;
                             }
-                            try {
-                                await api.post('visits/', { property: property.id });
-                                // toast.success("Visite demandée ! Code généré.") - Ideally show a toast
-                                navigate('/visits');
-                            } catch (e) {
-                                console.error(e);
-                                // toast.error("Erreur")
-                            }
+                            setIsVisitModalOpen(true);
                         }}
                         className="bg-white text-slate-900 border-2 border-slate-900 font-bold text-lg px-8 py-3 rounded-xl hover:bg-slate-50 transition-all"
                     >
@@ -116,6 +112,27 @@ const PropertyDetails = () => {
                 )}
               </div>
             </div>
+
+            <Toaster position="top-right" />
+            
+            <VisitModal 
+              isOpen={isVisitModalOpen}
+              onClose={() => setIsVisitModalOpen(false)}
+              propertyTitle={property.title}
+              onConfirm={async (scheduledAt) => {
+                try {
+                  await api.post('visits/', { 
+                    property: property.id,
+                    scheduled_at: scheduledAt
+                  });
+                  toast.success("Demande de visite envoyée !");
+                  setTimeout(() => navigate('/visits'), 1500);
+                } catch (e) {
+                  console.error(e);
+                  toast.error("Erreur lors de la demande.");
+                }
+              }}
+            />
 
             <ContactModal 
               isOpen={isModalOpen}

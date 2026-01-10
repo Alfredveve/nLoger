@@ -34,7 +34,13 @@ const MyVisits = () => {
   const fetchVisits = async () => {
     try {
       const response = await api.get('visits/');
-      setVisits(response.data);
+      // Sort: REQUESTED first, then by date desc
+      const sortedVisits = response.data.sort((a, b) => {
+        if (a.status === 'REQUESTED' && b.status !== 'REQUESTED') return -1;
+        if (a.status !== 'REQUESTED' && b.status === 'REQUESTED') return 1;
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+      setVisits(sortedVisits);
     } catch (error) {
       console.error('Error fetching visits:', error);
       toast.error('Impossible de charger les visites.');
@@ -55,6 +61,16 @@ const MyVisits = () => {
     }
   };
 
+  const handleAction = async (visitId, action) => {
+    try {
+      await api.post(`visits/${visitId}/${action}/`);
+      toast.success('Action effectuée avec succès');
+      fetchVisits();
+    } catch {
+      toast.error('Erreur lors de l’action');
+    }
+  };
+
   const handleRate = async (visitId) => {
     try {
       await api.post(`visits/${visitId}/rate_visit/`, { 
@@ -64,7 +80,7 @@ const MyVisits = () => {
       toast.success('Note enregistrée !');
       setRatingId(null);
       fetchVisits();
-    } catch (error) {
+    } catch {
       toast.error('Erreur lors de la notation.');
     }
   };
@@ -99,7 +115,12 @@ const MyVisits = () => {
           </div>
         ) : (
           <div className="space-y-6">
-            {visits.map((visit) => (
+            {visits.map((visit) => {
+              const isAgent = user?.id === visit.agent;
+              const isVisitor = user?.id === visit.visitor;
+              const isExpired = visit.scheduled_at && new Date(visit.scheduled_at) < new Date();
+              
+              return (
               <div 
                 key={visit.id} 
                 className={`bg-white rounded-3xl p-6 shadow-sm border transition-all ${
@@ -111,21 +132,51 @@ const MyVisits = () => {
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
                       <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
-                        visit.status === 'PENDING' ? 'bg-orange-50 text-orange-600' : 
-                        visit.status === 'VALIDATED' ? 'bg-green-50 text-green-600' : 'bg-slate-100 text-slate-500'
+                        isExpired && !['VALIDATED', 'CANCELLED', 'REJECTED'].includes(visit.status) ? 'bg-slate-100 text-slate-500' :
+                        visit.status === 'REQUESTED' ? 'bg-blue-50 text-blue-600' :
+                        visit.status === 'ACCEPTED' ? 'bg-orange-50 text-orange-600' : 
+                        visit.status === 'VALIDATED' ? 'bg-green-50 text-green-600' : 
+                        visit.status === 'REJECTED' ? 'bg-red-50 text-red-600' :
+                        visit.status === 'CANCELLED' ? 'bg-slate-100 text-slate-500' :
+                        'bg-slate-100 text-slate-500'
                       }`}>
-                        {visit.status_display}
+                        {isExpired && !['VALIDATED', 'CANCELLED', 'REJECTED'].includes(visit.status)
+                          ? 'Visite Expirée / Non Honorée'
+                          : visit.status === 'REQUESTED' 
+                              ? (isAgent ? 'Nouvelle Demande' : 'Demande Envoyée') 
+                              : visit.status_display}
+                        {isAgent && visit.status === 'REQUESTED' && !isExpired && (
+                          <span className="ml-1 w-2 h-2 bg-blue-600 rounded-full animate-ping"></span>
+                        )}
                       </span>
                       <span className="text-xs text-slate-400 font-medium flex items-center">
                         <Clock size={12} className="mr-1" />
                         {new Date(visit.created_at).toLocaleDateString()}
                       </span>
+                      {visit.scheduled_at && (
+                        <span className={`text-xs px-2 py-0.5 rounded-md font-bold flex items-center ${
+                          new Date(visit.scheduled_at) < new Date() && visit.status !== 'VALIDATED'
+                          ? 'bg-red-50 text-red-600 ring-1 ring-red-100'
+                          : 'bg-slate-100 text-slate-600'
+                        }`}>
+                          <Calendar size={12} className="mr-1" />
+                          {new Date(visit.scheduled_at).toLocaleString('fr-FR', {
+                            day: 'numeric',
+                            month: 'short',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                          {new Date(visit.scheduled_at) < new Date() && visit.status !== 'VALIDATED' && (
+                            <span className="ml-1 italic opacity-75">(Expiré)</span>
+                          )}
+                        </span>
+                      )}
                     </div>
                     
                     <h3 className="text-lg font-bold text-slate-900 mb-1">{visit.property_title}</h3>
                     
                     <div className="flex items-center text-sm text-slate-500 mb-4">
-                       {user.is_demarcheur ? (
+                       {isAgent ? (
                            <>
                             <User size={14} className="mr-1" />
                             Visiteur : <span className="font-bold ml-1 text-slate-700">{visit.visitor_username}</span>
@@ -142,49 +193,106 @@ const MyVisits = () => {
                   {/* Action Block */}
                   <div className="w-full md:w-auto flex flex-col items-center min-w-[200px]">
                     
-                    {/* CASE 1: VISITOR VIEW - SHOW CODE */}
-                    {!user.is_demarcheur && visit.status === 'PENDING' && (
-                        <div className="bg-slate-900 text-white p-4 rounded-2xl w-full text-center">
-                            <p className="text-xs uppercase tracking-widest text-slate-400 mb-1">Code Secret</p>
-                            <p className="text-3xl font-black font-mono tracking-widest">{visit.validation_code}</p>
-                            <p className="text-[10px] text-slate-400 mt-2">Présentez ce code à l'agent sur place</p>
-                        </div>
+                    {/* CASE 1: VISITOR VIEW - SHOW CODE OR STATUS */}
+                    {isVisitor && (
+                        visit.status === 'ACCEPTED' ? (
+                            <div className="bg-slate-900 text-white p-4 rounded-2xl w-full text-center shadow-lg">
+                                <p className="text-xs uppercase tracking-widest text-slate-400 mb-1">Code Secret</p>
+                                <p className="text-3xl font-black font-mono tracking-widest">{visit.validation_code}</p>
+                                <p className="text-[10px] text-slate-400 mt-2">Présentez ce code à l'agent sur place</p>
+                            </div>
+                        ) : visit.status === 'REQUESTED' ? (
+                            <>
+                                <div className="bg-blue-50 text-blue-700 p-4 rounded-2xl w-full text-center border border-blue-100 italic text-sm">
+                                    <Clock size={16} className="mx-auto mb-1" />
+                                    En attente de confirmation par le démarcheur
+                                </div>
+                                <button 
+                                    onClick={() => handleAction(visit.id, 'cancel_visit')}
+                                    className="text-[10px] text-red-500 hover:underline mt-2"
+                                >
+                                    Annuler ma demande
+                                </button>
+                            </>
+                        ) : null
                     )}
 
-                    {/* CASE 2: AGENT VIEW - VALIDATE CODE */}
-                    {user.is_demarcheur && visit.status === 'PENDING' && (
-                        <div className="w-full">
-                            {validatingId === visit.id ? (
-                                <div className="space-y-2">
-                                    <input 
-                                        type="text" 
-                                        placeholder="Entrez le code..." 
-                                        className="w-full p-2 text-center text-lg font-bold border rounded-xl"
-                                        maxLength={6}
-                                        value={validationCode}
-                                        onChange={(e) => setValidationCode(e.target.value)}
-                                    />
-                                    <button 
-                                        onClick={() => handleValidate(visit.id)}
-                                        className="w-full bg-green-600 text-white py-2 rounded-xl font-bold text-sm"
-                                    >
-                                        Valider
-                                    </button>
-                                </div>
-                            ) : (
+                    {/* CASE 2: AGENT VIEW - ACCEPT/REJECT OR VALIDATE */}
+                    {isAgent && (
+                        visit.status === 'REQUESTED' ? (
+                            <div className="flex flex-col gap-2 w-full">
                                 <button 
-                                    onClick={() => setValidatingId(visit.id)}
-                                    className="w-full bg-slate-900 text-white py-3 px-6 rounded-xl font-bold shadow-lg flex items-center justify-center"
+                                    onClick={() => handleAction(visit.id, 'accept_visit')}
+                                    className="w-full bg-slate-900 text-white py-2 rounded-xl font-bold text-sm shadow-md"
                                 >
-                                    <QrCode size={18} className="mr-2" />
-                                    Valider la visite
+                                    Accepter la visite
                                 </button>
-                            )}
-                        </div>
+                                <button 
+                                    onClick={() => handleAction(visit.id, 'reject_visit')}
+                                    className="w-full bg-white text-red-600 border border-red-200 py-2 rounded-xl font-bold text-sm"
+                                >
+                                    Refuser
+                                </button>
+                            </div>
+                        ) : visit.status === 'ACCEPTED' ? (
+                            <div className="w-full">
+                                {isExpired ? (
+                                    <button 
+                                        disabled
+                                        className="w-full bg-slate-100 text-slate-400 border border-slate-200 py-3 rounded-xl font-bold flex items-center justify-center cursor-not-allowed"
+                                    >
+                                        <Clock size={18} className="mr-2" />
+                                        Date dépassée
+                                    </button>
+                                ) : validatingId === visit.id ? (
+                                    <div className="space-y-2">
+                                        <input 
+                                            type="text" 
+                                            placeholder="Code à 6 chiffres..." 
+                                            className="w-full p-2 text-center text-lg font-bold border rounded-xl"
+                                            maxLength={6}
+                                            value={validationCode}
+                                            onChange={(e) => setValidationCode(e.target.value)}
+                                        />
+                                        <div className="flex gap-2">
+                                            <button 
+                                                onClick={() => handleValidate(visit.id)}
+                                                className="flex-1 bg-green-600 text-white py-2 rounded-xl font-bold text-sm"
+                                            >
+                                                Valider
+                                            </button>
+                                            <button 
+                                                onClick={() => setValidatingId(null)}
+                                                className="px-4 bg-slate-100 text-slate-600 py-2 rounded-xl font-bold text-sm"
+                                            >
+                                                X
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col gap-2 w-full text-center">
+                                         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Code Attendu</p>
+                                         <button 
+                                            onClick={() => setValidatingId(visit.id)}
+                                            className="w-full bg-green-50 text-green-700 border border-green-200 py-3 rounded-xl font-black flex items-center justify-center shadow-sm"
+                                        >
+                                            <QrCode size={18} className="mr-2" />
+                                            Saisir le Code
+                                        </button>
+                                        <button 
+                                            onClick={() => handleAction(visit.id, 'cancel_visit')}
+                                            className="text-[10px] text-red-500 hover:underline mt-1"
+                                        >
+                                            Annuler le rendez-vous
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : null
                     )}
 
                     {/* CASE 3: RATING (Visitor Only, after Validation) */}
-                    {!user.is_demarcheur && visit.status === 'VALIDATED' && !visit.rating && (
+                    {isVisitor && visit.status === 'VALIDATED' && !visit.rating && (
                         <div className="w-full">
                              {ratingId === visit.id ? (
                                  <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200">
@@ -233,7 +341,8 @@ const MyVisits = () => {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

@@ -15,9 +15,10 @@ const mockVisits = [
     {
         id: 1,
         property_title: 'Maison Test',
+        visitor: 2,
         visitor_username: 'visitor',
         agent_username: 'agent',
-        status: 'PENDING',
+        status: 'ACCEPTED',
         status_display: 'En attente',
         validation_code: '123456',
         created_at: new Date().toISOString()

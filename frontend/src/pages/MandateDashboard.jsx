@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import { Toaster, toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import { 
   Briefcase, 
   MapPin, 
@@ -25,6 +26,7 @@ const MandateDashboard = () => {
   const [mandates, setMandates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('ALL'); // ALL, PENDING, ACCEPTED
+  const [pendingVisitsCount, setPendingVisitsCount] = useState(0);
   
   // Modal State for Creation
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -45,11 +47,18 @@ const MandateDashboard = () => {
   const fetchMandates = async () => {
     setLoading(true);
     try {
-      const response = await api.get('mandates/');
-      setMandates(response.data);
+      const [mandatesRes, visitsRes] = await Promise.all([
+        api.get('mandates/'),
+        api.get('visits/')
+      ]);
+      setMandates(mandatesRes.data);
+      
+      // Count pending visits where user is agent
+      const pending = visitsRes.data.filter(v => v.status === 'REQUESTED' && v.agent === user.id);
+      setPendingVisitsCount(pending.length);
     } catch (error) {
-      console.error('Error fetching mandates:', error);
-      toast.error('Impossible de charger les mandats.');
+      console.error('Error fetching data:', error);
+      toast.error('Impossible de charger les données.');
     } finally {
       setLoading(false);
     }
@@ -230,7 +239,29 @@ const MandateDashboard = () => {
           </div>
           
           <div className="flex items-center space-x-3">
-             {/* Only Owners can initiate a mandate request in this simple UI for now */}
+             <Link
+                to="/visits"
+                className={`px-4 py-2 rounded-xl flex items-center font-bold shadow-sm transition-all ${
+                  pendingVisitsCount > 0 
+                  ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700 animate-pulse' 
+                  : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
+                }`}
+              >
+                <Calendar size={18} className={`mr-2 ${pendingVisitsCount > 0 ? 'text-white' : 'text-blue-600'}`} />
+                Gérer les Visites
+                {pendingVisitsCount > 0 && (
+                  <span className="ml-2 bg-white text-blue-600 text-[10px] px-1.5 py-0.5 rounded-full ring-1 ring-blue-100">
+                    {pendingVisitsCount}
+                  </span>
+                )}
+              </Link>
+             <Link
+                to="/my-occupations"
+                className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-xl flex items-center font-bold shadow-sm hover:bg-slate-50 transition-all"
+              >
+                <Home size={18} className="mr-2 text-indigo-600" />
+                Réservations
+              </Link>
              <button
                 onClick={() => setShowCreateModal(true)}
                 className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-xl flex items-center font-bold shadow-lg transition-all"

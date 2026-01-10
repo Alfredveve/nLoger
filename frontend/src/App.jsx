@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Routes, Route, Outlet} from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Properties from './pages/Properties';
@@ -17,6 +18,7 @@ import Settings from './pages/Settings';
 import About from './pages/About';
 import PaymentPage from './pages/PaymentPage';
 import MyPayments from './pages/MyPayments';
+import MyOccupations from './pages/MyOccupations';
 import Footer from './components/Footer';
 import GeolocationBanner from './components/GeolocationBanner';
 import {AuthProvider, useAuth} from './context/AuthContext';
@@ -72,24 +74,23 @@ function App() {
             <Router>
                 <div className="min-h-screen flex flex-col">
                     <GeolocationBanner/>
-                    <Routes> {/* Admin Routes */}
-                        <Route path="/admin-dashboard/*"
-                            element={
-                                <AdminRoute>
-                                    <AdminLayout>
-                                        <Routes>
-                                            <Route path="/" element={<AdminDashboard />} />
-                                            <Route path="/users" element={<AdminUsers />} />
-                                            <Route path="/properties" element={<AdminProperties />} />
-                                            <Route path="/mandates" element={<AdminMandates />} />
-                                            <Route path="/transactions" element={<AdminTransactions />} />
-                                            <Route path="/payments" element={<AdminPayments />} />
-                                            <Route path="/disputes" element={<AdminDisputes />} />
-                                            <Route path="/analytics" element={<AdminAnalytics />} />
-                                        </Routes>
-                                    </AdminLayout>
-                                </AdminRoute>
-                            }/> {/* Public and Standard Protected Routes */}
+                    <Routes> 
+                        {/* Admin Routes */}
+                        <Route path="/admin-dashboard" element={
+                            <AdminRoute>
+                                <AdminLayout />
+                            </AdminRoute>
+                        }>
+                            <Route index element={<AdminDashboard />} />
+                            <Route path="users" element={<AdminUsers />} />
+                            <Route path="properties" element={<AdminProperties />} />
+                            <Route path="mandates" element={<AdminMandates />} />
+                            <Route path="transactions" element={<AdminTransactions />} />
+                            <Route path="payments" element={<AdminPayments />} />
+                            <Route path="disputes" element={<AdminDisputes />} />
+                            <Route path="analytics" element={<AdminAnalytics />} />
+                            <Route path="occupations" element={<MyOccupations />} />
+                        </Route> {/* Public and Standard Protected Routes */}
                         <Route path="/"
                             element={<PageLayout/>}>
                             <Route index
@@ -133,6 +134,10 @@ function App() {
                                 element={
                                     <ProtectedRoute><MyPayments/></ProtectedRoute>
                                 }/>
+                            <Route path="my-occupations"
+                                element={
+                                    <ProtectedRoute><MyOccupations/></ProtectedRoute>
+                                }/>
                             <Route path="settings"
                                 element={
                                     <ProtectedRoute><Settings/></ProtectedRoute>
@@ -143,6 +148,7 @@ function App() {
                     </Routes>
                 </div>
             </Router>
+            <Toaster position="top-right" />
         </AuthProvider>
     );
 }

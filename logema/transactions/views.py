@@ -24,7 +24,36 @@ class OccupationRequestViewSet(viewsets.ModelViewSet):
         if user.is_demarcheur or user.is_proprietaire:
              # Logic could be refined: agent sees requests on properties they manage
              return OccupationRequest.objects.filter(property__agent=user) | OccupationRequest.objects.filter(user=user)
-        return OccupationRequest.objects.filter(user=user)
+    @action(detail=True, methods=['post'])
+    def validate_occupation(self, request, pk=None):
+        """Démarcheur valide le dossier de réservation"""
+        occupation = self.get_object()
+        # Verify if user is the agent of the property
+        if request.user != occupation.property.agent and request.user != occupation.property.owner:
+            return Response({"error": "Non autorisé"}, status=403)
+            
+        if occupation.status != 'PENDING':
+            return Response({"error": "Statut invalide"}, status=400)
+        
+        occupation.status = 'VALIDATED'
+        occupation.save()
+        return Response({"status": "Dossier validé"})
+
+    @action(detail=True, methods=['post'])
+    def cancel_occupation(self, request, pk=None):
+        """Démarcheur ou Locataire annule le dossier"""
+        occupation = self.get_object()
+        
+        # Check permissions
+        is_agent = (request.user == occupation.property.agent or request.user == occupation.property.owner)
+        is_tenant = (request.user == occupation.user)
+        
+        if not is_agent and not is_tenant:
+             return Response({"error": "Non autorisé"}, status=403)
+        
+        occupation.status = 'CANCELLED'
+        occupation.save()
+        return Response({"status": "Dossier annulé"})
 
 class VisitVoucherViewSet(viewsets.ModelViewSet):
     queryset = VisitVoucher.objects.all()
@@ -40,15 +69,20 @@ class VisitVoucherViewSet(viewsets.ModelViewSet):
         code = get_random_string(length=6, allowed_chars='0123456789')
         # Agent is derived from property
         property_id = self.request.data.get('property')
+        scheduled_at = self.request.data.get('scheduled_at')
+        
+        if not scheduled_at:
+             # This should ideally be caught by serializer validation, 
+             # but keeping a safeguard or letting it fail gracefully.
+             pass
+
         try:
              prop = Property.objects.get(id=property_id)
              agent = prop.agent
-             # If no agent, maybe owner manages it?
              if not agent:
                  agent = prop.owner 
-             serializer.save(visitor=self.request.user, validation_code=code, agent=agent)
+             serializer.save(visitor=self.request.user, validation_code=code, agent=agent, status='REQUESTED')
         except Property.DoesNotExist:
-             # Should be handled by validation but safe fallback
              pass
 
     @action(detail=True, methods=['post'])
@@ -63,8 +97,8 @@ class VisitVoucherViewSet(viewsets.ModelViewSet):
         if request.user != visit.agent:
             return Response({"error": "Vous n'êtes pas autorisé à valider cette visite"}, status=403)
             
-        if visit.status != 'PENDING':
-             return Response({"error": "Visite déjà traitée"}, status=400)
+        if visit.status not in ['REQUESTED', 'ACCEPTED']:
+             return Response({"error": "Visite déjà traitée ou non confirmée"}, status=400)
              
         if code == visit.validation_code:
             visit.status = 'VALIDATED'
@@ -72,6 +106,43 @@ class VisitVoucherViewSet(viewsets.ModelViewSet):
             return Response({"status": "Visite validée avec succès"})
         else:
             return Response({"error": "Code invalide"}, status=400)
+
+    @action(detail=True, methods=['post'])
+    def accept_visit(self, request, pk=None):
+        """Démarcheur accepte la demande de visite"""
+        visit = self.get_object()
+        if request.user != visit.agent:
+            return Response({"error": "Non autorisé"}, status=403)
+        if visit.status != 'REQUESTED':
+            return Response({"error": "Statut invalide"}, status=400)
+        
+        visit.status = 'ACCEPTED'
+        visit.save()
+        return Response({"status": "Visite acceptée"})
+
+    @action(detail=True, methods=['post'])
+    def reject_visit(self, request, pk=None):
+        """Démarcheur refuse la demande de visite"""
+        visit = self.get_object()
+        if request.user != visit.agent:
+            return Response({"error": "Non autorisé"}, status=403)
+        if visit.status != 'REQUESTED':
+            return Response({"error": "Statut invalide"}, status=400)
+        
+        visit.status = 'REJECTED'
+        visit.save()
+        return Response({"status": "Visite refusée"})
+
+    @action(detail=True, methods=['post'])
+    def cancel_visit(self, request, pk=None):
+        """Visiteur ou Démarcheur annule la visite"""
+        visit = self.get_object()
+        if request.user != visit.agent and request.user != visit.visitor:
+            return Response({"error": "Non autorisé"}, status=403)
+        
+        visit.status = 'CANCELLED'
+        visit.save()
+        return Response({"status": "Visite annulée"})
 
     @action(detail=True, methods=['post'])
     def rate_visit(self, request, pk=None):

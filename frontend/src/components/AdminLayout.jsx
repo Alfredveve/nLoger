@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation, Outlet } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, Home, ClipboardList, 
   BarChart3, Settings, LogOut, Menu, X, ChevronRight,
@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = () => {
   const sidebarOpen = true;
   const location = useLocation();
   const { logout } = useAuth();
@@ -17,6 +17,8 @@ const AdminLayout = ({ children }) => {
     { name: 'Utilisateurs', icon: Users, path: '/admin-dashboard/users' },
     { name: 'Propriétés', icon: Home, path: '/admin-dashboard/properties' },
     { name: 'Mandats', icon: ClipboardList, path: '/admin-dashboard/mandates' },
+    { name: 'Réservations', icon: ClipboardList, path: '/admin-dashboard/occupations' },
+    { name: 'Visites', icon: LayoutDashboard, path: '/visits' },
     { name: 'Transactions', icon: ArrowRightLeft, path: '/admin-dashboard/transactions' },
     { name: 'Analytics', icon: BarChart3, path: '/admin-dashboard/analytics' },
   ];
@@ -66,7 +68,7 @@ const AdminLayout = ({ children }) => {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto p-4 md:p-8">
         <div className="max-w-7xl mx-auto">
-          {children}
+          <Outlet />
         </div>
       </main>
     </div>

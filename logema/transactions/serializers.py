@@ -8,7 +8,11 @@ class OccupationRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OccupationRequest
-        fields = ['id', 'property', 'property_title', 'user', 'user_username', 'status', 'status_display', 'created_at']
+        fields = [
+            'id', 'property', 'property_title', 'user', 'user_username', 
+            'status', 'status_display', 'created_at',
+            'requires_payment', 'payment_amount', 'payment_status', 'payment_deadline'
+        ]
         read_only_fields = ['user', 'status']
 
 class VisitVoucherSerializer(serializers.ModelSerializer):

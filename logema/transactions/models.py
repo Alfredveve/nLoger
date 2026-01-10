@@ -56,19 +56,21 @@ class OccupationRequest(models.Model):
 
 class VisitVoucher(models.Model):
     STATUS_CHOICES = (
-        ('PENDING', 'En attente'),
-        ('VALIDATED', 'Validé (Visite effectuée)'),
-        ('MISSED', 'Non honoré'),
-        ('CANCELLED', 'Annulé'),
+        ('REQUESTED', 'Demande envoyée'),
+        ('ACCEPTED', 'Acceptée (En attente)'),
+        ('VALIDATED', 'Validée (Visite effectuée)'),
+        ('REJECTED', 'Refusée'),
+        ('MISSED', 'Non honorée'),
+        ('CANCELLED', 'Annulée'),
     )
     
     agent = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='visits_as_agent', on_delete=models.CASCADE)
     visitor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='visits_as_visitor', on_delete=models.CASCADE)
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='visits')
     
-    scheduled_at = models.DateTimeField()
-    validation_code = models.CharField(max_length=6, help_text="Code à 6 chiffres à valider lors de la visite")
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+    scheduled_at = models.DateTimeField(null=True, blank=True)
+    validation_code = models.CharField(max_length=6, help_text="Code à 6 chiffres à valider lors de la visite", blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='REQUESTED')
     validated_at = models.DateTimeField(null=True, blank=True, help_text="Date et heure de validation de la visite")
     
     # Feedback/Rating (Phase 3 anticipation)

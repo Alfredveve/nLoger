@@ -189,11 +189,21 @@ const PropertyMap = ({ properties, selectedRegion, userLocation }) => {
                         </p>
                       )}
                     </div>
+
+                    <div className="mt-2 pt-2 border-t border-gray-100 flex items-center text-xs text-gray-600 font-medium">
+                      <span className="mr-1.5 opacity-70">👤</span>
+                      {property.agent_name ? (
+                        <span>Géré par : <span className="font-bold text-gray-900">{property.agent_name}</span></span>
+                      ) : (
+                        <span>Propriétaire : <span className="font-bold text-gray-900">{property.owner_name}</span></span>
+                      )}
+                    </div>
+
                     <Link 
                       to={`/property/${property.id}`}
-                      className="mt-3 block w-full bg-primary-600 !text-white text-center py-2.5 rounded-xl font-black text-sm shadow-lg hover:bg-primary-700 transition-colors uppercase tracking-wider"
+                      className="mt-3 block w-full bg-slate-800 !text-white text-center py-2.5 rounded-xl font-bold text-xs shadow-md hover:bg-slate-900 transition-colors uppercase tracking-wider"
                     >
-                      Demander une visite
+                      VOIR DÉTAILS
                     </Link>
                   </div>
                 </Popup>

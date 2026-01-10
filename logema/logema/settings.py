@@ -195,3 +195,84 @@ WAVE_API_KEY = ''
 WAVE_API_SECRET = ''
 PAYMENT_WEBHOOK_SECRET = 'your-webhook-secret-here'
 
+# Jazzmin Configuration
+JAZZMIN_SETTINGS = {
+    "site_title": "Logema Admin",
+    "site_header": "Logema Finance",
+    "site_brand": "Logema",
+    "site_logo": None,
+    "welcome_sign": "Bienvenue dans l'interface de gestion Logema",
+    "copyright": "Logema Ltd",
+    "search_model": ["payments.Payment", "transactions.OccupationRequest"],
+    "user_avatar": None,
+    
+    "topmenu_links": [
+        {"name": "Accueil", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"app": "payments"},
+    ],
+    
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.group": "fas fa-users",
+        "accounts.User": "fas fa-user-circle",
+        "payments.Payment": "fas fa-money-bill-wave",
+        "payments.EscrowAccount": "fas fa-vault",
+        "payments.PaymentDistribution": "fas fa-distribute-spacing-horizontal",
+        "payments.Transaction": "fas fa-exchange-alt",
+        "payments.PaymentMethod": "fas fa-credit-card",
+        "payments.PaymentDispute": "fas fa-exclamation-triangle",
+        "transactions.OccupationRequest": "fas fa-file-invoice-dollar",
+        "properties.Property": "fas fa-home",
+        "locations.City": "fas fa-city",
+    },
+    
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+    
+    "related_modal_active": True,
+    
+    "custom_css": None,
+    "custom_js": None,
+    
+    "show_ui_builder": False,
+    
+    "changeform_format": "horizontal_tabs",
+    
+    "order_with_respect_to": ["payments", "transactions", "properties", "accounts"],
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-dark",
+    "accent": "accent-primary",
+    "navbar": "navbar-white navbar-light",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_hover_elevate": False,
+    "sidebar_activate_nav_on_scroll": True,
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}
+

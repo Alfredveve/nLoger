@@ -13,16 +13,44 @@ from .models import (
 class PaymentAdmin(admin.ModelAdmin):
     list_display = [
         'id',
-        'payer',
-        'amount',
-        'currency',
-        'status',
+        'payer_link',
+        'amount_display',
+        'status_tag',
         'payment_method',
         'created_at'
     ]
     list_filter = ['status', 'payment_method', 'created_at']
     search_fields = ['id', 'payer__username', 'transaction_id', 'payment_phone']
     readonly_fields = ['id', 'created_at', 'updated_at', 'completed_at']
+    
+    def payer_link(self, obj):
+        from django.utils.html import format_html
+        from django.urls import reverse
+        url = reverse('admin:accounts_user_change', args=[obj.payer.id])
+        return format_html('<a href="{}">{}</a>', url, obj.payer.username)
+    payer_link.short_description = "Payeur"
+
+    def amount_display(self, obj):
+        return f"{obj.amount} {obj.currency}"
+    amount_display.short_description = "Montant"
+
+    def status_tag(self, obj):
+        from django.utils.html import format_html
+        colors = {
+            'PENDING': '#ffc107',       # Warning (Yellow)
+            'PROCESSING': '#17a2b8',    # Info (Blue)
+            'HELD_IN_ESCROW': '#6610f2', # Indigo
+            'RELEASED': '#28a745',       # Success (Green)
+            'REFUNDED': '#dc3545',       # Danger (Red)
+            'FAILED': '#6c757d',         # Gray
+            'CANCELLED': '#343a40',      # Dark
+        }
+        color = colors.get(obj.status, '#000')
+        return format_html(
+            '<span style="background-color: {}; color: white; padding: 3px 10px; border-radius: 10px; font-weight: bold; font-size: 0.8em;">{}</span>',
+            color, obj.get_status_display()
+        )
+    status_tag.short_description = "Statut"
     
     fieldsets = (
         ('Informations principales', {
@@ -45,7 +73,7 @@ class EscrowAccountAdmin(admin.ModelAdmin):
     list_display = [
         'payment',
         'held_amount',
-        'status',
+        'status_tag',
         'held_at',
         'release_scheduled_date',
         'released_at'
@@ -53,6 +81,20 @@ class EscrowAccountAdmin(admin.ModelAdmin):
     list_filter = ['status', 'held_at']
     search_fields = ['payment__id']
     readonly_fields = ['held_at', 'released_at']
+
+    def status_tag(self, obj):
+        from django.utils.html import format_html
+        colors = {
+            'HOLDING': '#6610f2',    # Indigo
+            'RELEASED': '#28a745',   # Green
+            'REFUNDED': '#dc3545',   # Red
+        }
+        color = colors.get(obj.status, '#000')
+        return format_html(
+            '<span style="background-color: {}; color: white; padding: 3px 10px; border-radius: 10px; font-weight: bold; font-size: 0.8em;">{}</span>',
+            color, obj.get_status_display()
+        )
+    status_tag.short_description = "Statut"
     
     actions = ['release_funds', 'process_refund']
     
@@ -133,14 +175,28 @@ class PaymentDisputeAdmin(admin.ModelAdmin):
         'id',
         'payment',
         'raised_by',
-        'status',
+        'status_tag',
         'resolution',
         'created_at',
-        'resolved_at'
     ]
     list_filter = ['status', 'resolution', 'created_at']
     search_fields = ['payment__id', 'raised_by__username']
     readonly_fields = ['created_at', 'updated_at', 'resolved_at']
+
+    def status_tag(self, obj):
+        from django.utils.html import format_html
+        colors = {
+            'OPEN': '#dc3545',          # Danger (Red)
+            'INVESTIGATING': '#17a2b8', # Info (Blue)
+            'RESOLVED': '#28a745',      # Success (Green)
+            'CLOSED': '#6c757d',        # Gray
+        }
+        color = colors.get(obj.status, '#000')
+        return format_html(
+            '<span style="background-color: {}; color: white; padding: 3px 10px; border-radius: 10px; font-weight: bold; font-size: 0.8em;">{}</span>',
+            color, obj.get_status_display()
+        )
+    status_tag.short_description = "Statut"
     
     fieldsets = (
         ('Informations du litige', {

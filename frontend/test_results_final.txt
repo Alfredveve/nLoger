@@ -1,0 +1,2244 @@
+﻿
+> frontend@0.0.0 test
+> vitest run --run --reporter=verbose
+
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90mC:/Users/codeshester0011/Desktop/NLoger/frontend[39m
+
+ [32mÔ£ô[39m src/pages/admin/AdminTransactions.test.jsx[2m > [22mAdminTransactions Component[2m > [22mrenders transactions list[33m 632[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/admin/AdminDisputes.test.jsx[2m > [22mAdminDisputes Component[2m > [22mrenders disputes list[33m 812[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/admin/AdminTransactions.test.jsx[2m > [22mAdminTransactions Component[2m > [22mfilters transactions by status[33m 959[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/admin/AdminDisputes.test.jsx[2m > [22mAdminDisputes Component[2m > [22mresolves dispute with full refund[33m 940[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/admin/AdminDisputes.test.jsx[2m > [22mAdminDisputes Component[2m > [22mresolves dispute with partial refund[32m 230[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/admin/AdminDisputes.test.jsx[2m > [22mAdminDisputes Component[2m > [22mresolves dispute with no refund[32m 228[2mms[22m[39m
+ [31m├ù[39m src/pages/admin/AdminTransactions.test.jsx[2m > [22mAdminTransactions Component[2m > [22mvalidates a transaction[33m 1228[2mms[22m[39m
+[31m   ÔåÆ Found multiple elements with the text: /Valider/i
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<p[31m
+  [33mclass[31m=[32m"text-gray-600 dark:text-gray-400 text-sm leading-relaxed"[31m
+[36m>[31m
+  [0m├ètes-vous s├╗r de vouloir valider la demande pour "Test Property" ?[0m
+[36m</p>[31m
+
+Ignored nodes: comments, script, style
+[36m<button[31m
+  [33mclass[31m=[32m"px-4 py-2 text-sm font-semibold text-white rounded-xl transition-all active:scale-95 disabled:opacity-50 shadow-lg flex items-center justify-center min-w-[100px] bg-emerald-600 hover:bg-emerald-700 focus:ring-emerald-500 shadow-emerald-200"[31m
+[36m>[31m
+  [0mValider[0m
+[36m</button>[31m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex justify-between items-center"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight"[31m
+          [36m>[31m
+            [0mTransactions[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-500 dark:text-gray-400"[31m
+          [36m>[31m
+            [0mG├®rer les demandes d'occupation et r├®servations avec pr├®cision[0m
+          [36m</p>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"relative w-full md:w-96"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"lucide lucide-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mheight[31m=[32m"18"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-linecap[31m=[32m"round"[31m
+            [33mstroke-linejoin[31m=[32m"round"[31m
+            [33mstroke-width[31m=[32m"2"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mwidth[31m=[32m"18"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"m21 21-4.34-4.34"[31m
+            [36m/>[31m
+            [36m<circle[31m
+              [33mcx[31m=[32m"11"[31m
+              [33mcy[31m=[32m"11"[31m
+              [33mr[31m=[32m"8"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [36m<input[31m
+            [33mclass[31m=[32m"w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 transition-all"[31m
+            [33mplaceholder[31m=[32m"Rechercher par logement ou client..."[31m
+            [33mtype[31m=[32m"text"[31m
+            [33mvalue[31m=[32m""[31m
+          [36m/>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"flex items-center gap-4 w-full md:w-auto"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-2 bg-gray-50 dark:bg-gray-900 px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"lucide lucide-funnel text-gray-400"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"18"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"18"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33mclass[31m=[32m"bg-transparent border-none focus:ring-0 text-sm font-medium text-gray-700 dark:text-gray-300 outline-none"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m""[31m
+              [36m>[31m
+                [0mTous les statuts[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"PENDING"[31m
+              [36m>[31m
+                [0mEn attente[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"VALIDATED"[31m
+              [36m>[31m
+                [0mValid├®[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"CANCELLED"[31m
+              [36m>[31m
+                [0mAnnul├®[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"COMPLETED"[31m
+              [36m>[31m
+                [0mTermin├®[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"EXPIRED"[31m
+              [36m>[31m
+                [0mExpir├®[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"overflow-x-auto"[31m
+        [36m>[31m
+          [36m<table[31m
+            [33mclass[31m=[32m"w-full text-left"[31m
+          [36m>[31m
+            [36m<thead>[31m
+              [36m<tr[31m
+                [33mclass[31m=[32m"bg-gray-50 dark:bg-gray-900/50 border-b border-gray-100 dark:border-gray-700"[31m
+              [36m>[31m
+                [36m<th[31m
+                  [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                [36m>[31m
+                  [0mID[0m
+                [36m</th>[31m
+                [36m<th[31m
+                  [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                [36m>[31m
+                  [0mLogement[0m
+                [36m</th>[31m
+                [36m<th[31m
+                  [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                [36m>[31m
+                  [0mClient[0m
+                [36m</th>[31m
+                [36m<th[31m
+                  [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                [36m>[31m
+                  [0mMessage[0m
+                [36m</th>[31m
+                [36m<th[31m
+                  [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                [36m>[31m
+                  [0mStatut[0m
+                [36m</th>[31m
+         ...
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"flex justify-between items-center"[31m
+        [36m>[31m
+          [36m<div>[31m
+            [36m<h1[31m
+              [33mclass[31m=[32m"text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight"[31m
+            [36m>[31m
+              [0mTransactions[0m
+            [36m</h1>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"text-gray-500 dark:text-gray-400"[31m
+            [36m>[31m
+              [0mG├®rer les demandes d'occupation et r├®servations avec pr├®cision[0m
+            [36m</p>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative w-full md:w-96"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"lucide lucide-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"18"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"18"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-4.34-4.34"[31m
+              [36m/>[31m
+              [36m<circle[31m
+                [33mcx[31m=[32m"11"[31m
+                [33mcy[31m=[32m"11"[31m
+                [33mr[31m=[32m"8"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 transition-all"[31m
+              [33mplaceholder[31m=[32m"Rechercher par logement ou client..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-4 w-full md:w-auto"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex items-center gap-2 bg-gray-50 dark:bg-gray-900 px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700"[31m
+            [36m>[31m
+              [36m<svg[31m
+                [33maria-hidden[31m=[32m"true"[31m
+                [33mclass[31m=[32m"lucide lucide-funnel text-gray-400"[31m
+                [33mfill[31m=[32m"none"[31m
+                [33mheight[31m=[32m"18"[31m
+                [33mstroke[31m=[32m"currentColor"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+                [33mstroke-width[31m=[32m"2"[31m
+                [33mviewBox[31m=[32m"0 0 24 24"[31m
+                [33mwidth[31m=[32m"18"[31m
+                [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+              [36m>[31m
+                [36m<path[31m
+                  [33md[31m=[32m"M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"[31m
+                [36m/>[31m
+              [36m</svg>[31m
+              [36m<select[31m
+                [33mclass[31m=[32m"bg-transparent border-none focus:ring-0 text-sm font-medium text-gray-700 dark:text-gray-300 outline-none"[31m
+              [36m>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m""[31m
+                [36m>[31m
+                  [0mTous les statuts[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"PENDING"[31m
+                [36m>[31m
+                  [0mEn attente[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"VALIDATED"[31m
+                [36m>[31m
+                  [0mValid├®[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"CANCELLED"[31m
+                [36m>[31m
+                  [0mAnnul├®[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"COMPLETED"[31m
+                [36m>[31m
+                  [0mTermin├®[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"EXPIRED"[31m
+                [36m>[31m
+                  [0mExpir├®[0m
+                [36m</option>[31m
+              [36m</select>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"overflow-x-auto"[31m
+          [36m>[31m
+            [36m<table[31m
+              [33mclass[31m=[32m"w-full text-left"[31m
+            [36m>[31m
+              [36m<thead>[31m
+                [36m<tr[31m
+                  [33mclass[31m=[32m"bg-gray-50 dark:bg-gray-900/50 border-b border-gray-100 dark:border-gray-700"[31m
+                [36m>[31m
+                  [36m<th[31m
+                    [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                  [36m>[31m
+                    [0mID[0m
+                  [36m</th>[31m
+                  [36m<th[31m
+                    [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                  [36m>[31m
+                    [0mLogement[0m
+                  [36m</th>[31m
+                  [36m<th[31m
+                    [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                  [36m>[31m
+                    [0mClient[0m
+                  [36m</th>[31m
+                  [36m<th[31m
+                    [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+             ...[39m
+ [31m├ù[39m src/pages/admin/AdminDisputes.test.jsx[2m > [22mAdminDisputes Component[2m > [22mfilters disputes by status[33m 1208[2mms[22m[39m
+[31m   ÔåÆ expected "vi.fn()" to be called with arguments: [ StringContaining "status=OPEN" ][90m
+
+Received: 
+
+[1m  1st vi.fn() call:
+
+[22m[2m  [[22m
+[32m-   StringContaining "status=OPEN",[90m
+[31m+   "disputes/",[90m
+[31m+   {[90m
+[31m+     "params": {[90m
+[31m+       "page": 1,[90m
+[31m+       "search": "",[90m
+[31m+       "status": "",[90m
+[31m+     },[90m
+[31m+   },[90m
+[2m  ][22m
+
+[1m  2nd vi.fn() call:
+
+[22m[2m  [[22m
+[32m-   StringContaining "status=OPEN",[90m
+[31m+   "disputes/",[90m
+[31m+   {[90m
+[31m+     "params": {[90m
+[31m+       "page": 1,[90m
+[31m+       "search": "",[90m
+[31m+       "status": "OPEN",[90m
+[31m+     },[90m
+[31m+   },[90m
+[2m  ][22m
+[31m[90m
+
+Number of calls: [1m2[22m
+[31m
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"space-y-6"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"flex justify-between items-center"[31m
+        [36m>[31m
+          [36m<div>[31m
+            [36m<h1[31m
+              [33mclass[31m=[32m"text-2xl font-black text-gray-900 dark:text-white"[31m
+            [36m>[31m
+              [0mGestion des Litiges[0m
+            [36m</h1>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"text-gray-500 dark:text-gray-400"[31m
+            [36m>[31m
+              [0mR├®soudre les diff├®rends de paiement entre utilisateurs[0m
+            [36m</p>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"grid grid-cols-1 md:grid-cols-3 gap-6"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex items-center gap-4"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-red-600"[31m
+              [36m>[31m
+                [36m<svg[31m
+                  [33maria-hidden[31m=[32m"true"[31m
+                  [33mclass[31m=[32m"lucide lucide-triangle-alert"[31m
+                  [33mfill[31m=[32m"none"[31m
+                  [33mheight[31m=[32m"24"[31m
+                  [33mstroke[31m=[32m"currentColor"[31m
+                  [33mstroke-linecap[31m=[32m"round"[31m
+                  [33mstroke-linejoin[31m=[32m"round"[31m
+                  [33mstroke-width[31m=[32m"2"[31m
+                  [33mviewBox[31m=[32m"0 0 24 24"[31m
+                  [33mwidth[31m=[32m"24"[31m
+                  [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+                [36m>[31m
+                  [36m<path[31m
+                    [33md[31m=[32m"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"[31m
+                  [36m/>[31m
+                  [36m<path[31m
+                    [33md[31m=[32m"M12 9v4"[31m
+                  [36m/>[31m
+                  [36m<path[31m
+                    [33md[31m=[32m"M12 17h.01"[31m
+                  [36m/>[31m
+                [36m</svg>[31m
+              [36m</div>[31m
+              [36m<div>[31m
+                [36m<p[31m
+                  [33mclass[31m=[32m"text-sm text-gray-500"[31m
+                [36m>[31m
+                  [0mLitiges Ouverts[0m
+                [36m</p>[31m
+                [36m<p[31m
+                  [33mclass[31m=[32m"text-2xl font-black"[31m
+                [36m>[31m
+                  [0m1[0m
+                [36m</p>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex items-center gap-4"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600"[31m
+              [36m>[31m
+                [36m<svg[31m
+                  [33maria-hidden[31m=[32m"true"[31m
+                  [33mclass[31m=[32m"lucide lucide-clock"[31m
+                  [33mfill[31m=[32m"none"[31m
+                  [33mheight[31m=[32m"24"[31m
+                  [33mstroke[31m=[32m"currentColor"[31m
+                  [33mstroke-linecap[31m=[32m"round"[31m
+                  [33mstroke-linejoin[31m=[32m"round"[31m
+                  [33mstroke-width[31m=[32m"2"[31m
+                  [33mviewBox[31m=[32m"0 0 24 24"[31m
+                  [33mwidth[31m=[32m"24"[31m
+                  [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+                [36m>[31m
+                  [36m<path[31m
+                    [33md[31m=[32m"M12 6v6l4 2"[31m
+                  [36m/>[31m
+                  [36m<circle[31m
+                    [33mcx[31m=[32m"12"[31m
+                    [33mcy[31m=[32m"12"[31m
+                    [33mr[31m=[32m"10"[31m
+                  [36m/>[31m
+                [36m</svg>[31m
+              [36m</div>[31m
+              [36m<div>[31m
+                [36m<p[31m
+                  [33mclass[31m=[32m"text-sm text-gray-500"[31m
+                [36m>[31m
+                  [0mEn Investigation[0m
+                [36m</p>[31m
+                [36m<p[31m
+                  [33mclass[31m=[32m"text-2xl font-black"[31m
+                [36m>[31m
+                  [0m0[0m
+                [36m</p>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex items-center gap-4"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600"[31m
+              [36m>[31m
+                [36m<svg[31m
+                  [33maria-hidden[31m=[32m"true"[31m
+                  [33mclass[31m=[32m"lucide lucide-circle-check"[31m
+                  [33mfill[31m=[32m"none"[31m
+                  [33mheight[31m=[32m"24"[31m
+                  [33mstroke[31m=[32m"currentColor"[31m
+                  [33mstroke-linecap[31m=[32m"round"[31m
+                  [33mstroke-linejoin[31m=[32m"round"[31m
+                  [33mstroke-width[31m=[32m"2"[31m
+                  [33mviewBox[31m=[32m"0 0 24 24"[31m
+                  [33mwidth[31m=[32m"24"[31m
+                  [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+                [36m>[31m
+                  [36m<circle[31m
+                    [33mcx[31m=[32m"12"[31m
+                    [33mcy[31m=[32m"12"[31m
+                    [33mr[31m=[32m"10"[31m
+                  [36m/>[31m
+                  [36m<path[31m
+                    [33md[31m=[32m"m9 12 2 2 4-4"[31m
+                  [36m/>[31m
+                [36m</svg>[31m
+              [36m</div>[31m
+              [36m<div>[31m
+                [36m<p[31m
+                  [33mclass[31m=[32m"text-sm text-gray-500"[31m
+                [36m>[31m
+                  [0mR├®solus ce mois[0m
+                [36m</p>[31m
+                [36m<p[31m
+  ...[39m
+ [32mÔ£ô[39m src/pages/admin/AdminDisputes.test.jsx[2m > [22mAdminDisputes Component[2m > [22mhandles empty disputes list[32m 61[2mms[22m[39m
+ [31m├ù[39m src/pages/admin/AdminTransactions.test.jsx[2m > [22mAdminTransactions Component[2m > [22mdisplays transaction details modal[33m 1153[2mms[22m[39m
+[31m   ÔåÆ Found multiple elements with the text: /tenant1/i
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<span[31m
+  [33mclass[31m=[32m"text-sm"[31m
+[36m>[31m
+  [0mtenant1[0m
+[36m</span>[31m
+
+Ignored nodes: comments, script, style
+[36m<p[31m
+  [33mclass[31m=[32m"font-medium text-gray-900 dark:text-white"[31m
+[36m>[31m
+  [0mtenant1[0m
+[36m</p>[31m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex justify-between items-center"[31m
+      [36m>[31m
+        [36m<div>[31m
+          [36m<h1[31m
+            [33mclass[31m=[32m"text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight"[31m
+          [36m>[31m
+            [0mTransactions[0m
+          [36m</h1>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"text-gray-500 dark:text-gray-400"[31m
+          [36m>[31m
+            [0mG├®rer les demandes d'occupation et r├®servations avec pr├®cision[0m
+          [36m</p>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"relative w-full md:w-96"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"lucide lucide-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mheight[31m=[32m"18"[31m
+            [33mstroke[31m=[32m"currentColor"[31m
+            [33mstroke-linecap[31m=[32m"round"[31m
+            [33mstroke-linejoin[31m=[32m"round"[31m
+            [33mstroke-width[31m=[32m"2"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [33mwidth[31m=[32m"18"[31m
+            [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"m21 21-4.34-4.34"[31m
+            [36m/>[31m
+            [36m<circle[31m
+              [33mcx[31m=[32m"11"[31m
+              [33mcy[31m=[32m"11"[31m
+              [33mr[31m=[32m"8"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [36m<input[31m
+            [33mclass[31m=[32m"w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 transition-all"[31m
+            [33mplaceholder[31m=[32m"Rechercher par logement ou client..."[31m
+            [33mtype[31m=[32m"text"[31m
+            [33mvalue[31m=[32m""[31m
+          [36m/>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"flex items-center gap-4 w-full md:w-auto"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-2 bg-gray-50 dark:bg-gray-900 px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"lucide lucide-funnel text-gray-400"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"18"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"18"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<select[31m
+              [33mclass[31m=[32m"bg-transparent border-none focus:ring-0 text-sm font-medium text-gray-700 dark:text-gray-300 outline-none"[31m
+            [36m>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m""[31m
+              [36m>[31m
+                [0mTous les statuts[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"PENDING"[31m
+              [36m>[31m
+                [0mEn attente[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"VALIDATED"[31m
+              [36m>[31m
+                [0mValid├®[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"CANCELLED"[31m
+              [36m>[31m
+                [0mAnnul├®[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"COMPLETED"[31m
+              [36m>[31m
+                [0mTermin├®[0m
+              [36m</option>[31m
+              [36m<option[31m
+                [33mvalue[31m=[32m"EXPIRED"[31m
+              [36m>[31m
+                [0mExpir├®[0m
+              [36m</option>[31m
+            [36m</select>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"overflow-x-auto"[31m
+        [36m>[31m
+          [36m<table[31m
+            [33mclass[31m=[32m"w-full text-left"[31m
+          [36m>[31m
+            [36m<thead>[31m
+              [36m<tr[31m
+                [33mclass[31m=[32m"bg-gray-50 dark:bg-gray-900/50 border-b border-gray-100 dark:border-gray-700"[31m
+              [36m>[31m
+                [36m<th[31m
+                  [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                [36m>[31m
+                  [0mID[0m
+                [36m</th>[31m
+                [36m<th[31m
+                  [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                [36m>[31m
+                  [0mLogement[0m
+                [36m</th>[31m
+                [36m<th[31m
+                  [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                [36m>[31m
+                  [0mClient[0m
+                [36m</th>[31m
+                [36m<th[31m
+                  [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                [36m>[31m
+                  [0mMessage[0m
+                [36m</th>[31m
+                [36m<th[31m
+                  [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                [36m>[31m
+                  [0mStatut[0m
+                [36m</th>[31m
+         ...
+
+Ignored nodes: comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"flex justify-between items-center"[31m
+        [36m>[31m
+          [36m<div>[31m
+            [36m<h1[31m
+              [33mclass[31m=[32m"text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight"[31m
+            [36m>[31m
+              [0mTransactions[0m
+            [36m</h1>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"text-gray-500 dark:text-gray-400"[31m
+            [36m>[31m
+              [0mG├®rer les demandes d'occupation et r├®servations avec pr├®cision[0m
+            [36m</p>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"relative w-full md:w-96"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"lucide lucide-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"[31m
+              [33mfill[31m=[32m"none"[31m
+              [33mheight[31m=[32m"18"[31m
+              [33mstroke[31m=[32m"currentColor"[31m
+              [33mstroke-linecap[31m=[32m"round"[31m
+              [33mstroke-linejoin[31m=[32m"round"[31m
+              [33mstroke-width[31m=[32m"2"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+              [33mwidth[31m=[32m"18"[31m
+              [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m21 21-4.34-4.34"[31m
+              [36m/>[31m
+              [36m<circle[31m
+                [33mcx[31m=[32m"11"[31m
+                [33mcy[31m=[32m"11"[31m
+                [33mr[31m=[32m"8"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<input[31m
+              [33mclass[31m=[32m"w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 transition-all"[31m
+              [33mplaceholder[31m=[32m"Rechercher par logement ou client..."[31m
+              [33mtype[31m=[32m"text"[31m
+              [33mvalue[31m=[32m""[31m
+            [36m/>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"flex items-center gap-4 w-full md:w-auto"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"flex items-center gap-2 bg-gray-50 dark:bg-gray-900 px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700"[31m
+            [36m>[31m
+              [36m<svg[31m
+                [33maria-hidden[31m=[32m"true"[31m
+                [33mclass[31m=[32m"lucide lucide-funnel text-gray-400"[31m
+                [33mfill[31m=[32m"none"[31m
+                [33mheight[31m=[32m"18"[31m
+                [33mstroke[31m=[32m"currentColor"[31m
+                [33mstroke-linecap[31m=[32m"round"[31m
+                [33mstroke-linejoin[31m=[32m"round"[31m
+                [33mstroke-width[31m=[32m"2"[31m
+                [33mviewBox[31m=[32m"0 0 24 24"[31m
+                [33mwidth[31m=[32m"18"[31m
+                [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+              [36m>[31m
+                [36m<path[31m
+                  [33md[31m=[32m"M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"[31m
+                [36m/>[31m
+              [36m</svg>[31m
+              [36m<select[31m
+                [33mclass[31m=[32m"bg-transparent border-none focus:ring-0 text-sm font-medium text-gray-700 dark:text-gray-300 outline-none"[31m
+              [36m>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m""[31m
+                [36m>[31m
+                  [0mTous les statuts[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"PENDING"[31m
+                [36m>[31m
+                  [0mEn attente[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"VALIDATED"[31m
+                [36m>[31m
+                  [0mValid├®[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"CANCELLED"[31m
+                [36m>[31m
+                  [0mAnnul├®[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"COMPLETED"[31m
+                [36m>[31m
+                  [0mTermin├®[0m
+                [36m</option>[31m
+                [36m<option[31m
+                  [33mvalue[31m=[32m"EXPIRED"[31m
+                [36m>[31m
+                  [0mExpir├®[0m
+                [36m</option>[31m
+              [36m</select>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"overflow-x-auto"[31m
+          [36m>[31m
+            [36m<table[31m
+              [33mclass[31m=[32m"w-full text-left"[31m
+            [36m>[31m
+              [36m<thead>[31m
+                [36m<tr[31m
+                  [33mclass[31m=[32m"bg-gray-50 dark:bg-gray-900/50 border-b border-gray-100 dark:border-gray-700"[31m
+                [36m>[31m
+                  [36m<th[31m
+                    [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                  [36m>[31m
+                    [0mID[0m
+                  [36m</th>[31m
+                  [36m<th[31m
+                    [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                  [36m>[31m
+                    [0mLogement[0m
+                  [36m</th>[31m
+                  [36m<th[31m
+                    [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+                  [36m>[31m
+                    [0mClient[0m
+                  [36m</th>[31m
+                  [36m<th[31m
+                    [33mclass[31m=[32m"px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"[31m
+             ...[39m
+ [32mÔ£ô[39m src/pages/admin/AdminTransactions.test.jsx[2m > [22mAdminTransactions Component[2m > [22mhandles empty transaction list[32m 56[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/Register.test.jsx[2m > [22mRegister Component[2m > [22mrenders registration form correctly[32m 187[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/Register.test.jsx[2m > [22mRegister Component[2m > [22mshows document upload fields when Demarcheur role is selected[32m 174[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/Register.test.jsx[2m > [22mRegister Component[2m > [22mhandles successful registration for Locataire[33m 880[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/Register.test.jsx[2m > [22mRegister Component[2m > [22mhandles successful registration for Demarcheur[32m 273[2mms[22m[39m
+ [32mÔ£ô[39m src/components/payments/PaymentForm.test.jsx[2m > [22mPaymentForm Component[2m > [22mrenders correctly with initial state[32m 235[2mms[22m[39m
+ [32mÔ£ô[39m src/components/payments/PaymentForm.test.jsx[2m > [22mPaymentForm Component[2m > [22mvalidates phone number on submission[32m 83[2mms[22m[39m
+ [32mÔ£ô[39m src/components/payments/PaymentForm.test.jsx[2m > [22mPaymentForm Component[2m > [22mcalls initiatePayment and shows success state[33m 841[2mms[22m[39m
+ [32mÔ£ô[39m src/components/payments/PaymentForm.test.jsx[2m > [22mPaymentForm Component[2m > [22mswitches payment methods[32m 220[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/Settings.test.jsx[2m > [22mSettings Component[2m > [22mrenders settings page title[32m 262[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/Settings.test.jsx[2m > [22mSettings Component[2m > [22mrenders password change section[32m 65[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/Settings.test.jsx[2m > [22mSettings Component[2m > [22mrenders notifications section[33m 570[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/Login.test.jsx[2m > [22mLogin Component[2m > [22mrenders login form correctly[33m 1214[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/Login.test.jsx[2m > [22mLogin Component[2m > [22mhandles successful login[32m 243[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/Login.test.jsx[2m > [22mLogin Component[2m > [22mdisplays error message on failed login[32m 230[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/MandateDashboard.test.jsx[2m > [22mMandateDashboard[2m > [22mrenders correctly and fetches mandates[33m 630[2mms[22m[39m
+node.exe : [90mstderr[2m | 
+src/pages/MandateDashboard.test.jsx[2m > 
+[22m[2mMandateDashboard[2m > [22m[2mopens create modal 
+on click
+Au caractère Ligne:1 : 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([90mstderr[2 
+   m... modal on click:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[22m[39mAn update to MandateDashboard inside a test was 
+not wrapped in act(...).
+
+When testing, code that causes React state updates should 
+be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user 
+would see in the browser. Learn more at 
+https://react.dev/link/wrap-tests-with-act
+An update to MandateDashboard inside a test was not wrapped 
+in act(...).
+
+When testing, code that causes React state updates should 
+be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user 
+would see in the browser. Learn more at 
+https://react.dev/link/wrap-tests-with-act
+An update to MandateDashboard inside a test was not wrapped 
+in act(...).
+
+When testing, code that causes React state updates should 
+be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user 
+would see in the browser. Learn more at 
+https://react.dev/link/wrap-tests-with-act
+
+ [32mÔ£ô[39m src/pages/MandateDashboard.test.jsx[2m > [22mMandateDashboard[2m > [22mshows sign button for owner if not signed[32m 135[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/MandateDashboard.test.jsx[2m > [22mMandateDashboard[2m > [22mopens create modal on click[33m 456[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/AddProperty.test.jsx[2m > [22mAddProperty Integration[2m > [22mshows validation errors for empty fields[33m 1849[2mms[22m[39m
+ [2m[90mÔåô[39m[22m src/pages/AddProperty.test.jsx[2m > [22mAddProperty Integration[2m > [22msuccessfully submits the form with valid data
+[90mstderr[2m | 
+src/pages/admin/AdminDashboard.test.jsx[2m > 
+[22m[2mAdminDashboard Component[2m > [22m[2mdisplays 
+dashboard statistics when loaded
+[22m[39mThe width(-1) and height(-1) of chart should be 
+greater than 0,
+       please check the style of container, or the props 
+width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use 
+aspect(undefined) to control the
+       height and width.
+The width(-1) and height(-1) of chart should be greater 
+than 0,
+       please check the style of container, or the props 
+width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use 
+aspect(undefined) to control the
+       height and width.
+
+ [32mÔ£ô[39m src/pages/admin/AdminDashboard.test.jsx[2m > [22mAdminDashboard Component[2m > [22mrenders loading state initially[33m 651[2mms[22m[39m
+[90mstderr[2m | 
+src/pages/admin/AdminDashboard.test.jsx[2m > 
+[22m[2mAdminDashboard Component[2m > [22m[2mhandles 
+API errors gracefully
+[22m[39mFailed to fetch admin dashboard data Error: 
+Network error
+    at C:/Users/codeshester0011/Desktop/NLoger/frontend/src/
+pages/admin/AdminDashboard.test.jsx:76:31
+    at [90mfile:///C:/Users/codeshester0011/Desktop/NLoger/
+frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/inde
+x.js:145:11
+    at [90mfile:///C:/Users/codeshester0011/Desktop/NLoger/
+frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/inde
+x.js:915:26
+    at [90mfile:///C:/Users/codeshester0011/Desktop/NLoger/
+frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/inde
+x.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///C:/Users/codeshester0011
+/Desktop/NLoger/frontend/[39mnode_modules/[4m@vitest/runne
+r[24m/dist/index.js:1209:10[90m)[39m
+    at [90mfile:///C:/Users/codeshester0011/Desktop/NLoger/
+frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/inde
+x.js:1653:37
+    at Traces.$ [90m(file:///C:/Users/codeshester0011/Deskt
+op/NLoger/frontend/[39mnode_modules/[4mvitest[24m/dist/ch
+unks/traces.U4xDYhzZ.js:115:27[90m)[39m
+    at trace [90m(file:///C:/Users/codeshester0011/Desktop/
+NLoger/frontend/[39mnode_modules/[4mvitest[24m/dist/chunk
+s/test.B8ej_ZHS.js:239:21[90m)[39m
+    at runTest [90m(file:///C:/Users/codeshester0011/Deskto
+p/NLoger/frontend/[39mnode_modules/[4m@vitest/runner[24m/
+dist/index.js:1653:12[90m)[39m
+
+[90mstderr[2m | 
+src/pages/admin/AdminDashboard.test.jsx[2m > 
+[22m[2mAdminDashboard Component[2m > [22m[2mhandles 
+API errors gracefully
+[22m[39mThe width(-1) and height(-1) of chart should be 
+greater than 0,
+       please check the style of container, or the props 
+width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use 
+aspect(undefined) to control the
+       height and width.
+The width(-1) and height(-1) of chart should be greater 
+than 0,
+       please check the style of container, or the props 
+width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use 
+aspect(undefined) to control the
+       height and width.
+
+ [32mÔ£ô[39m src/pages/admin/AdminDashboard.test.jsx[2m > [22mAdminDashboard Component[2m > [22mdisplays dashboard statistics when loaded[33m 338[2mms[22m[39m
+[90mstderr[2m | 
+src/pages/admin/AdminDashboard.test.jsx[2m > 
+[22m[2mAdminDashboard Component[2m > [22m[2mdisplays 
+charts with analytics data
+[22m[39mThe width(-1) and height(-1) of chart should be 
+greater than 0,
+       please check the style of container, or the props 
+width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use 
+aspect(undefined) to control the
+       height and width.
+The width(-1) and height(-1) of chart should be greater 
+than 0,
+       please check the style of container, or the props 
+width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use 
+aspect(undefined) to control the
+       height and width.
+
+ [32mÔ£ô[39m src/pages/admin/AdminDashboard.test.jsx[2m > [22mAdminDashboard Component[2m > [22mhandles API errors gracefully[32m 257[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/admin/AdminDashboard.test.jsx[2m > [22mAdminDashboard Component[2m > [22mdisplays charts with analytics data[32m 178[2mms[22m[39m
+[90mstderr[2m | src/pages/PropertyDetails.test.jsx[2m > 
+[22m[2mPropertyDetails Component[2m > [22m[2mrenders 
+loading state initially
+[22m[39mNo routes matched location "/" 
+
+ [32mÔ£ô[39m src/components/payments/EscrowStatus.test.jsx[2m > [22mEscrowStatus Component[2m > [22mrenders HOLDING status correctly[33m 423[2mms[22m[39m
+ [32mÔ£ô[39m src/components/payments/EscrowStatus.test.jsx[2m > [22mEscrowStatus Component[2m > [22mrenders RELEASED status correctly[32m 42[2mms[22m[39m
+ [32mÔ£ô[39m src/components/payments/EscrowStatus.test.jsx[2m > [22mEscrowStatus Component[2m > [22mrenders REFUNDED status correctly[32m 57[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/PropertyDetails.test.jsx[2m > [22mPropertyDetails Component[2m > [22mrenders loading state initially[32m 91[2mms[22m[39m
+ [2m[90mÔåô[39m[22m src/pages/PropertyDetails.test.jsx[2m > [22mPropertyDetails Integration[2m > [22mdisplays property details after fetching
+ [2m[90mÔåô[39m[22m src/pages/PropertyDetails.test.jsx[2m > [22mPropertyDetails Integration[2m > [22mopens contact modal when logged in user clicks contact
+[90mstderr[2m | src/pages/PropertyDetails.test.jsx[2m > 
+[22m[2mPropertyDetails Integration[2m > 
+[22m[2mdisplays error message when fetch fails
+[22m[39mErreur lors du chargement du logement: Error: 
+Network error
+    at C:/Users/codeshester0011/Desktop/NLoger/frontend/src/
+pages/PropertyDetails.test.jsx:134:36
+    at [90mfile:///C:/Users/codeshester0011/Desktop/NLoger/
+frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/inde
+x.js:145:11
+    at [90mfile:///C:/Users/codeshester0011/Desktop/NLoger/
+frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/inde
+x.js:915:26
+    at [90mfile:///C:/Users/codeshester0011/Desktop/NLoger/
+frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/inde
+x.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///C:/Users/codeshester0011
+/Desktop/NLoger/frontend/[39mnode_modules/[4m@vitest/runne
+r[24m/dist/index.js:1209:10[90m)[39m
+    at [90mfile:///C:/Users/codeshester0011/Desktop/NLoger/
+frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/inde
+x.js:1653:37
+    at Traces.$ [90m(file:///C:/Users/codeshester0011/Deskt
+op/NLoger/frontend/[39mnode_modules/[4mvitest[24m/dist/ch
+unks/traces.U4xDYhzZ.js:115:27[90m)[39m
+    at trace [90m(file:///C:/Users/codeshester0011/Desktop/
+NLoger/frontend/[39mnode_modules/[4mvitest[24m/dist/chunk
+s/test.B8ej_ZHS.js:239:21[90m)[39m
+    at runTest [90m(file:///C:/Users/codeshester0011/Deskto
+p/NLoger/frontend/[39mnode_modules/[4m@vitest/runner[24m/
+dist/index.js:1653:12[90m)[39m
+
+ [32mÔ£ô[39m src/pages/PropertyDetails.test.jsx[2m > [22mPropertyDetails Integration[2m > [22mredirects to login when not logged in user clicks contact[32m 262[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/PropertyDetails.test.jsx[2m > [22mPropertyDetails Integration[2m > [22mdisplays error message when fetch fails[32m 42[2mms[22m[39m
+ [32mÔ£ô[39m src/pages/MyVisits.test.jsx[2m > [22mMyVisits[2m > [22mrenders visits and shows code for visitor[33m 824[2mms[22m[39m
+ [32mÔ£ô[39m src/components/Navbar.test.jsx[2m > [22mNavbar Component[2m > [22mrenders the logo and navigation items[32m 194[2mms[22m[39m
+ [32mÔ£ô[39m src/components/PropertyCard.test.jsx[2m > [22mPropertyCard Component[2m > [22mrenders property details information[33m 437[2mms[22m[39m
+ [32mÔ£ô[39m src/components/PropertyCard.test.jsx[2m > [22mPropertyCard Component[2m > [22mrenders the correct property type label[32m 28[2mms[22m[39m
+
+[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m[1m[41m Failed Suites 1 
+[49m[22m[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m
+
+[41m[1m FAIL [22m[49m 
+src/pages/PropertyList.test.jsx[2m [ 
+src/pages/PropertyList.test.jsx ][22m
+[31m[1mError[22m: Failed to resolve import "../api/api" 
+from "src/pages/PropertyList.test.jsx". Does the file 
+exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/codeshester0011/Desktop/NLoger/fronten
+d/src/pages/PropertyList.test.jsx[39m:32:0
+[33m  17 |  const __vi_import_2__ = await 
+import("react-router-dom");
+  18 |  const __vi_import_3__ = await 
+import("./Properties");
+  19 |  const __vi_import_4__ = await import("../api/api");
+     |                                       ^
+  20 |  
+  21 |  [39m
+[90m [2mÔØ»[22m TransformPluginContext._formatLog node_mo
+dules/vite/dist/node/chunks/config.js:[2m28998:43[22m[39m
+[90m [2mÔØ»[22m TransformPluginContext.error node_modules
+/vite/dist/node/chunks/config.js:[2m28995:14[22m[39m
+[90m [2mÔØ»[22m normalizeUrl node_modules/vite/dist/node/
+chunks/config.js:[2m27118:18[22m[39m
+[90m [2mÔØ»[22m node_modules/vite/dist/node/chunks/config
+.js:[2m27176:32[22m[39m
+[90m [2mÔØ»[22m TransformPluginContext.transform node_mod
+ules/vite/dist/node/chunks/config.js:[2m27144:4[22m[39m
+[90m [2mÔØ»[22m EnvironmentPluginContainer.transform node
+_modules/vite/dist/node/chunks/config.js:[2m28796:14[22m[
+39m
+[90m [2mÔØ»[22m loadAndTransform node_modules/vite/dist/n
+ode/chunks/config.js:[2m22669:26[22m[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/4]ÔÄ»[22m[39m
+
+
+[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m[1m[41m Failed Tests 3 
+[49m[22m[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m
+
+[41m[1m FAIL [22m[49m 
+src/pages/admin/AdminDisputes.test.jsx[2m > 
+[22mAdminDisputes Component[2m > [22mfilters disputes by 
+status
+[31m[1mAssertionError[22m[39m: expected "vi.fn()" to be 
+called with arguments: [ StringContaining "status=OPEN" 
+][90m
+
+Received: 
+
+[1m  1st vi.fn() call:
+
+[22m[2m  [[22m
+[32m-   StringContaining "status=OPEN",[90m
+[31m+   "disputes/",[90m
+[31m+   {[90m
+[31m+     "params": {[90m
+[31m+       "page": 1,[90m
+[31m+       "search": "",[90m
+[31m+       "status": "",[90m
+[31m+     },[90m
+[31m+   },[90m
+[2m  ][22m
+
+[1m  2nd vi.fn() call:
+
+[22m[2m  [[22m
+[32m-   StringContaining "status=OPEN",[90m
+[31m+   "disputes/",[90m
+[31m+   {[90m
+[31m+     "params": {[90m
+[31m+       "page": 1,[90m
+[31m+       "search": "",[90m
+[31m+       "status": "OPEN",[90m
+[31m+     },[90m
+[31m+   },[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m2[22m
+[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"space-y-6"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex justify-between 
+items-center"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-2xl font-black 
+text-gray-900 dark:text-white"[39m
+            [36m>[39m
+              [0mGestion des Litiges[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-gray-500 
+dark:text-gray-400"[39m
+            [36m>[39m
+              [0mR├®soudre les diff├®rends de paiement 
+entre utilisateurs[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"grid grid-cols-1 
+md:grid-cols-3 gap-6"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"bg-white dark:bg-gray-800 
+p-6 rounded-2xl shadow-sm border border-gray-100 
+dark:border-gray-700"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-center 
+gap-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"w-12 h-12 bg-red-100 
+rounded-xl flex items-center justify-center 
+text-red-600"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide 
+lucide-triangle-alert"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  
+[33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21.73 18-8-14a2 2 0 
+0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 9v4"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 17h.01"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-sm 
+text-gray-500"[39m
+                [36m>[39m
+                  [0mLitiges Ouverts[0m
+                [36m</p>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-2xl 
+font-black"[39m
+                [36m>[39m
+                  [0m1[0m
+                [36m</p>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"bg-white dark:bg-gray-800 
+p-6 rounded-2xl shadow-sm border border-gray-100 
+dark:border-gray-700"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-center 
+gap-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"w-12 h-12 
+bg-yellow-100 rounded-xl flex items-center justify-center 
+text-yellow-600"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide 
+lucide-clock"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  
+[33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M12 6v6l4 2"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"12"[39m
+                    [33mcy[39m=[32m"12"[39m
+                    [33mr[39m=[32m"10"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-sm 
+text-gray-500"[39m
+                [36m>[39m
+                  [0mEn Investigation[0m
+                [36m</p>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-2xl 
+font-black"[39m
+                [36m>[39m
+                  [0m0[0m
+                [36m</p>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"bg-white dark:bg-gray-800 
+p-6 rounded-2xl shadow-sm border border-gray-100 
+dark:border-gray-700"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-center 
+gap-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"w-12 h-12 
+bg-green-100 rounded-xl flex items-center justify-center 
+text-green-600"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide 
+lucide-circle-check"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  
+[33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<circle[39m
+                    [33mcx[39m=[32m"12"[39m
+                    [33mcy[39m=[32m"12"[39m
+                    [33mr[39m=[32m"10"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m9 12 2 2 4-4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+              [36m<div>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-sm 
+text-gray-500"[39m
+                [36m>[39m
+                  [0mR├®solus ce mois[0m
+                [36m</p>[39m
+                [36m<p[39m
+  ...
+[36m [2mÔØ»[22m 
+src/pages/admin/AdminDisputes.test.jsx:[2m221:25[22m[39m
+    [90m219| [39m      
+    [90m220| [39m      [35mawait[39m 
+[34mwaitFor[39m(() [33m=>[39m {
+    [90m221| [39m        expect(api.get).toHaveBeenCalledW
+ith(expect.stringContaining('ÔÇª
+    [90m   | [39m                        [31m^[39m
+    [90m222| [39m      })[33m;[39m
+    [90m223| [39m    }
+[90m [2mÔØ»[22m runWithExpensiveErrorDiagnosticsDisabled 
+node_modules/@testing-library/dom/dist/config.js:[2m47:12[
+22m[39m
+[90m [2mÔØ»[22m checkCallback node_modules/@testing-libra
+ry/dom/dist/wait-for.js:[2m124:77[22m[39m
+[90m [2mÔØ»[22m Timeout.checkRealTimersCallback node_modu
+les/@testing-library/dom/dist/wait-for.js:[2m118:16[22m[3
+9m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/4]ÔÄ»[22m[39m
+
+[41m[1m FAIL [22m[49m 
+src/pages/admin/AdminTransactions.test.jsx[2m > 
+[22mAdminTransactions Component[2m > [22mvalidates a 
+transaction
+[31m[1mTestingLibraryElementError[22m[39m: Found 
+multiple elements with the text: /Valider/i
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<p[39m
+  [33mclass[39m=[32m"text-gray-600 dark:text-gray-400 
+text-sm leading-relaxed"[39m
+[36m>[39m
+  [0m├ètes-vous s├╗r de vouloir valider la demande pour 
+"Test Property" ?[0m
+[36m</p>[39m
+
+Ignored nodes: comments, script, style
+[36m<button[39m
+  [33mclass[39m=[32m"px-4 py-2 text-sm font-semibold 
+text-white rounded-xl transition-all active:scale-95 
+disabled:opacity-50 shadow-lg flex items-center 
+justify-center min-w-[100px] bg-emerald-600 
+hover:bg-emerald-700 focus:ring-emerald-500 
+shadow-emerald-200"[39m
+[36m>[39m
+  [0mValider[0m
+[36m</button>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of 
+the query (like `queryAllByText`, `getAllByText`, or 
+`findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"space-y-6 animate-in fade-in 
+slide-in-from-bottom-4 duration-500"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex justify-between 
+items-center"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-3xl font-extrabold 
+text-gray-900 dark:text-white tracking-tight"[39m
+          [36m>[39m
+            [0mTransactions[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"text-gray-500 
+dark:text-gray-400"[39m
+          [36m>[39m
+            [0mG├®rer les demandes d'occupation et 
+r├®servations avec pr├®cision[0m
+          [36m</p>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col md:flex-row 
+gap-4 items-center justify-between bg-white 
+dark:bg-gray-800 p-4 rounded-2xl shadow-sm border 
+border-gray-100 dark:border-gray-700"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"relative w-full 
+md:w-96"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-search 
+absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"18"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"18"[39m
+            
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"m21 21-4.34-4.34"[39m
+            [36m/>[39m
+            [36m<circle[39m
+              [33mcx[39m=[32m"11"[39m
+              [33mcy[39m=[32m"11"[39m
+              [33mr[39m=[32m"8"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<input[39m
+            [33mclass[39m=[32m"w-full pl-10 pr-4 py-2.5 
+rounded-xl border border-gray-200 dark:border-gray-700 
+focus:outline-none focus:ring-2 focus:ring-blue-500 
+dark:bg-gray-900 transition-all"[39m
+            [33mplaceholder[39m=[32m"Rechercher par 
+logement ou client..."[39m
+            [33mtype[39m=[32m"text"[39m
+            [33mvalue[39m=[32m""[39m
+          [36m/>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex items-center gap-4 
+w-full md:w-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"flex items-center gap-2 
+bg-gray-50 dark:bg-gray-900 px-3 py-2 rounded-xl border 
+border-gray-200 dark:border-gray-700"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-funnel 
+text-gray-400"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"18"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"18"[39m
+              
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M10 20a1 1 0 0 0 
+.553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 
+4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 
+0 1 10 14z"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<select[39m
+              [33mclass[39m=[32m"bg-transparent 
+border-none focus:ring-0 text-sm font-medium text-gray-700 
+dark:text-gray-300 outline-none"[39m
+            [36m>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m""[39m
+              [36m>[39m
+                [0mTous les statuts[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"PENDING"[39m
+              [36m>[39m
+                [0mEn attente[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"VALIDATED"[39m
+              [36m>[39m
+                [0mValid├®[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"CANCELLED"[39m
+              [36m>[39m
+                [0mAnnul├®[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"COMPLETED"[39m
+              [36m>[39m
+                [0mTermin├®[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"EXPIRED"[39m
+              [36m>[39m
+                [0mExpir├®[0m
+              [36m</option>[39m
+            [36m</select>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"bg-white dark:bg-gray-800 
+rounded-2xl border border-gray-100 dark:border-gray-700 
+shadow-sm overflow-hidden"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"overflow-x-auto"[39m
+        [36m>[39m
+          [36m<table[39m
+            [33mclass[39m=[32m"w-full text-left"[39m
+          [36m>[39m
+            [36m<thead>[39m
+              [36m<tr[39m
+                [33mclass[39m=[32m"bg-gray-50 
+dark:bg-gray-900/50 border-b border-gray-100 
+dark:border-gray-700"[39m
+              [36m>[39m
+                [36m<th[39m
+                  [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                [36m>[39m
+                  [0mID[0m
+                [36m</th>[39m
+                [36m<th[39m
+                  [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                [36m>[39m
+                  [0mLogement[0m
+                [36m</th>[39m
+                [36m<th[39m
+                  [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                [36m>[39m
+                  [0mClient[0m
+                [36m</th>[39m
+                [36m<th[39m
+                  [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                [36m>[39m
+                  [0mMessage[0m
+                [36m</th>[39m
+                [36m<th[39m
+                  [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                [36m>[39m
+                  [0mStatut[0m
+                [36m</th>[39m
+         ...
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"space-y-6 animate-in fade-in 
+slide-in-from-bottom-4 duration-500"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex justify-between 
+items-center"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-3xl font-extrabold 
+text-gray-900 dark:text-white tracking-tight"[39m
+            [36m>[39m
+              [0mTransactions[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-gray-500 
+dark:text-gray-400"[39m
+            [36m>[39m
+              [0mG├®rer les demandes d'occupation et 
+r├®servations avec pr├®cision[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-col md:flex-row 
+gap-4 items-center justify-between bg-white 
+dark:bg-gray-800 p-4 rounded-2xl shadow-sm border 
+border-gray-100 dark:border-gray-700"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative w-full 
+md:w-96"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search 
+absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"18"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"18"[39m
+              
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"w-full pl-10 pr-4 
+py-2.5 rounded-xl border border-gray-200 
+dark:border-gray-700 focus:outline-none focus:ring-2 
+focus:ring-blue-500 dark:bg-gray-900 transition-all"[39m
+              [33mplaceholder[39m=[32m"Rechercher par 
+logement ou client..."[39m
+              [33mtype[39m=[32m"text"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"flex items-center gap-4 
+w-full md:w-auto"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-center gap-2 
+bg-gray-50 dark:bg-gray-900 px-3 py-2 rounded-xl border 
+border-gray-200 dark:border-gray-700"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-funnel 
+text-gray-400"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"18"[39m
+                
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M10 20a1 1 0 0 0 
+.553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 
+4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 
+0 1 10 14z"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<select[39m
+                [33mclass[39m=[32m"bg-transparent 
+border-none focus:ring-0 text-sm font-medium text-gray-700 
+dark:text-gray-300 outline-none"[39m
+              [36m>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m>[39m
+                  [0mTous les statuts[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"PENDING"[39m
+                [36m>[39m
+                  [0mEn attente[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"VALIDATED"[39m
+                [36m>[39m
+                  [0mValid├®[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"CANCELLED"[39m
+                [36m>[39m
+                  [0mAnnul├®[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"COMPLETED"[39m
+                [36m>[39m
+                  [0mTermin├®[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"EXPIRED"[39m
+                [36m>[39m
+                  [0mExpir├®[0m
+                [36m</option>[39m
+              [36m</select>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-white dark:bg-gray-800 
+rounded-2xl border border-gray-100 dark:border-gray-700 
+shadow-sm overflow-hidden"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"overflow-x-auto"[39m
+          [36m>[39m
+            [36m<table[39m
+              [33mclass[39m=[32m"w-full text-left"[39m
+            [36m>[39m
+              [36m<thead>[39m
+                [36m<tr[39m
+                  [33mclass[39m=[32m"bg-gray-50 
+dark:bg-gray-900/50 border-b border-gray-100 
+dark:border-gray-700"[39m
+                [36m>[39m
+                  [36m<th[39m
+                    [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                  [36m>[39m
+                    [0mID[0m
+                  [36m</th>[39m
+                  [36m<th[39m
+                    [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                  [36m>[39m
+                    [0mLogement[0m
+                  [36m</th>[39m
+                  [36m<th[39m
+                    [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                  [36m>[39m
+                    [0mClient[0m
+                  [36m</th>[39m
+                  [36m<th[39m
+                    [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+             ...
+[90m [2mÔØ»[22m Proxy.waitForWrapper node_modules/@testin
+g-library/dom/dist/wait-for.js:[2m163:27[22m[39m
+[36m [2mÔØ»[22m src/pages/admin/AdminTransactions.test.js
+x:[2m125:13[22m[39m
+    [90m123| [39m      
+    [90m124| [39m      [90m// Confirm in modal if 
+exists[39m
+    [90m125| [39m      [35mawait[39m 
+[34mwaitFor[39m(() [33m=>[39m {
+    [90m   | [39m            [31m^[39m
+    [90m126| [39m        [35mconst[39m confirmButton 
+[33m=[39m screen[33m.[39m[34mqueryByText[39m([36m/Val
+ider/i[39m)[33m;[39m
+    [90m127| [39m        [35mif[39m (confirmButton) {
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/4]ÔÄ»[22m[39m
+
+[41m[1m FAIL [22m[49m 
+src/pages/admin/AdminTransactions.test.jsx[2m > 
+[22mAdminTransactions Component[2m > [22mdisplays 
+transaction details modal
+[31m[1mTestingLibraryElementError[22m[39m: Found 
+multiple elements with the text: /tenant1/i
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<span[39m
+  [33mclass[39m=[32m"text-sm"[39m
+[36m>[39m
+  [0mtenant1[0m
+[36m</span>[39m
+
+Ignored nodes: comments, script, style
+[36m<p[39m
+  [33mclass[39m=[32m"font-medium text-gray-900 
+dark:text-white"[39m
+[36m>[39m
+  [0mtenant1[0m
+[36m</p>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of 
+the query (like `queryAllByText`, `getAllByText`, or 
+`findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"space-y-6 animate-in fade-in 
+slide-in-from-bottom-4 duration-500"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex justify-between 
+items-center"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-3xl font-extrabold 
+text-gray-900 dark:text-white tracking-tight"[39m
+          [36m>[39m
+            [0mTransactions[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"text-gray-500 
+dark:text-gray-400"[39m
+          [36m>[39m
+            [0mG├®rer les demandes d'occupation et 
+r├®servations avec pr├®cision[0m
+          [36m</p>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col md:flex-row 
+gap-4 items-center justify-between bg-white 
+dark:bg-gray-800 p-4 rounded-2xl shadow-sm border 
+border-gray-100 dark:border-gray-700"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"relative w-full 
+md:w-96"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-search 
+absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"18"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"18"[39m
+            
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"m21 21-4.34-4.34"[39m
+            [36m/>[39m
+            [36m<circle[39m
+              [33mcx[39m=[32m"11"[39m
+              [33mcy[39m=[32m"11"[39m
+              [33mr[39m=[32m"8"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [36m<input[39m
+            [33mclass[39m=[32m"w-full pl-10 pr-4 py-2.5 
+rounded-xl border border-gray-200 dark:border-gray-700 
+focus:outline-none focus:ring-2 focus:ring-blue-500 
+dark:bg-gray-900 transition-all"[39m
+            [33mplaceholder[39m=[32m"Rechercher par 
+logement ou client..."[39m
+            [33mtype[39m=[32m"text"[39m
+            [33mvalue[39m=[32m""[39m
+          [36m/>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex items-center gap-4 
+w-full md:w-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"flex items-center gap-2 
+bg-gray-50 dark:bg-gray-900 px-3 py-2 rounded-xl border 
+border-gray-200 dark:border-gray-700"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-funnel 
+text-gray-400"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"18"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"18"[39m
+              
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M10 20a1 1 0 0 0 
+.553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 
+4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 
+0 1 10 14z"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<select[39m
+              [33mclass[39m=[32m"bg-transparent 
+border-none focus:ring-0 text-sm font-medium text-gray-700 
+dark:text-gray-300 outline-none"[39m
+            [36m>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m""[39m
+              [36m>[39m
+                [0mTous les statuts[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"PENDING"[39m
+              [36m>[39m
+                [0mEn attente[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"VALIDATED"[39m
+              [36m>[39m
+                [0mValid├®[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"CANCELLED"[39m
+              [36m>[39m
+                [0mAnnul├®[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"COMPLETED"[39m
+              [36m>[39m
+                [0mTermin├®[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"EXPIRED"[39m
+              [36m>[39m
+                [0mExpir├®[0m
+              [36m</option>[39m
+            [36m</select>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"bg-white dark:bg-gray-800 
+rounded-2xl border border-gray-100 dark:border-gray-700 
+shadow-sm overflow-hidden"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"overflow-x-auto"[39m
+        [36m>[39m
+          [36m<table[39m
+            [33mclass[39m=[32m"w-full text-left"[39m
+          [36m>[39m
+            [36m<thead>[39m
+              [36m<tr[39m
+                [33mclass[39m=[32m"bg-gray-50 
+dark:bg-gray-900/50 border-b border-gray-100 
+dark:border-gray-700"[39m
+              [36m>[39m
+                [36m<th[39m
+                  [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                [36m>[39m
+                  [0mID[0m
+                [36m</th>[39m
+                [36m<th[39m
+                  [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                [36m>[39m
+                  [0mLogement[0m
+                [36m</th>[39m
+                [36m<th[39m
+                  [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                [36m>[39m
+                  [0mClient[0m
+                [36m</th>[39m
+                [36m<th[39m
+                  [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                [36m>[39m
+                  [0mMessage[0m
+                [36m</th>[39m
+                [36m<th[39m
+                  [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                [36m>[39m
+                  [0mStatut[0m
+                [36m</th>[39m
+         ...
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"space-y-6 animate-in fade-in 
+slide-in-from-bottom-4 duration-500"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex justify-between 
+items-center"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-3xl font-extrabold 
+text-gray-900 dark:text-white tracking-tight"[39m
+            [36m>[39m
+              [0mTransactions[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-gray-500 
+dark:text-gray-400"[39m
+            [36m>[39m
+              [0mG├®rer les demandes d'occupation et 
+r├®servations avec pr├®cision[0m
+
+[2m Test Files [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m12 passed[39m[22m[90m (15)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m40 passed[39m[22m[2m | [22m[33m3 skipped[39m[90m (46)[39m
+[2m   Start at [22m 22:39:56
+[2m   Duration [22m 38.63s[2m (transform 3.91s, setup 6.53s, import 21.19s, tests 19.96s, environment 54.63s)[22m
+
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-col md:flex-row 
+gap-4 items-center justify-between bg-white 
+dark:bg-gray-800 p-4 rounded-2xl shadow-sm border 
+border-gray-100 dark:border-gray-700"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative w-full 
+md:w-96"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search 
+absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"18"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"18"[39m
+              
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"w-full pl-10 pr-4 
+py-2.5 rounded-xl border border-gray-200 
+dark:border-gray-700 focus:outline-none focus:ring-2 
+focus:ring-blue-500 dark:bg-gray-900 transition-all"[39m
+              [33mplaceholder[39m=[32m"Rechercher par 
+logement ou client..."[39m
+              [33mtype[39m=[32m"text"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"flex items-center gap-4 
+w-full md:w-auto"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-center gap-2 
+bg-gray-50 dark:bg-gray-900 px-3 py-2 rounded-xl border 
+border-gray-200 dark:border-gray-700"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-funnel 
+text-gray-400"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"18"[39m
+                
+[33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M10 20a1 1 0 0 0 
+.553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 
+4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 
+0 1 10 14z"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<select[39m
+                [33mclass[39m=[32m"bg-transparent 
+border-none focus:ring-0 text-sm font-medium text-gray-700 
+dark:text-gray-300 outline-none"[39m
+              [36m>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m>[39m
+                  [0mTous les statuts[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"PENDING"[39m
+                [36m>[39m
+                  [0mEn attente[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"VALIDATED"[39m
+                [36m>[39m
+                  [0mValid├®[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"CANCELLED"[39m
+                [36m>[39m
+                  [0mAnnul├®[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"COMPLETED"[39m
+                [36m>[39m
+                  [0mTermin├®[0m
+                [36m</option>[39m
+                [36m<option[39m
+                  [33mvalue[39m=[32m"EXPIRED"[39m
+                [36m>[39m
+                  [0mExpir├®[0m
+                [36m</option>[39m
+              [36m</select>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-white dark:bg-gray-800 
+rounded-2xl border border-gray-100 dark:border-gray-700 
+shadow-sm overflow-hidden"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"overflow-x-auto"[39m
+          [36m>[39m
+            [36m<table[39m
+              [33mclass[39m=[32m"w-full text-left"[39m
+            [36m>[39m
+              [36m<thead>[39m
+                [36m<tr[39m
+                  [33mclass[39m=[32m"bg-gray-50 
+dark:bg-gray-900/50 border-b border-gray-100 
+dark:border-gray-700"[39m
+                [36m>[39m
+                  [36m<th[39m
+                    [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                  [36m>[39m
+                    [0mID[0m
+                  [36m</th>[39m
+                  [36m<th[39m
+                    [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                  [36m>[39m
+                    [0mLogement[0m
+                  [36m</th>[39m
+                  [36m<th[39m
+                    [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+                  [36m>[39m
+                    [0mClient[0m
+                  [36m</th>[39m
+                  [36m<th[39m
+                    [33mclass[39m=[32m"px-6 py-4 text-xs 
+font-semibold text-gray-500 uppercase tracking-wider"[39m
+             ...
+[90m [2mÔØ»[22m Proxy.waitForWrapper node_modules/@testin
+g-library/dom/dist/wait-for.js:[2m163:27[22m[39m
+[36m [2mÔØ»[22m src/pages/admin/AdminTransactions.test.js
+x:[2m169:13[22m[39m
+    [90m167| [39m      fireEvent[33m.[39m[34mclick[39m
+(detailsButton)[33m;[39m
+    [90m168| [39m      
+    [90m169| [39m      [35mawait[39m 
+[34mwaitFor[39m(() [33m=>[39m {
+    [90m   | [39m            [31m^[39m
+    [90m170| [39m        [90m// Modal should open - 
+check for modal content[39m
+    [90m171| [39m        
+expect(screen.queryByText(/tenant1/i) || 
+screen.queryByText(/AÔÇª
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/4]ÔÄ»[22m[39m
+

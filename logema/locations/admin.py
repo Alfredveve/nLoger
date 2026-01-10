@@ -22,7 +22,7 @@ class PrefectureAdmin(admin.ModelAdmin):
     list_filter = ('region',)
     search_fields = ('name', 'region__name')
     ordering = ('region__name', 'name')
-    raw_id_fields = ('region',)
+    autocomplete_fields = ('region',)
     
     def get_sous_prefectures_count(self, obj):
         """Affiche le nombre de sous-préfectures"""
@@ -37,7 +37,7 @@ class SousPrefectureAdmin(admin.ModelAdmin):
     list_filter = ('prefecture__region', 'prefecture')
     search_fields = ('name', 'prefecture__name', 'prefecture__region__name')
     ordering = ('prefecture__region__name', 'prefecture__name', 'name')
-    raw_id_fields = ('prefecture',)
+    autocomplete_fields = ('prefecture',)
     
     def get_region(self, obj):
         """Affiche la région parente"""
@@ -58,7 +58,7 @@ class VilleAdmin(admin.ModelAdmin):
     list_filter = ('sous_prefecture__prefecture__region', 'sous_prefecture__prefecture', 'sous_prefecture')
     search_fields = ('name', 'sous_prefecture__name', 'sous_prefecture__prefecture__name')
     ordering = ('sous_prefecture__prefecture__region__name', 'sous_prefecture__prefecture__name', 'name')
-    raw_id_fields = ('sous_prefecture',)
+    autocomplete_fields = ('sous_prefecture',)
     
     def get_prefecture(self, obj):
         """Affiche la préfecture parente"""
@@ -90,7 +90,7 @@ class QuartierAdmin(admin.ModelAdmin):
     )
     search_fields = ('name', 'ville__name', 'ville__sous_prefecture__name')
     ordering = ('ville__sous_prefecture__prefecture__region__name', 'ville__name', 'name')
-    raw_id_fields = ('ville',)
+    autocomplete_fields = ('ville',)
     
     def get_sous_prefecture(self, obj):
         """Affiche la sous-préfecture parente"""
@@ -129,7 +129,7 @@ class SecteurAdmin(admin.ModelAdmin):
     )
     search_fields = ('name', 'quartier__name', 'quartier__ville__name')
     ordering = ('quartier__ville__sous_prefecture__prefecture__region__name', 'quartier__ville__name', 'name')
-    raw_id_fields = ('quartier',)
+    autocomplete_fields = ('quartier',)
     
     def get_ville(self, obj):
         """Affiche la ville parente"""

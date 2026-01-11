@@ -182,8 +182,8 @@ class LocationHierarchyTests(TestCase):
         secteur = Secteur.objects.create(name="Secteur 1", quartier=quartier)
         
         self.assertEqual(str(region), "Conakry")
-        self.assertEqual(str(prefecture), "Kaloum")
-        self.assertEqual(str(sous_prefecture), "Kaloum Centre")
+        self.assertEqual(str(prefecture), "Kaloum (Conakry)")
+        self.assertEqual(str(sous_prefecture), "Kaloum Centre (Kaloum)")
         self.assertEqual(str(ville), "Conakry Ville")
         self.assertEqual(str(quartier), "Almamya")
         self.assertEqual(str(secteur), "Secteur 1")

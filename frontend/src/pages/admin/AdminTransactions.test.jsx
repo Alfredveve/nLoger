@@ -117,22 +117,20 @@ describe('AdminTransactions Component', () => {
     });
 
     // Find and click validate button if it exists
-    const validateButton = screen.queryByTitle(/Approuver/i);
-    if (validateButton) {
-      fireEvent.click(validateButton);
-      
-      // Confirm in modal if exists
-      await waitFor(() => {
-        const confirmButton = screen.queryByText(/Valider/i);
-        if (confirmButton) {
-          fireEvent.click(confirmButton);
-        }
-      });
-      
-      await waitFor(() => {
-        expect(api.patch).toHaveBeenCalled();
-      });
-    }
+    // Find and click validate button
+    const validateButton = screen.getByTitle(/Approuver/i);
+    fireEvent.click(validateButton);
+    
+    // Confirm in modal
+    await waitFor(() => {
+      // Look for the specific confirm button in the modal
+      const confirmButton = screen.getByRole('button', { name: /Valider/i });
+      fireEvent.click(confirmButton);
+    });
+    
+    await waitFor(() => {
+      expect(api.patch).toHaveBeenCalled();
+    });
   });
 
   it('displays transaction details modal', async () => {
@@ -167,8 +165,8 @@ describe('AdminTransactions Component', () => {
       fireEvent.click(detailsButton);
       
       await waitFor(() => {
-        // Modal should open - check for modal content
-        expect(screen.queryByText(/tenant1/i) || screen.queryByText(/Appartement/i)).toBeInTheDocument();
+        // Modal should open - check for modal title
+        expect(screen.getByText('Détails de la transaction')).toBeInTheDocument();
       });
     }
   });

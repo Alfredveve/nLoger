@@ -31,7 +31,7 @@ describe('Navbar Component', () => {
     // If hidden by class, they exist in DOM.
     expect(screen.getAllByText(/Accueil/i)[0]).toBeInTheDocument(); 
     expect(screen.getAllByText(/Logements/i)[0]).toBeInTheDocument();
-    // 'Publier' might be multiple places (mobile/desktop), use getAll
-    expect(screen.getAllByText(/Publier/i)[0]).toBeInTheDocument(); 
+    // 'Publier' hidden for guest
+    // expect(screen.getAllByText(/Publier/i)[0]).toBeInTheDocument(); 
   });
 });

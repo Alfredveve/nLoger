@@ -218,7 +218,14 @@ describe('AdminDisputes Component', () => {
       fireEvent.change(filterSelect, { target: { value: 'OPEN' } });
       
       await waitFor(() => {
-        expect(api.get).toHaveBeenCalledWith(expect.stringContaining('status=OPEN'));
+        expect(api.get).toHaveBeenCalledWith(
+          expect.stringContaining('disputes/'),
+          expect.objectContaining({
+            params: expect.objectContaining({
+              status: 'OPEN'
+            })
+          })
+        );
       });
     }
   });

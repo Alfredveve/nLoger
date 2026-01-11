@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Property, PropertyImage, ManagementMandate
+from .models import Property, PropertyImage, ManagementMandate, MandateHistory
+from locations.models import Secteur
 
 class PropertyImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,6 +9,7 @@ class PropertyImageSerializer(serializers.ModelSerializer):
 
 class PropertySerializer(serializers.ModelSerializer):
     images = PropertyImageSerializer(many=True, read_only=True)
+    secteur = serializers.PrimaryKeyRelatedField(queryset=Secteur.objects.all(), required=False, allow_null=True)
     secteur_name = serializers.ReadOnlyField(source='secteur.name')
     quartier_name = serializers.ReadOnlyField(source='secteur.quartier.name')
     
@@ -48,3 +50,8 @@ class ManagementMandateSerializer(serializers.ModelSerializer):
             'signature_owner', 'signature_agent', 'signed_at'
         ]
         read_only_fields = ['owner', 'status', 'agent', 'signature_owner', 'signature_agent', 'signed_at']
+
+class MandateHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MandateHistory
+        fields = ['id', 'status', 'comment', 'created_at']

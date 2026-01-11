@@ -1,4 +1,5 @@
 from rest_framework import viewsets, views, status, permissions
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Count
 from .models import User
@@ -9,6 +10,7 @@ from .admin_serializers import (
     AdminMandateSerializer, AdminStatsSerializer,
     AdminOccupationRequestSerializer
 )
+from properties.serializers import MandateHistorySerializer
 from .permissions import IsAdminUser
 
 class AdminStatsView(views.APIView):
@@ -47,6 +49,13 @@ class AdminMandateViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
     filterset_fields = ['status', 'property_type']
     search_fields = ['owner__username', 'agent__username']
+
+    @action(detail=True, methods=['get'])
+    def history(self, request, pk=None):
+        mandate = self.get_object()
+        history = mandate.history.all()
+        serializer = MandateHistorySerializer(history, many=True)
+        return Response(serializer.data)
 
 class AdminOccupationViewSet(viewsets.ModelViewSet):
     queryset = OccupationRequest.objects.all().order_by('-created_at')

@@ -58,6 +58,7 @@ import AdminPayments from './pages/admin/AdminPayments';
 import AdminDisputes from './pages/admin/AdminDisputes';
 import AdminLayout from './components/AdminLayout';
 import AdminRoute from './components/AdminRoute';
+import PublisherRoute from './components/PublisherRoute';
 
 function App() {
     useEffect(() => {
@@ -111,7 +112,7 @@ function App() {
                                 }/>
                             <Route path="add-property"
                                 element={
-                                    <ProtectedRoute><AddProperty/></ProtectedRoute>
+                                    <PublisherRoute><AddProperty/></PublisherRoute>
                                 }/>
                             <Route path="property/:id"
                                 element={<PropertyDetails/>}/>

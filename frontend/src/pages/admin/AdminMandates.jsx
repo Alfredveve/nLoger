@@ -4,6 +4,7 @@ import api from '../../api/axios';
 import DataTable from '../../components/admin/DataTable';
 import { toast } from 'react-hot-toast';
 import ConfirmationModal from '../../components/admin/ConfirmationModal';
+import MandateHistoryModal from '../../components/admin/MandateHistoryModal';
 
 const AdminMandates = () => {
   const [mandates, setMandates] = useState([]);
@@ -19,6 +20,13 @@ const AdminMandates = () => {
     message: '',
     type: 'warning',
     onConfirm: null
+  });
+
+  const [history, setHistory] = useState({
+    isOpen: false,
+    data: [],
+    mandateId: null,
+    loading: false
   });
 
   const fetchMandates = useCallback(async (page = 1) => {
@@ -75,6 +83,17 @@ const AdminMandates = () => {
       confirmText: isApprove ? 'Accepter' : 'Rejeter',
       onConfirm: () => executeUpdateStatus(row.id, action)
     });
+  };
+
+  const fetchHistory = async (mandateId) => {
+    setHistory(prev => ({ ...prev, isOpen: true, loading: true, mandateId }));
+    try {
+      const response = await api.get(`admin/mandates/${mandateId}/history/`);
+      setHistory(prev => ({ ...prev, data: response.data, loading: false }));
+    } catch {
+      toast.error("Erreur lors du chargement de l'historique");
+      setHistory(prev => ({ ...prev, isOpen: false, loading: false }));
+    }
   };
 
   const columns = [
@@ -163,10 +182,7 @@ const AdminMandates = () => {
             </>
           )}
           <button 
-            onClick={() => {
-              console.log('History button clicked for mandate:', row.id);
-              toast('Historique bientôt disponible', { icon: '🕒' });
-            }}
+            onClick={() => fetchHistory(row.id)}
             className="p-1.5 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all active:scale-90" 
             title="Historique"
           >
@@ -232,6 +248,13 @@ const AdminMandates = () => {
         type={confirmation.type}
         confirmText={confirmation.confirmText}
         isLoading={actionLoading}
+      />
+
+      <MandateHistoryModal 
+        isOpen={history.isOpen}
+        onClose={() => setHistory(prev => ({ ...prev, isOpen: false }))}
+        history={history.data}
+        mandateId={history.mandateId}
       />
     </div>
   );

@@ -7,17 +7,9 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const dropdownRef = React.useRef(null);
   const [scrolled, setScrolled] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-
   useEffect(() => {
-    const handler = (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-    window.addEventListener('beforeinstallprompt', handler);
-    
     // Scroll handler for glass effect intensity
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -33,23 +25,12 @@ const Navbar = () => {
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handler);
       window.removeEventListener('scroll', handleScroll);
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
-  const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      console.log('User accepted the install prompt');
-    } else {
-      console.log('User dismissed the install prompt');
-    }
-    setDeferredPrompt(null);
-  };
+
 
   const handleLogout = () => {
     logout();
@@ -239,24 +220,16 @@ const Navbar = () => {
                 </div>
               )}
               
-              {deferredPrompt && (
-                <button
-                  onClick={handleInstallClick}
-                  className="hidden md:flex p-2 text-primary-600 hover:bg-primary-50 rounded-full transition-colors"
-                  title="Installer l'application"
-                >
-                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                </button>
-              )}
+
 
               <div className="h-8 w-px bg-gray-200 mx-2 hidden md:block"></div>
-
-              <Link to="/add-property" className="hidden md:flex btn-primary items-center space-x-2 shadow-lg hover:shadow-primary-500/30 whitespace-nowrap rounded-full px-6">
-                <span>+</span>
-                <span>Publier</span>
-              </Link>
+              
+              {user && (user.is_proprietaire || user.is_demarcheur || user.is_superuser) && user.kyc_status === 'VERIFIED' && (
+                <Link to="/add-property" className="hidden md:flex btn-primary items-center space-x-2 shadow-lg hover:shadow-primary-500/30 whitespace-nowrap rounded-full px-6">
+                  <span>+</span>
+                  <span>Publier</span>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -355,21 +328,13 @@ const Navbar = () => {
               </div>
             )}
             
-            {deferredPrompt && (
-              <button
-                onClick={handleInstallClick}
-                className="w-full flex items-center justify-center space-x-2 text-primary-600 font-medium py-3 border border-primary-200 bg-primary-50/50 rounded-xl mt-2"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                <span>Installer l'app</span>
-              </button>
-            )}
+
             
-            <Link to="/add-property" onClick={() => setIsMenuOpen(false)} className="block w-full text-center btn-primary py-3 mt-4 shadow-xl shadow-primary-500/20 rounded-xl">
-              Publier un logement
-            </Link>
+            {user && (user.is_proprietaire || user.is_demarcheur || user.is_superuser) && user.kyc_status === 'VERIFIED' && (
+              <Link to="/add-property" onClick={() => setIsMenuOpen(false)} className="block w-full text-center btn-primary py-3 mt-4 shadow-xl shadow-primary-500/20 rounded-xl">
+                Publier un logement
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import api from '../api/axios';
-import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -42,6 +42,15 @@ const propertySchema = z.object({
   if (data.secteur === 'custom' && !data.secteur_custom_name) return false;
   return true;
 }, { message: "Le nom du secteur est obligatoire", path: ['secteur_custom_name'] });
+
+const MapEvents = ({ onMapClick }) => {
+  useMapEvents({
+    click(e) {
+      onMapClick(e.latlng);
+    },
+  });
+  return null;
+};
 
 const DraggableMarker = ({ position, setPosition }) => {
   const map = useMap();
@@ -210,8 +219,92 @@ const AddProperty = () => {
     fetchSecteurs();
   }, [selectedQuartier, setValue]);
 
+  const handleMapClick = async (latlng) => {
+    setMarkerPos(latlng);
+    setIsGeocoding(true);
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latlng.lat}&lon=${latlng.lng}&zoom=18&addressdetails=1`);
+      const data = await response.json();
+      
+      if (data && data.address) {
+        const addr = data.address;
+        const potentialCity = addr.city || addr.town || addr.municipality || addr.suburb || addr.village;
+        const potentialQuartier = addr.suburb || addr.neighbourhood || addr.city_district || addr.quarter;
+        
+        console.log('Map Click Reverse Geocode:', addr);
+
+        // Try to match with local DB
+        // 1. Match Region (Guinée is always the same for now, but Conakry/Coyah/Dubreka are key)
+        const conakryRegion = regions.find(r => r.name.toLowerCase().includes('conakry'));
+        if (conakryRegion) {
+          setValue('region', conakryRegion.id.toString());
+          
+          // 2. Fetch Prefectures and try to match
+          const prefRes = await api.get('prefectures/', { params: { region: conakryRegion.id } });
+          const matchPref = prefRes.data.find(p => 
+            potentialCity?.toLowerCase().includes(p.name.toLowerCase()) || 
+            addr.county?.toLowerCase().includes(p.name.toLowerCase())
+          );
+          
+          if (matchPref) {
+            setValue('prefecture', matchPref.id.toString());
+            
+            // 3. Fetch Sous-Prefectures
+            const spRes = await api.get('sous-prefectures/', { params: { prefecture: matchPref.id } });
+            // For Grand Conakry, SP often matches Prefecture or City
+            const matchSP = spRes.data.find(sp => 
+              potentialCity?.toLowerCase().includes(sp.name.toLowerCase()) || 
+              addr.city_district?.toLowerCase().includes(sp.name.toLowerCase())
+            ) || spRes.data[0];
+
+            if (matchSP) {
+              setValue('sous_prefecture', matchSP.id.toString());
+              
+              // 4. Fetch Villes
+              const vRes = await api.get('villes/', { params: { sous_prefecture: matchSP.id } });
+              const matchVille = vRes.data.find(v => 
+                potentialCity?.toLowerCase().includes(v.name.toLowerCase()) || 
+                addr.suburb?.toLowerCase().includes(v.name.toLowerCase())
+              ) || vRes.data[0];
+
+              if (matchVille) {
+                setValue('ville', matchVille.id.toString());
+                
+                // 5. Fetch Quartiers and try to match
+                const qRes = await api.get('quartiers/', { params: { ville: matchVille.id } });
+                const matchQ = qRes.data.find(q => 
+                  potentialQuartier?.toLowerCase().includes(q.name.toLowerCase()) ||
+                  addr.road?.toLowerCase().includes(q.name.toLowerCase())
+                );
+
+                if (matchQ) {
+                  setValue('quartier', matchQ.id.toString());
+                  
+                  // 6. Fetch Secteurs
+                  const sRes = await api.get('secteurs/', { params: { quartier: matchQ.id } });
+                  const matchS = sRes.data.find(s => 
+                    addr.road?.toLowerCase().includes(s.name.toLowerCase())
+                  );
+                  if (matchS) {
+                    setValue('secteur', matchS.id.toString());
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Reverse geocoding error:', err);
+    } finally {
+      setIsGeocoding(false);
+    }
+  };
+
   useEffect(() => {
+    // Geocode from typing (keep existing logic but with slight adjustment to not override manual map selection immediately)
     const geocodeAddress = async () => {
+      if (isGeocoding) return; // Don't trigger if we are already geocoding from click
       const region = regions.find(r => r.id.toString() === selectedRegion?.toString())?.name;
       const pref = prefectures.find(p => p.id.toString() === selectedPrefecture?.toString())?.name;
       const ville = villes.find(v => v.id.toString() === selectedVille?.toString())?.name;
@@ -249,7 +342,7 @@ const AddProperty = () => {
     }, 1500); // Slightly longer debounce for manual typing
 
     return () => clearTimeout(timer);
-  }, [selectedRegion, selectedPrefecture, selectedVille, selectedQuartier, selectedSecteur, quartierCustomName, secteurCustomName, regions, prefectures, villes, quartiers, secteurs]);
+  }, [selectedRegion, selectedPrefecture, selectedVille, selectedQuartier, selectedSecteur, quartierCustomName, secteurCustomName, regions, prefectures, villes, quartiers, secteurs, isGeocoding]);
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -259,16 +352,17 @@ const AddProperty = () => {
       const payload = {
         ...data,
         secteur: data.secteur === 'custom' ? null : parseInt(data.secteur),
+        quartier: data.quartier === 'custom' ? null : parseInt(data.quartier),
         latitude: markerPos.lat,
         longitude: markerPos.lng,
       };
       
       // Add custom names if 'custom' was selected
+      if (data.quartier === 'custom') {
+        payload.quartier_custom_name = data.quartier_custom_name;
+      }
       if (data.secteur === 'custom') {
         payload.secteur_custom_name = data.secteur_custom_name;
-        if (data.quartier === 'custom') {
-          payload.quartier_custom_name = data.quartier_custom_name;
-        }
       }
 
       await api.post('properties/', payload);
@@ -491,6 +585,7 @@ const AddProperty = () => {
                       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
+                    <MapEvents onMapClick={handleMapClick} />
                     <DraggableMarker position={markerPos} setPosition={setMarkerPos} />
                   </MapContainer>
                 </div>

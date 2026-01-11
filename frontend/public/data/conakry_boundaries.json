@@ -1,0 +1,62 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kaloum",
+        "type": "Commune"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-13.7122, 9.5090],
+            [-13.7000, 9.5200],
+            [-13.6800, 9.5150],
+            [-13.6900, 9.5000],
+            [-13.7122, 9.5090]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dixinn",
+        "type": "Commune"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-13.6800, 9.5150],
+            [-13.6600, 9.5400],
+            [-13.6400, 9.5300],
+            [-13.6500, 9.5100],
+            [-13.6800, 9.5150]
+          ]
+        ]
+      }
+    },
+    {
+        "type": "Feature",
+        "properties": {
+          "name": "Ratoma",
+          "type": "Commune"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [-13.6600, 9.5400],
+              [-13.6200, 9.5800],
+              [-13.6000, 9.5700],
+              [-13.6400, 9.5300],
+              [-13.6600, 9.5400]
+            ]
+          ]
+        }
+      }
+  ]
+}

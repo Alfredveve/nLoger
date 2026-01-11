@@ -36,6 +36,10 @@ class Property(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name_plural = "Properties"
+
     @property
     def is_under_validation(self):
         """
@@ -97,4 +101,40 @@ class ManagementMandate(models.Model):
 
     def __str__(self):
         return f"Mandat {self.id} ({self.get_mandate_type_display()}) - {self.owner.username} ({self.get_status_display()})"
+
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        old_status = None
+        if not is_new:
+            old_instance = ManagementMandate.objects.filter(pk=self.pk).first()
+            if old_instance:
+                old_status = old_instance.status
+        
+        super().save(*args, **kwargs)
+        
+        if is_new:
+            MandateHistory.objects.create(
+                mandate=self,
+                status=self.status,
+                comment="Création du mandat"
+            )
+        elif old_status != self.status:
+            MandateHistory.objects.create(
+                mandate=self,
+                status=self.status,
+                comment=f"Changement de statut : {old_status} -> {self.status}"
+            )
+
+class MandateHistory(models.Model):
+    mandate = models.ForeignKey(ManagementMandate, on_delete=models.CASCADE, related_name='history')
+    status = models.CharField(max_length=20)
+    comment = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Mandate histories"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"History for Mandate {self.mandate.id} - {self.status} at {self.created_at}"
 

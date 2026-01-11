@@ -8,6 +8,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from math import sin, cos, sqrt, atan2, radians
 
+from .permissions import IsVerifiedOwnerOrAgent
+
 class PropertyViewSet(viewsets.ModelViewSet):
     queryset = Property.objects.select_related(
         'secteur__quartier__ville__sous_prefecture__prefecture__region',
@@ -16,6 +18,11 @@ class PropertyViewSet(viewsets.ModelViewSet):
     ).prefetch_related('images').all()
     serializer_class = PropertySerializer
     filterset_class = PropertyFilter
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsVerifiedOwnerOrAgent()]
+        return [permissions.AllowAny()]
     
     def perform_create(self, serializer):
         # Handle semi-automated location creation

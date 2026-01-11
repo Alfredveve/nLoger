@@ -1,0 +1,12 @@
+﻿C:\Users\codeshester0011\Desktop\NLoger\logema\payments\admin.py:27:        from django.utils.html import format_html
+C:\Users\codeshester0011\Desktop\NLoger\logema\payments\admin.py:30:        return format_html('<a href="{}">{}</a>', url, obj.payer.username)
+C:\Users\codeshester0011\Desktop\NLoger\logema\payments\admin.py:38:        from django.utils.html import format_html
+C:\Users\codeshester0011\Desktop\NLoger\logema\payments\admin.py:49:        return format_html(
+C:\Users\codeshester0011\Desktop\NLoger\logema\payments\admin.py:86:        from django.utils.html import format_html
+C:\Users\codeshester0011\Desktop\NLoger\logema\payments\admin.py:93:        return format_html(
+C:\Users\codeshester0011\Desktop\NLoger\logema\payments\admin.py:187:        from django.utils.html import format_html
+C:\Users\codeshester0011\Desktop\NLoger\logema\payments\admin.py:195:        return format_html(
+C:\Users\codeshester0011\Desktop\NLoger\logema\transactions\admin.py:12:        from django.utils.html import format_html
+C:\Users\codeshester0011\Desktop\NLoger\logema\transactions\admin.py:20:        return format_html(
+C:\Users\codeshester0011\Desktop\NLoger\logema\transactions\admin.py:27:        from django.utils.html import format_html
+C:\Users\codeshester0011\Desktop\NLoger\logema\transactions\admin.py:34:        return format_html(

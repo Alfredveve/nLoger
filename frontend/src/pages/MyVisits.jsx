@@ -199,7 +199,19 @@ const MyVisits = () => {
                             <div className="bg-slate-900 text-white p-4 rounded-2xl w-full text-center shadow-lg">
                                 <p className="text-xs uppercase tracking-widest text-slate-400 mb-1">Code Secret</p>
                                 <p className="text-3xl font-black font-mono tracking-widest">{visit.validation_code}</p>
-                                <p className="text-[10px] text-slate-400 mt-2">Présentez ce code à l'agent sur place</p>
+                                <p className="text-[10px] text-slate-400 mt-2 mb-3">Présentez ce code à l'agent sur place</p>
+                                
+                                {visit.location_link && (
+                                    <a 
+                                        href={visit.location_link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center justify-center w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl text-xs font-bold transition-colors gap-2"
+                                    >
+                                        <MapPin size={14} />
+                                        Localisation du bien
+                                    </a>
+                                )}
                             </div>
                         ) : visit.status === 'REQUESTED' ? (
                             <>

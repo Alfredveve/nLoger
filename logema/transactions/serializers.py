@@ -20,12 +20,18 @@ class VisitVoucherSerializer(serializers.ModelSerializer):
     visitor_username = serializers.ReadOnlyField(source='visitor.username')
     agent_username = serializers.ReadOnlyField(source='agent.username')
     status_display = serializers.CharField(source='get_status_display', read_only=True)
+    location_link = serializers.SerializerMethodField()
 
     class Meta:
         model = VisitVoucher
         fields = [
             'id', 'agent', 'agent_username', 'visitor', 'visitor_username', 'property', 'property_title',
-            'scheduled_at', 'validation_code', 'status', 'status_display',
+            'scheduled_at', 'validation_code', 'status', 'status_display', 'location_link',
             'rating', 'comment', 'created_at', 'updated_at'
         ]
         read_only_fields = ['agent', 'visitor', 'validation_code', 'status', 'rating', 'comment']
+
+    def get_location_link(self, obj):
+        if obj.status == 'ACCEPTED' and obj.property.latitude and obj.property.longitude:
+            return f"https://www.google.com/maps/search/?api=1&query={obj.property.latitude},{obj.property.longitude}"
+        return None

@@ -10,6 +10,7 @@ import PropertyDetails from './pages/PropertyDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Profile from './pages/Profile';
 import DelegateManagement from './pages/DelegateManagement';
 import MandateDashboard from './pages/MandateDashboard';
@@ -106,6 +107,8 @@ function App() {
                                 element={<Register/>}/>
                             <Route path="forgot-password"
                                 element={<ForgotPassword/>}/>
+                            <Route path="reset-password"
+                                element={<ResetPassword/>}/>
                             <Route path="profile"
                                 element={
                                     <ProtectedRoute><Profile/></ProtectedRoute>

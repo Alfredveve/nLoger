@@ -26,7 +26,8 @@ class PropertySerializer(serializers.ModelSerializer):
             'id', 'owner', 'owner_name', 'owner_phone', 'agent', 'agent_name', 'agent_phone',
             'title', 'description', 
             'property_type', 'price', 'secteur', 'secteur_name', 
-            'quartier_name', 'latitude', 'longitude', 'address_details', 
+            'quartier_name', 'latitude', 'longitude', 'plus_code',
+            'point_de_repere', 'description_direction', 'address_details', 
             'religion_preference', 'ethnic_preference', 'is_available', 
             'is_under_validation', 'images', 'created_at'
         ]

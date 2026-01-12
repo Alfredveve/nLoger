@@ -40,3 +40,13 @@ class User(AbstractUser):
     
     def __str__(self):
         return f"{self.username} ({self.email})"
+
+class PhoneOTP(models.Model):
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    otp = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+    attempts = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"OTP for {self.phone_number}: {self.otp}"

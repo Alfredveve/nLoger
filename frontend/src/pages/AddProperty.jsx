@@ -30,6 +30,8 @@ const propertySchema = z.object({
   quartier_custom_name: z.string().optional(),
   secteur_custom_name: z.string().optional(),
   address_details: z.string().optional(),
+  point_de_repere: z.string().min(5, "Veuillez donner un repère visuel (ex: à 50m de la mosquée)"),
+  description_direction: z.string().optional(),
   religion_preference: z.string().default('Indifférent'),
   ethnic_preference: z.string().default('Indifférent'),
   latitude: z.number().optional(),
@@ -112,6 +114,36 @@ const AddProperty = () => {
       ethnic_preference: 'Indifférent',
     },
   });
+  
+  const [gpsLoading, setGpsLoading] = useState(false);
+  const [gpsPrecision, setGpsPrecision] = useState(null);
+
+  const getCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      alert("La géolocalisation n'est pas supportée par votre navigateur.");
+      return;
+    }
+
+    setGpsLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude, accuracy } = position.coords;
+        setMarkerPos({ lat: latitude, lng: longitude });
+        setGpsPrecision(accuracy);
+        setGpsLoading(false);
+        
+        if (accuracy > 20) {
+          alert(`Précision faible (${Math.round(accuracy)}m). Essayez de sortir ou de vous rapprocher d'une fenêtre.`);
+        }
+      },
+      (error) => {
+        setGpsLoading(false);
+        alert("Impossible de récupérer votre position.");
+        console.error(error);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  };
 
   const selectedRegion = watch('region');
   const selectedPrefecture = watch('prefecture');
@@ -589,15 +621,66 @@ const AddProperty = () => {
                     <DraggableMarker position={markerPos} setPosition={setMarkerPos} />
                   </MapContainer>
                 </div>
+                <div className="mt-4 flex flex-col sm:flex-row gap-4">
+                  <button
+                    type="button"
+                    onClick={getCurrentLocation}
+                    disabled={gpsLoading}
+                    className="flex-1 flex items-center justify-center gap-2 bg-primary-100 text-primary-700 font-bold py-3 px-4 rounded-xl hover:bg-primary-200 transition-all border-2 border-primary-200"
+                  >
+                    {gpsLoading ? (
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    )}
+                    Ma position actuelle
+                  </button>
+                  {gpsPrecision && (
+                    <div className="flex items-center text-xs text-gray-500 bg-gray-50 px-3 py-2 rounded-lg border">
+                      Précision: <span className={`font-bold ml-1 ${gpsPrecision < 20 ? 'text-green-600' : 'text-amber-600'}`}>{Math.round(gpsPrecision)}m</span>
+                    </div>
+                  )}
+                </div>
               </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                <div>
+                  <label htmlFor="point_de_repere" className="block text-sm font-medium text-gray-700 mb-1">Point de repère (Obligatoire)</label>
+                  <input
+                    id="point_de_repere"
+                    type="text"
+                    {...register('point_de_repere')}
+                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none ${errors.point_de_repere ? 'border-red-500' : ''}`}
+                    placeholder="Ex: À 50m de la Mosquée de Dubréka"
+                  />
+                  {errors.point_de_repere && <p className="text-red-500 text-xs mt-1">{errors.point_de_repere.message}</p>}
+                </div>
+                <div>
+                  <label htmlFor="description_direction" className="block text-sm font-medium text-gray-700 mb-1">Indications de direction</label>
+                  <input
+                    id="description_direction"
+                    type="text"
+                    {...register('description_direction')}
+                    className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                    placeholder="Ex: Portail bleu, deuxième ruelle à droite"
+                  />
+                </div>
+              </div>
+
               <div className="mt-4">
-                <label htmlFor="address_details" className="block text-sm font-medium text-gray-700 mb-1">Détails d'adresse</label>
+                <label htmlFor="address_details" className="block text-sm font-medium text-gray-700 mb-1">Détails d'adresse complémentaires</label>
                 <input
                   id="address_details"
                   type="text"
                   {...register('address_details')}
                   className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
-                  placeholder="Ex: Près de la mosquée, Rue 123..."
+                  placeholder="Ex: Rue 123, Porte 45..."
                 />
               </div>
             </div>

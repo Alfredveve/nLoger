@@ -20,14 +20,16 @@ class PropertyFilter(filters.FilterSet):
     # Availability filter
     is_available = filters.BooleanFilter(field_name='is_available')
     
-    # Preference filters (optional)
-    religion_preference = filters.CharFilter(field_name='religion_preference', lookup_expr='icontains')
-    ethnic_preference = filters.CharFilter(field_name='ethnic_preference', lookup_expr='icontains')
+    # Geolocation filters
+    plus_code = filters.CharFilter(field_name='plus_code', lookup_expr='icontains')
+    point_de_repere = filters.CharFilter(field_name='point_de_repere', lookup_expr='icontains')
+    description_direction = filters.CharFilter(field_name='description_direction', lookup_expr='icontains')
 
     class Meta:
         model = Property
         fields = [
             'region', 'prefecture', 'sous_prefecture', 'ville', 'quartier', 'secteur',
             'property_type', 'min_price', 'max_price', 'is_available',
-            'religion_preference', 'ethnic_preference'
+            'religion_preference', 'ethnic_preference', 'plus_code',
+            'point_de_repere', 'description_direction'
         ]

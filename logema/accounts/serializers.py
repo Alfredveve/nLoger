@@ -44,3 +44,36 @@ class RegisterSerializer(serializers.ModelSerializer):
         
         user.save()
         return user
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    phone = serializers.CharField(max_length=20, required=False)
+    email = serializers.EmailField(required=False)
+
+    def validate(self, data):
+        phone = data.get('phone')
+        email = data.get('email')
+
+        if not phone and not email:
+            raise serializers.ValidationError("Vous devez fournir un numéro de téléphone ou un email.")
+
+        if phone:
+            if not User.objects.filter(phone=phone).exists():
+                raise serializers.ValidationError({"phone": "Aucun utilisateur trouvé avec ce numéro de téléphone."})
+        
+        if email:
+            if not User.objects.filter(email=email).exists():
+                raise serializers.ValidationError({"email": "Aucun utilisateur trouvé avec cet email."})
+                
+        return data
+
+class PasswordResetVerifySerializer(serializers.Serializer):
+    phone = serializers.CharField(max_length=20, required=False)
+    email = serializers.EmailField(required=False)
+    otp = serializers.CharField(max_length=6)
+    new_password = serializers.CharField(write_only=True, min_length=8)
+    confirm_password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        if data['new_password'] != data['confirm_password']:
+            raise serializers.ValidationError({"confirm_password": "Les mots de passe ne correspondent pas."})
+        return data

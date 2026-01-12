@@ -79,3 +79,34 @@ class VisitTests(TestCase):
         
         self.assertEqual(voucher.rating, 5)
         self.assertEqual(voucher.comment, "Super agent !")
+
+    def test_location_link_in_serializer(self):
+        """Test that the location_link is present in the serializer when accepted."""
+        from django.utils import timezone
+        from transactions.serializers import VisitVoucherSerializer
+        
+        # Add coordinates to the property
+        self.prop.latitude = 9.509
+        self.prop.longitude = -13.712
+        self.prop.save()
+
+        voucher = VisitVoucher.objects.create(
+            property=self.prop,
+            visitor=self.visitor,
+            agent=self.agent,
+            status='ACCEPTED',
+            validation_code="907426",
+            scheduled_at=timezone.now()
+        )
+        
+        serializer = VisitVoucherSerializer(voucher)
+        data = serializer.data
+        
+        expected_link = f"https://www.google.com/maps/search/?api=1&query=9.509,-13.712"
+        self.assertEqual(data['location_link'], expected_link)
+
+        # Test that link is None if status is not ACCEPTED
+        voucher.status = 'REQUESTED'
+        voucher.save()
+        serializer = VisitVoucherSerializer(voucher)
+        self.assertIsNone(serializer.data['location_link'])

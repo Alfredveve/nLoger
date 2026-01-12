@@ -11,7 +11,7 @@ from locations.views import (
 )
 from properties.views import PropertyViewSet, ManagementMandateViewSet
 from transactions.views import OccupationRequestViewSet, VisitVoucherViewSet
-from accounts.views import RegisterView, UserProfileView
+from accounts.views import RegisterView, UserProfileView, PasswordResetRequestView, PasswordResetVerifyView
 
 from accounts.admin_views import (
     AdminStatsView, AdminUserViewSet, 
@@ -44,6 +44,8 @@ urlpatterns = [
     path('auth/profile/', UserProfileView.as_view(), name='profile'),
     path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/password/reset/request/', PasswordResetRequestView.as_view(), name='password_reset_request'),
+    path('auth/password/reset/verify/', PasswordResetVerifyView.as_view(), name='password_reset_verify'),
     path('admin/stats/', AdminStatsView.as_view(), name='admin-stats'),
     path('admin/analytics/', AdminAnalyticsView.as_view(), name='admin-analytics'),
 ]

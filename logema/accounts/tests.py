@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from django.utils import timezone
 from datetime import timedelta
-from .models import User
+from .models import User, PhoneOTP
 from .serializers import RegisterSerializer, UserSerializer
 
 
@@ -353,3 +353,92 @@ class KYCWorkflowTests(TestCase):
         user.kyc_status = 'PENDING'
         user.save()
         self.assertEqual(user.kyc_status, 'PENDING')
+
+class PasswordResetTests(APITestCase):
+    """Tests pour la récupération de mot de passe par téléphone"""
+    
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(
+            username='resetuser',
+            password='oldpassword123',
+            phone='622000000'
+        )
+
+    def test_password_reset_request_success(self):
+        """Test de la demande d'OTP réussie."""
+        response = self.client.post('/api/auth/password/reset/request/', {'phone': '622000000'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(PhoneOTP.objects.filter(phone_number='622000000').exists())
+
+    def test_password_reset_request_fail_user_not_found(self):
+        """Test de la demande d'OTP pour un utilisateur inexistant."""
+        response = self.client.post('/api/auth/password/reset/request/', {'phone': '000000000'})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_password_reset_verify_success(self):
+        """Test de la vérification OTP et réinitialisation réussie."""
+        # Creer un OTP manuel
+        PhoneOTP.objects.create(phone_number='622000000', otp='123456')
+        
+        data = {
+            'phone': '622000000',
+            'otp': '123456',
+            'new_password': 'newpassword123',
+            'confirm_password': 'newpassword123'
+        }
+        response = self.client.post('/api/auth/password/reset/verify/', data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+        # Vérifier que le mot de passe a changé
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password('newpassword123'))
+        # Vérifier que l'OTP est supprimé
+        self.assertFalse(PhoneOTP.objects.filter(phone_number='622000000').exists())
+
+    def test_password_reset_verify_fail_invalid_otp(self):
+        """Test avec un OTP incorrect."""
+        PhoneOTP.objects.create(phone_number='622000000', otp='123456')
+        
+        data = {
+            'phone': '622000000',
+            'otp': '999999',
+            'new_password': 'newpassword123',
+            'confirm_password': 'newpassword123'
+        }
+        response = self.client.post('/api/auth/password/reset/verify/', data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+class EmailPasswordResetTests(APITestCase):
+    """Tests pour la récupération de mot de passe par email"""
+    
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(
+            username='emailresetuser',
+            password='oldpassword123',
+            email='test@logema.com'
+        )
+
+    def test_password_reset_request_email_success(self):
+        """Test de la demande d'OTP par email réussie."""
+        response = self.client.post('/api/auth/password/reset/request/', {'email': 'test@logema.com'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(PhoneOTP.objects.filter(email='test@logema.com').exists())
+
+    def test_password_reset_verify_email_success(self):
+        """Test de la vérification OTP par email et réinitialisation réussie."""
+        PhoneOTP.objects.create(email='test@logema.com', otp='654321')
+        
+        data = {
+            'email': 'test@logema.com',
+            'otp': '654321',
+            'new_password': 'newpassword123',
+            'confirm_password': 'newpassword123'
+        }
+        response = self.client.post('/api/auth/password/reset/verify/', data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password('newpassword123'))
+        self.assertFalse(PhoneOTP.objects.filter(email='test@logema.com').exists())

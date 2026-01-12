@@ -58,4 +58,25 @@ describe('MyVisits', () => {
         expect(screen.getByText('123456')).toBeInTheDocument(); // Code should be visible for visitor
     });
   });
+
+  it('shows location button when location_link is present', async () => {
+    const visitsWithLink = [
+        {
+            ...mockVisits[0],
+            location_link: 'https://maps.google.com/?q=test'
+        }
+    ];
+    api.get.mockResolvedValue({ data: visitsWithLink });
+
+    render(
+      <BrowserRouter>
+        <MyVisits />
+      </BrowserRouter>
+    );
+
+    await waitFor(() => {
+        expect(screen.getByText('Localisation du bien')).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: /localisation du bien/i })).toHaveAttribute('href', 'https://maps.google.com/?q=test');
+    });
+  });
 });

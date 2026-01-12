@@ -1,4 +1,4 @@
-import {render, screen, fireEvent, waitFor} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import {BrowserRouter} from 'react-router-dom';
 import {
     describe,
@@ -8,6 +8,15 @@ import {
     beforeEach
 } from 'vitest';
 import PropertyList from './Properties';
+
+// Mock Components
+vi.mock('../components/PropertyMap', () => ({
+    default: () => <div data-testid="property-map">Property Map Mock</div>
+}));
+
+vi.mock('../components/PropertyCard', () => ({
+    default: ({property}) => <div data-testid="property-card">{property.title}</div>
+}));
 
 // Mock AuthContext
 vi.mock('../context/AuthContext', () => ({
@@ -23,24 +32,23 @@ vi.mock('../context/AuthContext', () => ({
 }));
 
 // Mock API
-vi.mock('../api/api', () => ({
+vi.mock('../api/axios', () => ({
     default: {
-        get: vi.fn()
+        get: vi.fn(),
+        getUri: vi.fn().mockReturnValue('http://localhost:8000/api/')
     }
 }));
 
-import api from '../api/api';
+import api from '../api/axios';
 
 describe('PropertyList Component', () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
-    it('renders property list page', () => {
+    it('renders property list page', async () => {
         api.get.mockResolvedValue({
-            data: {
-                results: []
-            }
+            data: []
         });
 
         render (
@@ -49,11 +57,13 @@ describe('PropertyList Component', () => {
             </BrowserRouter>
         );
 
-        expect(screen.getByText(/Logements/i)).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText(/Tous les logements/i)).toBeInTheDocument();
+        });
     });
 
     it('displays loading state', () => {
-        api.get.mockImplementation(() => new Promise(() => {})); // Never resolves
+        api.get.mockReturnValue(new Promise(() => {})); // Never resolves
 
         render (
             <BrowserRouter>
@@ -61,8 +71,8 @@ describe('PropertyList Component', () => {
             </BrowserRouter>
         );
 
-        // Should show loading indicator
-        expect(screen.queryByText(/Chargement/i) || screen.queryByRole('progressbar')).toBeTruthy();
+        // Should show loading indicator (match "Chargement" from the component)
+        expect(screen.getByText(/Chargement/i)).toBeInTheDocument();
     });
 
     it('displays properties when loaded', async () => {
@@ -72,27 +82,21 @@ describe('PropertyList Component', () => {
                 title: 'Bel Appartement',
                 price: 5000000,
                 property_type: 'APPARTEMENT',
-                secteur: {
-                    name: 'Almamya'
-                },
+                secteur_name: 'Almamya',
                 images: []
             }, {
                 id: 2,
                 title: 'Villa Moderne',
                 price: 10000000,
                 property_type: 'VILLA',
-                secteur: {
-                    name: 'Kaloum'
-                },
+                secteur_name: 'Kaloum',
                 images: []
             }
         ];
 
-        api.get.mockResolvedValue({
-            data: {
-                results: mockProperties
-            }
-        });
+        // Mock two successful calls: one for properties, one for regions
+        api.get.mockResolvedValueOnce({ data: mockProperties });
+        api.get.mockResolvedValueOnce({ data: [] });
 
         render (
             <BrowserRouter>
@@ -115,8 +119,8 @@ describe('PropertyList Component', () => {
             </BrowserRouter>
         );
 
-        await waitFor(() => { // Should show error message or empty state
-            expect(screen.queryByText(/erreur/i) || screen.queryByText(/aucun/i)).toBeTruthy();
+        await waitFor(() => { // Should show error message containing the error
+            expect(screen.getByText(/Erreur/i)).toBeInTheDocument();
         });
     });
 });

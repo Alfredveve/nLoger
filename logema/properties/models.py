@@ -25,6 +25,12 @@ class Property(models.Model):
     secteur = models.ForeignKey(Secteur, on_delete=models.PROTECT, related_name='properties')
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
+    plus_code = models.CharField(max_length=20, blank=True, null=True, help_text="Code d'adresse numérique (ex: 89P5+XJ)")
+    
+    # Landmark based navigation
+    point_de_repere = models.TextField(blank=True, help_text="Repère visuel (ex: À 50m de la Mosquée)")
+    description_direction = models.TextField(blank=True, help_text="Instructions de direction (ex: 2ème ruelle après le manguier)")
+    
     address_details = models.CharField(max_length=255, blank=True)
     
     # Specific Criteria
@@ -35,6 +41,13 @@ class Property(models.Model):
     is_available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        # Auto-generate plus code if coordinates are present
+        if self.latitude and self.longitude and not self.plus_code:
+            from logema.utils.geo import generate_plus_code
+            self.plus_code = generate_plus_code(self.latitude, self.longitude)
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['-created_at']

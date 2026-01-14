@@ -12,10 +12,12 @@ NLoger est une application web moderne de gestion immobilière permettant aux ut
 
 ## 🛠️ Technologies Utilisées
 
-- **Backend** : Django 6.0, Django REST Framework, SQLite (Développement).
-- **Frontend** : React 18, Vite, CSS Vanilla.
+- **Backend** : Django 5.1, Django REST Framework 3.16, JWT Auth, SQLite (Développement).
+- **Frontend** : React 19, Vite 7, Tailwind CSS 4, React Router 7.
 - **Cartographie** : Leaflet / React-Leaflet.
-- **Style** : Design moderne, responsive et fluide.
+- **Style** : Design moderne, fluide et responsive avec Tailwind CSS.
+- **Tests** : Vitest & React Testing Library (Frontend), Django Test (Backend).
+- **Outils** : Lucide React, Recharts, React Hot Toast, Vite PWA.
 
 ## 📦 Installation et Configuration
 

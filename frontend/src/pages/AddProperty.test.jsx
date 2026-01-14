@@ -1,10 +1,4 @@
-import {
-    render,
-    screen,
-    fireEvent,
-    waitFor,
-    act
-} from '@testing-library/react';
+import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {BrowserRouter} from 'react-router-dom';
 import {
@@ -68,6 +62,7 @@ describe('AddProperty Integration', () => {
                     ]
                 });
             
+
             if (urlStr.includes('prefectures')) 
                 return Promise.resolve({
                     data: [
@@ -78,6 +73,7 @@ describe('AddProperty Integration', () => {
                     ]
                 });
             
+
             if (urlStr.includes('regions')) 
                 return Promise.resolve({
                     data: [
@@ -88,6 +84,7 @@ describe('AddProperty Integration', () => {
                     ]
                 });
             
+
             if (urlStr.includes('villes')) 
                 return Promise.resolve({
                     data: [
@@ -98,6 +95,7 @@ describe('AddProperty Integration', () => {
                     ]
                 });
             
+
             if (urlStr.includes('quartiers')) 
                 return Promise.resolve({
                     data: [
@@ -108,6 +106,7 @@ describe('AddProperty Integration', () => {
                     ]
                 });
             
+
             if (urlStr.includes('secteurs')) 
                 return Promise.resolve({
                     data: [
@@ -118,6 +117,7 @@ describe('AddProperty Integration', () => {
                     ]
                 });
             
+
             return Promise.resolve({data: []});
         });
 

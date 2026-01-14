@@ -25,6 +25,25 @@ db.sqlite3
 .env
 venv/
 demo/
+ip.txt
+all_format_html_search.txt
+
+# Local scripts
+logema/seed_*.py
+logema/fix_*.py
+logema/verify_*.py
+logema/create_*.py
+logema/manage_reset.py
+logema/register_*.py
+logema/cleanup_*.py
+logema/check_properties.py
+
+# Local data and docs
+logema/kyc_docs/
+logema/avatars/
+logema/media/
+logema/*.txt
+logema/*.ps1
 
 # Node
 node_modules/
